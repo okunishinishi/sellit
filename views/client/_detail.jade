@@ -1,5 +1,5 @@
 section#client-detail-section
-    form#client-detail-form(method='post')
+    form#client-detail-form(method='post', action='/api/client/save').posotioned
         input(type='hidden', name='_id', value=selected_client._id)
         h1
             input(type='text', data-role='editable-text', name='name', value=selected_client.name)
