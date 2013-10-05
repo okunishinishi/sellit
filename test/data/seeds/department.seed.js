@@ -9,7 +9,7 @@ module.exports = {
         {
             _id: "1${padZero(rownum, 23)}",
             client_id: "${padZero(parseInt(rownum/5), 24)}",
-            name: '${fruit}'
+            name: '${fruit}部門'
         }.repeat(50)
     ]
 };
