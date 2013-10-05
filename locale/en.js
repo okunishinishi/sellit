@@ -34,3 +34,6 @@ plh.search = lbl.search;
 plh.client_name = lbl.client_name;
 
 var txt = exports.txt = {};
+
+var alt = exports.alt = {};
+alt.sure = 'Are your sure?';

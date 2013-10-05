@@ -5,7 +5,7 @@
  */
 
 
-(function ($) {
+(function ($,l) {
     $.extend({
 
     });
@@ -46,9 +46,9 @@
                         var form = $(this);
                         if (data.valid) {
                             form.setFormValue(data.model);
+                            form.trigger('edit-done');
                         }
                     });
-
                 li.findByRole('edit-btn').click(function () {
                     var onEdit = editableTxt.filter(':visible');
                     if (onEdit.length) {
@@ -69,7 +69,8 @@
                     })
                     .findByRole('submit-btn')
                     .click(function () {
-                        $(this).submit();
+                        var sure = confirm(l.alt.sure);
+                        if(sure) $(this).submit();
                     });
             });
         },
@@ -107,5 +108,5 @@
             location.href = ['/client', select.val()].join('/');
         });
     });
-})(jQuery);
+})(jQuery, window['l']);
 
