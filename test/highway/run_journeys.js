@@ -5,9 +5,9 @@ var journeys = require('./journeys'),
     JobQueue = tek['JobQueue'];
 
 new JobQueue()
-    .timeout(10000)
+    .timeout(5000)
     .pushAll(Object.keys(journeys).map(function (name) {
-        var journey = new journeys[name]().quiteDelay(5000);
+        var journey = new journeys[name]().quiteDelay(1000);
         return function (next) {
             console.log('new journey:', name, 'start');
             journey.takeoff(function () {
