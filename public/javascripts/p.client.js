@@ -3,34 +3,11 @@
         li: Handlebars.templates['client-list-item']
     };
     $.fn.extend({
-        clientSearchForm: function (callback) {
-            var form = $(this);
-            form.searchForm(callback);
-            return form;
-        },
-        clientListItem: function () {
-            return $(this)
-                .destroyableListItem()
-                .editableListItem();
-        },
-        clientList: function (data) {
-            var ul = $(this);
-            ul.htmlHandlebars(tmpl.li, data)
-                .find('li')
-                .clientListItem();
-            return ul;
-        },
-        clientListSection: function () {
+
+        clientDetailSection: function () {
             var section = $(this),
-                addBtn = section.findByRole('add-btn'),
-                ul = section.find('ul'),
-                searchForm = section.findByRole('search-form');
-            ul.appendableList(tmpl.li, addBtn, function (li) {
-                li.clientListItem();
-            });
-            searchForm.clientSearchForm(function (data) {
-                ul.clientList(data);
-            }).submit();
+                postForm = $('#client-detail-form', section);
+
             return section;
         }
     });
@@ -38,6 +15,7 @@
     $(function () {
         var body = $(document.body);
 
-        $('#client-list-section', body).clientListSection();
+        $('#client-detail-section', body).clientDetailSection();
+
     });
 })(jQuery);

@@ -46,7 +46,8 @@ exports.index = function (req, res) {
         return;
     }
     res.render('client/index.jade', {
-        selected_client: client
+        selected_client: client,
+        client: client
     });
 };
 
