@@ -1,0 +1,177 @@
+@import "lib/tek.less";
+@import "lib/icons";
+@import "lib/tek.component.less";
+@import "lib/tek.themes.less";
+
+@base: darken(@white, 1);
+@main: @gray;
+@accent: darken(@white, 10);
+
+body {
+  margin: 0 auto;
+  padding: 20px 20px;
+  .theme-clean(@base, @main, @accent);
+}
+
+header {
+  @h: 28px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  .border-box;
+  height: @h;
+  .box-shadow(1px 1px 2px, 0.4);
+  padding: 0;
+  #client-select {
+    margin: 5px 10px;
+  }
+  nav {
+    height: @h;
+    float: right;
+    .nav-item {
+      line-height: 18px;
+      float: left;
+      padding: 5px 10px;
+      &:hover {
+
+      }
+      &.active {
+        background-image: none;
+      }
+    }
+  }
+}
+
+#main {
+  margin: 32px auto;
+  width: 1080px;
+}
+
+.wide-btn {
+  .border-box;
+  width: 100%;
+  display: block;
+  text-align: center;
+}
+
+.add-btn {
+  .hoverable-btn(@base);
+  padding: 5px 0;
+  color: @gray;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.border-box {
+  .box-sizing(border-box);
+}
+
+.no-style-list {
+  padding: 0;
+  margin: 0;
+  li {
+    list-style: none;
+  }
+}
+
+.inline-form,
+.inline-section {
+  display: inline-block;
+}
+
+.small {
+  font-size: 0.75em;
+}
+
+.hidden {
+  display: none;
+}
+
+.cover {
+  .cover(101);
+}
+
+/*******************
+ *  mouse events
+ *******************/
+.unselectable {
+  .user-select(none);
+}
+
+.unpointable {
+  .pointer-events(none);
+}
+
+.grabbable {
+  .grabbable();
+}
+
+/*******************
+ *  positioning
+ *******************/
+.positioned {
+  position: relative;
+}
+
+.stick-left {
+  .stick-left(5px);
+}
+
+.stick-right {
+  .stick-right(5px);
+}
+
+.stick-top {
+  .stick-top(5px);
+}
+
+.stick-bottom {
+  .stick-bottom(5px);
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.clear {
+  clear: both;
+}
+
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
+.block-list-item-control {
+  top: 0;
+  padding: 5px;
+  z-index: 199;
+  a {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.block-list {
+  &.loading {
+    opacity: 0.5;
+  }
+}
+
+.err-msg {
+  color: lighten(@red, 4);
+}

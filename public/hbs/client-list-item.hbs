@@ -1,0 +1,24 @@
+<li class="client-list-item positioned">
+    <a class="cover" data-role="detail-link" href="/client/{{_id}}"></a>
+
+    <form class="inline-form" action="/api/client/save"
+          method="post" name="edit-form">
+        <input type="hidden" value="{{_id}}" name="_id"/>
+        <input type="text" data-role="editable-text" name="name"
+               placeholder="{{l 'plh.client_name'}}"
+               value="{{name}}"/>
+    </form>
+    <div class="stick-right stick-top block-list-item-control">
+        <a href="javascript:void(0)" data-role='edit-btn'>
+            <i class="icon icon-pencil"></i>
+        </a>
+
+        <form class="inline-form" action="/api/client/destroy"
+              method="post" name="destroy-form">
+            <input type="hidden" value="{{_id}}" name="_id"/>
+            <a href="javascript:void(0)" data-role='submit-btn'>
+                <i class="icon icon-trash"></i>
+            </a>
+        </form>
+    </div>
+</li>

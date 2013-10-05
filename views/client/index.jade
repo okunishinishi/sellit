@@ -1,0 +1,13 @@
+extends ../layout
+
+block stylesheets
+    link(rel='stylesheet', href='/stylesheets/client.css')
+
+block javascripts
+    script(src='/javascripts/p.client.js')
+
+block content
+
+    include _detail
+
+    include ../department/_list
