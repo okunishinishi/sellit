@@ -51,13 +51,11 @@
             searchForm.departmentSearchForm(function (data) {
                 ul.departmentList(data);
             }).submit();
-            return section;
         }
     });
 
     $(function () {
         var body = $(document.body);
-
         $('#department-list-section', body).departmentListSection();
         $('#client-detail-section', body).clientDetailSection();
 

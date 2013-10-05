@@ -28,6 +28,7 @@ btn.search = 'search';
 var lbl = exports.lbl = {};
 lbl.search = 'search';
 lbl.client_name = 'client name';
+
 lbl.department = 'department';
 lbl.department_name = [lbl.department, 'name'].join(' ');
 
