@@ -7,7 +7,8 @@
     },
     "devDependencies": {
         "should": "1.2.1",
-        "nodeunit": "*"
+        "nodeunit": "*",
+        "test-data-printer": "*"
     },
     "dependencies": {
         "express": "3.0.4",
@@ -16,7 +17,7 @@
         "handlebars": "*",
         "revalidator": "*",
         "tek": "*",
-        "tek-web":"*",
+        "tek-web": "*",
         "sqlite3": "*"
     }
 }
