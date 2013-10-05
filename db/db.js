@@ -11,7 +11,14 @@ var tek = require('tek'),
     models = require('./models'),
     config = require('../app.config')['db'];
 
-var url = [config.host, config.name].join('/');
-module.exports = new DB(url, models, connectors[config.kind]);
+function newDB() {
+    var url = [config.host, config.name].join('/');
+    return new DB(url, models, connectors[config.kind]);
+}
+
+exports = module.exports = newDB();
+
+
+exports.newDB = newDB;
 
 

@@ -20,5 +20,5 @@ node_modules
 *.db
 
 test/work/*
-
+test/data/json/*.json
 public/uploaded/*
