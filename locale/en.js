@@ -30,6 +30,7 @@ lbl.search = 'search';
 lbl.client_name = 'client name';
 
 lbl.department = 'department';
+lbl.products = 'products';
 lbl.department_name = [lbl.department, 'name'].join(' ');
 
 var plh = exports.plh = {};
