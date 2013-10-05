@@ -8,7 +8,8 @@
     "devDependencies": {
         "should": "1.2.1",
         "nodeunit": "*",
-        "test-data-printer": "*"
+        "test-data-printer": "*",
+        "selenium-webdriver": "*"
     },
     "dependencies": {
         "express": "3.0.4",
