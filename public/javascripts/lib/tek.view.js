@@ -326,7 +326,7 @@
 		                        },
 		                        complete: function () {
 		                            form
-		                                .removeClass('bkr-loading')
+		                                .removeClass('tk-loading')
 		                                .removeSpin();
 		
 		                        }

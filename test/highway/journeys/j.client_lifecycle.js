@@ -3,7 +3,8 @@
  */
 var tek = require('tek'),
     define = tek['meta']['define'],
-    driveway = require('../sellit_driveway'),
+    driveway = require('../driveway'),
+    JobQueue = tek['JobQueue'],
     Journey = require('./journey');
 
 module.exports = define({
@@ -17,9 +18,14 @@ module.exports = define({
             var s = this,
                 rider = s.rider,
                 index = driveway.index;
-            index.goTop(rider, function () {
-                callback && callback.call(s);
-            });
+            new JobQueue()
+                .push(function (next) {
+                    index.goTop(rider, next);
+                })
+                .push(function (next) {
+                    index.addClient(rider, 'あいうえお', next);
+                })
+                .execute(callback);
         }
     }
 });
