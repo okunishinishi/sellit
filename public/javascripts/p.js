@@ -101,6 +101,11 @@
                 console.error('[ajax err]', statusCode, err);
             }
         });
+
+        $('#client-select', body).change(function () {
+            var select = $(this);
+            location.href = ['/client', select.val()].join('/');
+        });
     });
 })(jQuery);
 

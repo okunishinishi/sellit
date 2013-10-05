@@ -27,13 +27,27 @@ function find(condition, limit, skip, callback) {
     }).limit(limit).skip(skip);
 }
 
+
+function notFound(res) {
+    res.redirect('/404');
+}
+
 /**
  * show index page
  * @param req
  * @param res
  */
 exports.index = function (req, res) {
-    res.render('client/index.jade', {});
+    var p = req.params,
+        clientId = p['client_id'];
+    var client = clientId && res.getClient(clientId);
+    if (!client) {
+        notFound(res);
+        return;
+    }
+    res.render('client/index.jade', {
+        selected_client: client
+    });
 };
 
 

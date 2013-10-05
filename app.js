@@ -6,6 +6,7 @@
 
 var path = require('path'),
     http = require('http'),
+    db = require('./db'),
     express = require('express'),
     util = require('./util'),
     locale = require('./locale');
@@ -39,12 +40,16 @@ app.configure('development', function () {
 });
 
 app.all('*', function (req, res, next) {
+    var Client = db.models.Client;
+    Client.findByCondition({}, function (clients) {
+        res.locals.clients = clients;
 
-
-//    var lang = util['lang'];
+        //    var lang = util['lang'];
 //    res.locals.lang = lang.fromRequest(req);
-    res.locals.lang = 'en';//FIXME
-    next();
+        res.locals.lang = 'en';//FIXME
+        next();
+
+    });
 });
 
 
@@ -63,6 +68,19 @@ app.all('*', function (req, res, next) {
         var s = this;
         s.locals['l'] = locale[s.locals.lang];
         return render.call(s, view, options, fn);
+    };
+    app.response.__proto__.getClient = function (clientId) {
+        var s = this,
+            clients = s.locals.clients;
+        if (!clients) return null;
+        if (!clientId) return null;
+        var hit = false, client;
+        for (var i = 0, len = clients.length; i < len; i++) {
+            client = clients[i];
+            hit = client._id = clientId;
+            if (hit) return client;
+        }
+        return null;
     };
 })(app.response.__proto__.render);
 

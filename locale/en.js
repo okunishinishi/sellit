@@ -7,7 +7,7 @@
 
 var app = exports.app = {};
 app.name = 'sellit';
-app.description = 'sales management systme';
+app.description = 'sales management system';
 
 
 var msg = exports.msg = {};
