@@ -1,0 +1,50 @@
+doctype 5
+html
+    head
+        meta(charset='utf-8')
+        meta(name="viewport", content="width=device-width")
+        title=l.app.name
+
+        link(rel='shortcut icon', href='/fav.ico')
+        link(rel="apple-touch-icon", href="/touch.ico")
+        link(rel='stylesheet', href='/stylesheets/base.css')
+        block stylesheets
+
+        script(src='/javascripts/lib/tek.js')
+
+        script(src='/javascripts/lib/jquery.js')
+        script(src='/javascripts/lib/jquery-ui.custom.js')
+
+        script(src='/javascripts/lib/spin.js')
+        script(src='/javascripts/lib/handlebars.runtime.min.js')
+
+        script.
+            window.l = !{JSON.stringify(l)};
+            Handlebars.registerHelper('l' , function(name, options){
+                return name && eval(["window","l"].concat(name).join('.'));
+            });
+
+        script(src='/javascripts/lib/tek.view.js')
+
+        script(src='/javascripts/templates.js')
+
+        script(src='/javascripts/p.js')
+
+        block javascripts
+
+        block head
+
+
+    body
+        header
+            include _nav
+            h2.logo.float-left
+                a(href='/')
+                    | #{l.app.name}
+
+        article#main
+            block content
+
+        br.clear
+
+        footer

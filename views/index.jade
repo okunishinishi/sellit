@@ -1,0 +1,17 @@
+extends layout
+
+block stylesheets
+    link(rel='stylesheet', href='/stylesheets/index.css')
+
+block javascripts
+    script(src='/javascripts/p.index.js')
+
+
+block content
+
+    aside.float-right.positioned
+        include client/_list
+
+    article
+        h1#large-logo=l.app.name
+        p.description=l.app.description

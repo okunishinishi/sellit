@@ -1,0 +1,13 @@
+section.list-section#client-list-section
+    form#client-list-form.block-list-header(
+    data-role='search-form',action='/api/client.json',method='get')
+        input(type='search', name='search_word', placeholder=l.plh.search).float-right
+        input(type='hidden', name='skip', value='0')
+        input(type='hidden', name='limit', value='500')
+        input.btn(type='submit')=l.lbl.search
+        br.clear
+    ul#client_list.block-list
+
+    a.add-btn.wide-btn#client-add-btn(
+    href='javascript:void(0)', data-role='add-btn')
+        | #{l.btn.new}
