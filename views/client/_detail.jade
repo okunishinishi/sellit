@@ -6,4 +6,14 @@ section#client-detail-section
 
     .paper#client-detail-paper
         .paper-content
+            h4(data-name='name')
+            br
+            for product in products
+                input(
+                    type="checkbox",
+                    id="product-#{product._id}",
+                    value=product._id)
+                label(
+                    for="product-#{product._id}"
+                    )=product.name
 

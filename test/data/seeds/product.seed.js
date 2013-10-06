@@ -8,7 +8,7 @@ module.exports = {
     entries: [
         {
             _id: "2${padZero(rownum, 23)}",
-            name: '${animal}'
+            name: '${color}${choice("カリバー,ソード,アックス,アーマー,ソード,ナイフ,アロー".split(","))}'
         }.repeat(10)
     ]
 };

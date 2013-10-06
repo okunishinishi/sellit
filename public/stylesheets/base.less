@@ -17,9 +17,28 @@ body {
     z-index: -1;
     opacity: 0.1;
   }
-  .btn-danger{
+  .btn-danger {
     .btn(#FF99AC);
   }
+  .block-list {
+    &.loading {
+      opacity: 0.5;
+    }
+    li {
+      @back: rgb(154, 107, 255);
+      &:active{
+        background-color: darken(@back, 5);
+      }
+      &.selected {
+        background-color: @back;
+        color: @white;
+        &:hover {
+          background-color: @back;
+        }
+      }
+    }
+  }
+
 }
 
 header {
@@ -175,16 +194,13 @@ header {
   }
 }
 
-.block-list {
-  &.loading {
-    opacity: 0.5;
-  }
-}
 
 .err-msg {
   color: lighten(@red, 4);
 }
-.confirm-dialog{
+
+.confirm-dialog {
   .confirm-dialog();
   z-index: 999;
 }
+

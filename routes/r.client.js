@@ -1,7 +1,8 @@
 var tek = require('tek'),
     copy = tek['meta']['copy'],
     db = require('../db'),
-    Client = db.models['Client'];
+    Client = db.models['Client'],
+    Product = db.models['Product'];
 
 /**
  * find single model
@@ -45,8 +46,12 @@ exports.index = function (req, res) {
         notFound(res);
         return;
     }
-    res.render('client/index.jade', {
-        selected_client: client
+    Product.findAll(function(products){
+        res.render('client/index.jade', {
+            products:products,
+            selected_client: client
+        });
+
     });
 };
 

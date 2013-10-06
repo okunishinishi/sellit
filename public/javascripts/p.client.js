@@ -28,13 +28,27 @@
         departmentListItem: function () {
             return $(this)
                 .destroyableListItem()
-                .editableListItem();
+                .editableListItem()
+                .click(function () {
+                    var li = $(this),
+                        values = li.findByName('edit-form').getFormValue();
+                    li
+                        .addClass('selected')
+                        .trigger('department-list-item-select', [values])
+                        .siblings('li.selected')
+                        .removeClass('selected');
+                })
+                .find('.block-list-item-control')
+                .click(function (e) {
+                    e.stopPropagation();
+                });
         },
         departmentList: function (data) {
             var ul = $(this);
             ul.htmlHandlebars(tmpl.departmentLi, data)
                 .find('li')
                 .departmentListItem();
+            ul.find('li').first().click();
             return ul;
         },
         departmentListSection: function () {
@@ -51,12 +65,25 @@
             searchForm.departmentSearchForm(function (data) {
                 ul.departmentList(data);
             }).submit();
+            return section;
+        },
+        clientDetailPaper: function (data) {
+            var paper = $(this);
+            paper.find('[data-name]').each(function () {
+                var elm = $(this),
+                    name = elm.data('name');
+                elm.text(data[name]);
+            });
+            return paper;
         }
     });
 
     $(function () {
         var body = $(document.body);
-        $('#department-list-section', body).departmentListSection();
+        $('#department-list-section', body).departmentListSection()
+            .on('department-list-item-select', function (e, data) {
+                $('#client-detail-paper', body).clientDetailPaper(data);
+            });
         $('#client-detail-section', body).clientDetailSection();
 
     });
