@@ -39,26 +39,50 @@ exports.csvData = function (callback) {
 };
 
 var publicDir = require('../app.config')['publicDir'];
-exports.download = function (req, res) {
+
+
+exports.generateWorkbook = function (dirpath, filename, callback) {
     exports.csvData(function (data) {
         var createWorkbook = excelbuilder.createWorkbook,
-            filename = 'sellit.xlsx',
-            workbook = createWorkbook(publicDir + "/", filename);
-        var rows = data.length,
-            cols = data[0].length;
-        var sheet1 = workbook.createSheet('all', cols + 2, rows);
-        for (var row = 0; row < rows; row++) {
-            for (var col = 0; col < cols; col++) {
-                sheet1.set(col+1, row+1, data[row][col]);
-            }
-        }
+            workbook = createWorkbook(dirpath + "/", filename);
+        var sheet1 = workbook.createSheet('all', data[0].length + 2, data.length + 2);
+        'client,department,product'.split(',').forEach(function (header, i) {
+            var col = i + 1, row = 1;
+            sheet1.width(i, 30);
+            sheet1.set(col, row, header);
+            sheet1.fill(col, row, {
+                type:'solid',fgColor:'8',bgColor:'64'
+            });
+            sheet1.border(col, row, {
+                left:'thin',top:'thin',right:'thin',bottom:'medium'
+            });
+        });
+        data.forEach(function (data, i) {
+            data.forEach(function (data, j) {
+                var col = j + 1,
+                    row = i + 2;
+                sheet1.set(col, row, data);
+                sheet1.border(col, row, {left:'thin',top:'thin',right:'thin',bottom:'thin'});
+            });
+        });
         workbook.save(function (err) {
             if (err) {
                 workbook.cancel();
-                res.json(data);
+                callback(err);
             } else {
-                res.redirect('/' + filename);
+                callback(err, resolve(dirpath, filename));
             }
         });
+    });
+};
+
+exports.download = function (req, res) {
+    var filename = 'sellit.xlsx';
+    exports.generateWorkbook(publicDir, filename, function (err) {
+        if (err) {
+            res.redirect('/404');
+        } else {
+            res.redirect('/' + filename);
+        }
     });
 };

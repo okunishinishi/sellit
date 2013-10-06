@@ -22,3 +22,6 @@ node_modules
 test/work/*
 test/data/json/*.json
 public/uploaded/*
+
+backup/*.json
+backup/*.xlsx

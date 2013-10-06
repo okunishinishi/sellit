@@ -85,6 +85,41 @@ app.all('*', function (req, res, next) {
 })(app.response.__proto__.render);
 
 
+(function (backup) {
+    var tek = require('tek'),
+        fs = require('fs'),
+        padZero = tek['string']['padZero'],
+        resolve = require('path')['resolve'],
+        excel = require('./routes/r.excel');
+    var takeBackup = function () {
+        var now = (function (date) {
+            return [
+                date.getFullYear(),
+                padZero(date.getMonth() + 1, 2),
+                padZero(date.getDate())
+            ].join('') + '-' + [
+                padZero(date.getHours(), 2),
+                padZero(date.getMinutes(), 2),
+                padZero(date.getSeconds(), 2)
+            ].join('');
+        })(new Date);
+        var dirpath = backup.dirpath,
+            filename = [now, 'xlsx'].join('.');
+        fs.readdirSync(dirpath).reverse().forEach(function (filename, i) {
+            if (filename.match(/^\./)) return;
+            var filepath = resolve(dirpath, filename);
+            if (backup.max_count <= i) {
+                fs.unlinkSync(filepath);
+            }
+        });
+        excel.generateWorkbook(dirpath, filename, function () {
+            console.log('back up saved to :', resolve(dirpath, filename));
+        });
+    };
+    setInterval(takeBackup, backup.interval);
+    takeBackup();
+})(require('./app.config')['backup']);
+
 http.createServer(app).listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));
 });
