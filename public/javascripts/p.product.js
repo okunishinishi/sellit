@@ -1,35 +1,35 @@
 (function ($) {
     var tmpl = {
-        li: Handlebars.templates['__model_name__-list-item']
+        li: Handlebars.templates['product-list-item']
     };
     $.fn.extend({
-        __modelName__SearchForm: function (callback) {
+        productSearchForm: function (callback) {
             var form = $(this);
             form.searchForm(callback);
             return form;
         },
-        __modelName__ListItem: function () {
+        productListItem: function () {
             return $(this)
                 .destroyableListItem()
                 .editableListItem();
         },
-        __modelName__List: function (data) {
+        productList: function (data) {
             var ul = $(this);
             ul.htmlHandlebars(tmpl.li, data)
                 .find('li')
-                .__modelName__ListItem();
+                .productListItem();
             return ul;
         },
-        __modelName__ListSection: function () {
+        productListSection: function () {
             var section = $(this),
                 addBtn = section.findByRole('add-btn'),
                 ul = section.find('ul'),
                 searchForm = section.findByRole('search-form');
             ul.appendableList(tmpl.li, addBtn, function (li) {
-                li.__modelName__ListItem();
+                li.productListItem();
             });
-            searchForm.__modelName__SearchForm(function (data) {
-                ul.__modelName__List(data);
+            searchForm.productSearchForm(function (data) {
+                ul.productList(data);
             }).submit();
             return section;
         }
@@ -38,6 +38,6 @@
     $(function () {
         var body = $(document.body);
 
-        $('#__model_name__-list-section', body).__modelName__ListSection();
+        $('#product-list-section', body).productListSection();
     });
 })(jQuery);

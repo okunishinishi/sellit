@@ -18,7 +18,7 @@
                         href:'/client/' + editForm.findByName('_id').val()
                     });
                 })
-                .destroyableListItem()
+                .destroyableListItem(true)
                 .editableListItem();
         },
         clientList: function (data) {

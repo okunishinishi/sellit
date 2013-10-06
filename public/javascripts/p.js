@@ -5,9 +5,47 @@
  */
 
 
-(function ($,l) {
+(function ($, l, Handlebars) {
     $.extend({
+        confirmRemove: function (name, callback) {
+            var tmpl = Handlebars.templates['confirm-dialog'],
+                html = tmpl({
+                    name: name,
+                    label: name
+                }).replace('{{it}}', name);
+            var dialog = $(html).appendTo(document.body),
+                inner = $('.confirm-dialog-inner', dialog),
+                form = dialog.find('form'),
+                cancelBtn = form.findByRole('cancel-btn'),
+                submit = form.find(':submit');
 
+            cancelBtn.click(function () {
+                dialog.fadeOut(100, function () {
+                    dialog.remove();
+                });
+            });
+            dialog.click(function () {
+                cancelBtn.click();
+            });
+            inner.click(function (e) {
+                e.stopPropagation();
+            });
+            var check = $('#confirm-dialog-check', form).change(function () {
+                if (check[0].checked) {
+                    submit.removeAttr('disabled').removeClass('disabled');
+                } else {
+                    submit.attr('disabled', 'disabled').addClass('disabled');
+                }
+            });
+            form.submit(function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (submit.attr('disabled')) return;
+                dialog.remove();
+                callback && callback();
+            });
+
+        }
     });
     $.fn.extend({
         /**
@@ -60,7 +98,7 @@
                 });
             });
         },
-        destroyableListItem: function () {
+        destroyableListItem: function (showDialog) {
             return this.each(function () {
                 var li = $(this);
                 li.findByName('destroy-form')
@@ -69,8 +107,16 @@
                     })
                     .findByRole('submit-btn')
                     .click(function () {
-                        var sure = confirm(l.alt.sure);
-                        if(sure) $(this).submit();
+                        var btn = $(this);
+                        if (showDialog) {
+                            var name = li.findByName('name').val();
+                            $.confirmRemove(name, function () {
+                                btn.submit();
+                            });
+                        } else {
+                            var sure = confirm(l.alt.sure);
+                            if (sure) btn.submit();
+                        }
                     });
             });
         },
@@ -108,5 +154,5 @@
             location.href = ['/client', select.val()].join('/');
         });
     });
-})(jQuery, window['l']);
+})(jQuery, window['l'], Handlebars);
 

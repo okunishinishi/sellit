@@ -1,0 +1,19 @@
+<section class="confirm-dialog">
+    <div class="confirm-dialog-inner">
+        <h2 class="dialog-title">{{l "msg.sure"}}</h2>
+        {{l 'msg.never_go_back'}}
+        <form>
+            <a href="javascript:void(0)" data-role="cancel-btn"
+               class="stick-right stick-top remove-btn"
+                    >&times;</a>
+
+            <p>
+
+                <input type="checkbox" id="confirm-dialog-check"/>
+                <label for="confirm-dialog-check"><b>{{l 'lbl.understand'}}</b></label>
+            </p>
+            <input type="submit" class="btn btn-danger wide-btn disabled"
+                   disabled="disabled" value="{{l 'btn.remove_it'}}"/>
+        </form>
+    </div>
+</section>
