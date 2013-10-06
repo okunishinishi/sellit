@@ -1,7 +1,7 @@
 var tek = require('tek'),
     copy = tek['meta']['copy'],
     db = require('../db'),
-    Department = db.models['Department'];
+    Product = db.models['Product'];
 
 /**
  * find single model
@@ -10,7 +10,7 @@ var tek = require('tek'),
  * @returns {*}
  */
 function findOne(_id, callback) {
-    return Department.findById(_id, callback);
+    return Product.findById(_id, callback);
 }
 
 /**
@@ -22,7 +22,7 @@ function findOne(_id, callback) {
  * @returns {*|Cursor}
  */
 function find(condition, limit, skip, callback) {
-    return Department.findByCondition(condition,function (models) {
+    return Product.findByCondition(condition,function (models) {
         callback(models.splice(skip, limit));
     }).limit(limit).skip(skip);
 }
@@ -33,7 +33,7 @@ function find(condition, limit, skip, callback) {
  * @param res
  */
 exports.index = function (req, res) {
-    res.render('department/index.jade', {});
+    res.render('product/index.jade', {});
 };
 
 
@@ -65,7 +65,6 @@ exports.api = {
 
         var skip = Number(parameters.skip),
             limit = Number(parameters.limit),
-            client_id = parameters.client_id,
             search_word = parameters.search_word,
             condition = {};
 
@@ -76,7 +75,6 @@ exports.api = {
             });
             condition = new db.AmbiguousCondition(condition);
         }
-        condition.client_id = client_id;
 
         find(condition, limit, skip, function (models) {
             res.json(models);
@@ -89,20 +87,18 @@ exports.api = {
      * @param res
      */
     save: function (req, res) {
-        var department = new Department(req.body);
-        var result = department.validate();
+        var product = new Product(req.body);
+        var result = product.validate();
         if (!result.valid) {
             res.json(result);
             return;
         }
-        var product_ids = department['product_ids'];
-        department['product_ids'] = [].concat(product_ids).join(',');
-        findOne(department._id, function (duplicate) {
+        findOne(product._id, function (duplicate) {
             var action = duplicate ? 'update' : 'save';
-            department[action](function (department) {
+            product[action](function (product) {
                 res.json({
                     valid: true,
-                    model: department,
+                    model: product,
                     action: action
                 });
             });
@@ -116,9 +112,9 @@ exports.api = {
      */
     destroy: function (req, res) {
         var _id = req.body['_id'];
-        findOne(_id, function (department) {
-            if (department) {
-                department.remove(function () {
+        findOne(_id, function (product) {
+            if (product) {
+                product.remove(function () {
                     res.json({count: 1});
                 });
             } else {

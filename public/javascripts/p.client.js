@@ -1,4 +1,12 @@
 (function ($) {
+    Array.prototype.contains = function (val) {
+        var s = this, hit = false;
+        for (var i = 0; i < s.length; i++) {
+            hit = s[i] === val;
+            if (hit) return true;
+        }
+        return false;
+    };
     var tmpl = {
         clientLi: Handlebars.templates['client-list-item'],
         departmentLi: Handlebars.templates['department-list-item']
@@ -28,13 +36,13 @@
         departmentListItem: function () {
             return $(this)
                 .destroyableListItem()
-                .editableListItem()
+                .editableListItem("dblclick")
                 .click(function () {
                     var li = $(this),
                         values = li.findByName('edit-form').getFormValue();
                     li
                         .addClass('selected')
-                        .trigger('department-list-item-select', [values])
+                        .trigger('department-list-item-select', [values, li])
                         .siblings('li.selected')
                         .removeClass('selected');
                 })
@@ -67,12 +75,36 @@
             }).submit();
             return section;
         },
-        clientDetailPaper: function (data) {
+        clientProductForm: function (data, callback) {
+            var form = $(this);
+            if (!form.hasClass('ajax-form')) {
+                form
+                    .addClass('ajax-form')
+                    .ajaxForm(function (data) {
+                        callback(data.model);
+                    })
+                    .find(':checkbox').change(function () {
+                        form.submit();
+                    });
+            }
+            form.findByName('_id').val(data._id);
+            var product_ids = data.product_ids && data.product_ids.split(',') || [];
+            form.findByName('product_ids').each(function () {
+                var checkbox = this,
+                    $checkbox = $(checkbox);
+                checkbox.checked = product_ids.contains($checkbox.val());
+            });
+            return form;
+        },
+        clientDetailPaper: function (data, callback) {
             var paper = $(this);
             paper.find('[data-name]').each(function () {
                 var elm = $(this),
                     name = elm.data('name');
                 elm.text(data[name]);
+            });
+            paper.find('#client-product-form').clientProductForm(data, function (data) {
+                callback && callback(data);
             });
             return paper;
         }
@@ -81,8 +113,10 @@
     $(function () {
         var body = $(document.body);
         $('#department-list-section', body).departmentListSection()
-            .on('department-list-item-select', function (e, data) {
-                $('#client-detail-paper', body).clientDetailPaper(data);
+            .on('department-list-item-select', function (e, data, li) {
+                $('#client-detail-paper', body).clientDetailPaper(data, function (data) {
+                    li.findByName('product_ids').val(data['product_ids']);
+                });
             });
         $('#client-detail-section', body).clientDetailSection();
 

@@ -5,15 +5,17 @@ section#client-detail-section
             input(type='text', data-role='editable-text', name='name', value=selected_client.name)
 
     .paper#client-detail-paper
-        .paper-content
-            h4(data-name='name')
-            br
-            for product in products
-                input(
-                    type="checkbox",
-                    id="product-#{product._id}",
-                    value=product._id)
-                label(
-                    for="product-#{product._id}"
-                    )=product.name
+        form#client-product-form(method='post', action='/api/department/save').posotioned
+            input(type='hidden', name='_id', value)
+            .paper-content
+                h4(data-name='name')
+                br
+                for product in products
+                    label(for="product-#{product._id}")
+                        input(
+                        name='product_ids',
+                        type="checkbox",
+                        id="product-#{product._id}",
+                        value=product._id)
+                        span=product.name
 

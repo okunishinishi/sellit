@@ -48,3 +48,6 @@ post('/api/product/save', product.api.save);
 post('/api/product/destroy', product.api.destroy);
 get('/api/product.json', product.api.list);
 get('/api/product/:_id', product.api.one);
+
+var excel = r['excel'];
+get('/excel/download', excel.download);

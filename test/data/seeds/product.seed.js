@@ -8,7 +8,7 @@ module.exports = {
     entries: [
         {
             _id: "2${padZero(rownum, 23)}",
-            name: '${color}${choice("カリバー,ソード,アックス,アーマー,ソード,ナイフ,アロー".split(","))}'
-        }.repeat(10)
+            name: '${color}の${choice("刀,剣,鎧,兜,槍,斧,盾,矛,弓".split(","))}'
+        }.repeat(20)
     ]
 };

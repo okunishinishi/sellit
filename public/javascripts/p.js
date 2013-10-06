@@ -69,11 +69,11 @@
          * list item which is editable
          * @returns {*}
          */
-        editableListItem: function () {
+        editableListItem: function (trigger) {
             return this.each(function () {
                 var li = $(this);
                 var editableTxt = li.findByRole('editable-text')
-                    .editableText()
+                    .editableText(trigger)
                     .change(function () {
                         $(this).submit();
                     })

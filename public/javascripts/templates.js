@@ -84,7 +84,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (stack1 = helpers._id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0._id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" name=\"_id\"/>\n        <input type=\"text\" data-role=\"editable-text\"\n               placeholder=\"";
+    + "\" name=\"_id\"/>\n        <input type=\"hidden\" value=\"";
+  if (stack1 = helpers.product_ids) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.product_ids; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" name=\"product_ids\"/>\n        <input type=\"text\" data-role=\"editable-text\"\n               placeholder=\"";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers['l'] || depth0['l']),stack1 ? stack1.call(depth0, "plh.department_name", options) : helperMissing.call(depth0, "l", "plh.department_name", options)))
     + "\"\n               name=\"name\" value=\"";
