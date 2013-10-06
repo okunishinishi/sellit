@@ -2,11 +2,13 @@
  * Created by okunishitaka on 10/6/13.
  */
 
-var db = require('../db'),
+var excelbuilder = require('msexcel-builder'),
+    db = require('../db'),
     models = db['models'],
     Client = models['Client'],
     Department = models['Department'],
-    Product = models['Product'];
+    Product = models['Product'],
+    resolve = require('path')['resolve'];
 
 
 function toIdMap(data) {
@@ -35,8 +37,28 @@ exports.csvData = function (callback) {
         })
     });
 };
+
+var publicDir = require('../app.config')['publicDir'];
 exports.download = function (req, res) {
     exports.csvData(function (data) {
-        res.json(data);//TODO
+        var createWorkbook = excelbuilder.createWorkbook,
+            filename = 'sellit.xlsx',
+            workbook = createWorkbook(publicDir + "/", filename);
+        var rows = data.length,
+            cols = data[0].length;
+        var sheet1 = workbook.createSheet('all', cols + 2, rows);
+        for (var row = 0; row < rows; row++) {
+            for (var col = 0; col < cols; col++) {
+                sheet1.set(col+1, row+1, data[row][col]);
+            }
+        }
+        workbook.save(function (err) {
+            if (err) {
+                workbook.cancel();
+                res.json(data);
+            } else {
+                res.redirect('/' + filename);
+            }
+        });
     });
 };

@@ -112,7 +112,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<li class=\"product-list-item positioned\">\n    <a class=\"cover\" data-role=\"detail-link\" href=\"/product/?_id=";
+  buffer += "<li class=\"product-list-item positioned\">\n    <a class=\"cover detail-link\" data-role=\"detail-link\" href=\"/product/?_id=";
   if (stack1 = helpers._id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0._id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
