@@ -85,7 +85,9 @@ app.all('*', function (req, res, next) {
 })(app.response.__proto__.render);
 
 
-(function (backup) {
+(function (config) {
+    var backup = config['backup'],
+        db = config['db'];
     var tek = require('tek'),
         fs = require('fs'),
         padZero = tek['string']['padZero'],
@@ -108,17 +110,25 @@ app.all('*', function (req, res, next) {
         fs.readdirSync(dirpath).reverse().forEach(function (filename, i) {
             if (filename.match(/^\./)) return;
             var filepath = resolve(dirpath, filename);
-            if (backup.max_count - 1 <= i) {
+            if ((backup.max_count - 1) * 2 <= i) {
                 fs.unlinkSync(filepath);
             }
         });
-        excel.generateWorkbook(dirpath, filename, function () {
-            console.log('back up saved to :', resolve(dirpath, filename));
+        var db_filepath = resolve(db.host, db.name);
+        fs.readFile(db_filepath, function (err, buffer) {
+            if (err) console.error(err);
+            var bk_filepath = resolve(dirpath, now + '.db');
+            fs.writeFile(bk_filepath, buffer, function (err) {
+                if (err) console.error(err);
+                excel.generateWorkbook(dirpath, filename, function () {
+                    console.log('back up saved to :', resolve(dirpath, filename));
+                });
+            });
         });
     };
     setInterval(takeBackup, backup.interval);
     takeBackup();
-})(require('./app.config')['backup']);
+})(require('./app.config'));
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));

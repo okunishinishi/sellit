@@ -32,12 +32,6 @@ exports.use = [
     express.static(exports.publicDir)
 ];
 
-//exports.db = {
-//    kind: 'mongojs',
-//    host: 'localhost',
-//    name: 'sellit'.replace(/\./g, '_')
-//};
-
 exports.db = {
     kind: 'sqlite3',
     host: resolve(__dirname),
