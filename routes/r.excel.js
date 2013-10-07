@@ -34,7 +34,8 @@ exports.csvData = function (callback) {
             result.clients.push([
                 l.lbl.client,
                 l.lbl.industry,
-                l.lbl.rank
+                l.lbl.rank,
+                l.lbl.products
             ]);
             result.clients = result.clients.concat(
                 clients.map(function (client) {
@@ -49,6 +50,13 @@ exports.csvData = function (callback) {
                         industry && industry.name || '',
                         rank && rank.name || ''
                     ]
+                        .concat(product_ids.split(',').map(function (product_id) {
+                            var product = productMap[product_id];
+                            return product && product.name || '';
+                        })).filter(function (v) {
+                            return !!v;
+                        })
+                        ;
                 })
             );
             callback(result);
