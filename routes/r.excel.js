@@ -4,38 +4,45 @@
 
 var excelbuilder = require('msexcel-builder'),
     db = require('../db'),
+    util = require('../util'),
+    toIdMap = util['obj']['toIdMap'],
     models = db['models'],
     Client = models['Client'],
+    Industry = models['Industry'],
+    l = require('../locale')['en'],
     Product = models['Product'],
     resolve = require('path')['resolve'];
 
 
-function toIdMap(data) {
-    var result = {};
-    data && data.forEach(function (data) {
-        result[data._id] = data;
-    });
-    return result;
-}
 exports.csvData = function (callback) {
     var result = {
         clients: [],
         products: []
     };
-    Product.findAll(function (products) {
-        products.forEach(function (product) {
-            var line = [product.name];
-            result.products.push(line);
-        });
-        var productMap = toIdMap(products);
-
-        Client.findAll(function (clients) {
-            clients.forEach(function (client) {
+    Industry.findAll(function (industries) {
+        var industryMap = toIdMap(industries);
+        Product.findAll(function (products) {
+            products.forEach(function (product) {
+                var line = [product.name];
+                result.products.push(line);
+            });
+            var productMap = toIdMap(products);
+            Client.findAll(function (clients) {
                 result.clients.push([
-                    client.name
+                    l.lbl.client,
+                    l.lbl.industry
                 ]);
-            })
-            callback(result);
+                result.clients = result.clients.concat(
+                    clients.map(function (client) {
+                        var industry = industryMap[client.industry_id];
+                        return [
+                            client.name,
+                            industry && industry.name || ''
+                        ];
+                    })
+                );
+                callback(result);
+            });
         });
     });
 };

@@ -17,13 +17,16 @@
             form.ajaxForm(function () {
 
             });
-            form.findByRole('editable-text').editableText();
+            form.findByRole('editable-text')
+                .editableText();
+            $('select,input', form).change(function () {
+                form.submit();
+            });
             return form;
         },
         clientDetailSection: function () {
             var section = $(this),
                 form = $('#client-detail-form', section);
-
             form.clientDetailForm();
 
             return section;

@@ -26,7 +26,7 @@ body {
     }
     li {
       @back: rgb(154, 107, 255);
-      &:active{
+      &:active {
         background-color: darken(@back, 5);
       }
       &.selected {
@@ -194,7 +194,6 @@ header {
   }
 }
 
-
 .err-msg {
   color: lighten(@red, 4);
 }
@@ -204,3 +203,12 @@ header {
   z-index: 999;
 }
 
+.label {
+  .border-radius(3px);
+  font-size: 0.75em;
+  color: darken(@white, 20);
+  display: inline-block;
+  padding: 2px 4px;
+  .rotate(10deg);
+  margin: 0 5px;
+}

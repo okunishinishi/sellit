@@ -15,7 +15,6 @@ msg.sure = 'Are ABSOLUTELY your sure?';
 msg.never_go_back = 'Once this done, there will be no way to go back.';
 
 
-
 var err = exports.err = {};
 err.page_not_found = 'sorry! page not found';
 
@@ -36,12 +35,15 @@ var lbl = exports.lbl = {};
 lbl.search = 'search';
 lbl.understand = 'I understand consequences.';
 
+lbl.client = 'client';
 lbl.client_name = 'client name';
 lbl.products = 'products';
+lbl.industry = 'industry';
 
 var plh = exports.plh = {};
 plh.search = lbl.search;
 plh.client_name = lbl.client_name;
+plh.industry = lbl.industry;
 
 
 var alt = exports.alt = {};

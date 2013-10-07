@@ -1,24 +1,30 @@
-section#client-detail-section.paper
+section#client-detail-section
     form#client-detail-form(method='post', action='/api/client/save'
-    ).posotioned.paper-content
-        input(type='hidden', name='_id', value=selected_client._id)
-        h1
-            input(type='text', data-role='editable-text', name='name', value=selected_client.name)
-
-        select#industry-select
-            for industry in industries
-                option(value=industry._id,selected=industry._id==selected_client.industry_id
-                )=industry.name
+    ).posotioned.paper
+        .paper-content
+            input(type='hidden', name='_id', value=selected_client._id)
+            h1
+                input(type='text', data-role='editable-text', name='name', value=selected_client.name)
 
 
-        fieldset#product-fieldset
-            legend=l.lbl.products
-            for product in products
-                label(for="product-#{product._id}")
-                    input(
-                    name='product_ids',
-                    type="checkbox",
-                    id="product-#{product._id}",
-                    value=product._id)
-                    span=product.name
+            div
+                label(for="industry-select")=l.lbl.industry
+                select#industry-select(name="industry_id")
+                    optoin(value="")="-- #{l.plh.industry} --"
+                    for industry in industries
+                        option(value=industry._id,selected=industry._id==selected_client.industry_id
+                        )=industry.name
+
+
+            fieldset#product-fieldset
+                legend=l.lbl.products
+                for product in products
+                    label(for="product-#{product._id}")
+                        input(
+                        name='product_ids',
+                        type="checkbox",
+                        checked=selected_client.product_ids&&(selected_client.product_ids.match(product._id))
+                        id="product-#{product._id}",
+                        value=product._id)
+                        span=product.name
 

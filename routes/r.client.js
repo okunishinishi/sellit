@@ -2,6 +2,8 @@ var tek = require('tek'),
     copy = tek['meta']['copy'],
     db = require('../db'),
     Client = db.models['Client'],
+    util = require('../util'),
+    toIdMap = util['obj']['toIdMap'],
     Industry = db.models['Industry'],
     Product = db.models['Product'];
 
@@ -25,7 +27,15 @@ function findOne(_id, callback) {
  */
 function find(condition, limit, skip, callback) {
     return Client.findByCondition(condition,function (models) {
-        callback(models.splice(skip, limit));
+        Industry.findByCondition({}, function (industries) {
+            industries = toIdMap(industries);
+            var result = models.splice(skip, limit).map(function (model) {
+                var industry = industries[model.industry_id];
+                model.industry_name = industry && industry.name || '';
+                return model;
+            });
+            callback(result);
+        });
     }).limit(limit).skip(skip);
 }
 
@@ -49,6 +59,10 @@ exports.index = function (req, res) {
     }
     Industry.findAll(function (industries) {
         Product.findAll(function (products) {
+            var productIds = client.product_ids || [];
+            if (productIds instanceof Array) {
+                client.product_ids = productIds.join(',');
+            }
             res.render('client/index.jade', {
                 products: products,
                 industries: industries,

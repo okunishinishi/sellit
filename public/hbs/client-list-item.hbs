@@ -1,6 +1,5 @@
 <li class="client-list-item positioned">
     <a class="cover" data-role="detail-link" href="/client/{{_id}}"></a>
-
     <form class="inline-form" action="/api/client/save"
           method="post" name="edit-form">
         <input type="hidden" value="{{_id}}" name="_id"/>
@@ -8,6 +7,12 @@
                placeholder="{{l 'plh.client_name'}}"
                value="{{name}}"/>
     </form>
+
+    {{#if industry_name}}
+        <span class="label">{{industry_name}}</span>
+    {{/if}}
+
+
     <div class="stick-right stick-top block-list-item-control">
         <a href="javascript:void(0)" data-role='edit-btn'>
             <i class="icon icon-pencil"></i>
