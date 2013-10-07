@@ -42,6 +42,7 @@
             return section;
         },
         largeLogo: function () {
+            if (!Array.prototype.map) return;
             var logo = $(this),
                 text = logo.text() || '';
             logo.click(function () {
