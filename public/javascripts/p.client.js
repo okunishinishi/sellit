@@ -22,6 +22,9 @@
             $('select,input', form).change(function () {
                 form.submit();
             });
+            $('textarea').blur(function(){
+                form.submit();
+            });
             return form;
         },
         clientDetailSection: function () {

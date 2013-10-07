@@ -4,27 +4,39 @@ section#client-detail-section
         .paper-content
             input(type='hidden', name='_id', value=selected_client._id)
             h1
-                input(type='text', data-role='editable-text', name='name', value=selected_client.name)
+                input(type='text', data-role='editable-text', name='name', value=selected_client.name).full-width
 
 
-            div
-                label(for="industry-select")=l.lbl.industry
-                select#industry-select(name="industry_id")
-                    optoin(value="")="-- #{l.plh.industry} --"
-                    for industry in industries
-                        option(value=industry._id,selected=industry._id==selected_client.industry_id
-                        )=industry.name
+            div.half.float-left
+                table.wide-table
+                    tbody
+                        tr
+                            th
+                                label(for="industry-select")=l.lbl.industry
+                            td
+                                select#industry-select(name="industry_id")
+                                    optoin(value="")="-- #{l.plh.industry} --"
+                                    for industry in industries
+                                        option(value=industry._id,selected=industry._id==selected_client.industry_id
+                                        )=industry.name
+                        tr
+                            th
+                                label(for="description-input")=l.lbl.client_description
+                            td
+                                textarea.full-width#description-input(
+                                name="description",placeholder=l.plh.client_description)=selected_client.description
 
+            div.half.float-right
+                fieldset#product-fieldset
+                    legend=l.lbl.products
+                    for product in products
+                        label(for="product-#{product._id}")
+                            input(
+                            name='product_ids',
+                            type="checkbox",
+                            checked=selected_client.product_ids&&(selected_client.product_ids.match(product._id))
+                            id="product-#{product._id}",
+                            value=product._id)
+                            span=product.name
 
-            fieldset#product-fieldset
-                legend=l.lbl.products
-                for product in products
-                    label(for="product-#{product._id}")
-                        input(
-                        name='product_ids',
-                        type="checkbox",
-                        checked=selected_client.product_ids&&(selected_client.product_ids.match(product._id))
-                        id="product-#{product._id}",
-                        value=product._id)
-                        span=product.name
-
+            br.clear

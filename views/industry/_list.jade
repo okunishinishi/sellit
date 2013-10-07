@@ -1,10 +1,12 @@
 section.list-section#industry-list-section
     form#industry-list-form.block-list-header(
     data-role='search-form',action='/api/industry.json',method='get')
-        input(type='search', name='search_word')
+        label.title=l.lbl.industry
+        input(type='search', name='search_word').float-right
         input(type='hidden', name='skip', value='0')
         input(type='hidden', name='limit', value='500')
         input.btn(type='submit')=l.lbl.search
+        br.clear
     ul#industry_list.block-list
 
     a.add-btn.wide-btn#industry-add-btn(

@@ -9,14 +9,10 @@
 
 body {
   margin: 0 auto;
+  height:100%;
   padding: 20px 20px;
   .theme-clean(@base, @main, @accent);
-  &:after {
-    .cover(1);
-    background-image: url('../images/stockvault-japanese-kingin-tissue-paper---white146735.jpg');
-    z-index: -1;
-    opacity: 0.1;
-  }
+  background-image: url('../images/brickwall/brickwall.png');
   .btn-danger {
     .btn(#FF99AC);
   }
@@ -38,7 +34,19 @@ body {
       }
     }
   }
-
+  .block-list-header {
+    .border-radius(8px 8px 0 0);
+    padding: 10px 5px 10px;
+    background-image: none;
+    .black-back(0.2);
+  }
+  .title{
+    margin: 0 10px;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+    color: #888;
+  }
 }
 
 header {

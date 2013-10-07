@@ -37,6 +37,7 @@ lbl.understand = 'I understand consequences.';
 
 lbl.client = 'client';
 lbl.client_name = 'client name';
+lbl.client_description = 'description';
 lbl.products = 'products';
 lbl.industry = 'industry';
 
@@ -44,6 +45,7 @@ var plh = exports.plh = {};
 plh.search = lbl.search;
 plh.client_name = lbl.client_name;
 plh.industry = lbl.industry;
+plh.client_description = lbl.client_description;
 
 
 var alt = exports.alt = {};
