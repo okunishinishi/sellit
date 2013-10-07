@@ -15,7 +15,7 @@ section#client-detail-section
                                 label(for="industry-select")=l.lbl.industry
                             td
                                 select#industry-select(name="industry_id")
-                                    optoin(value="")="-- #{l.plh.industry} --"
+                                    option(value="") -- #{l.plh.industry} --
                                     for industry in industries
                                         option(value=industry._id,selected=industry._id==selected_client.industry_id
                                         )=industry.name
