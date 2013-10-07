@@ -33,7 +33,11 @@ function program1(depth0,data) {
   if (stack1 = helpers._id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0._id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\"></a>\n\n    <span class=\"float-left rank-label\">";
+    + "\"></a>\n\n    <span class=\"float-left rank-label\" style=\"background-color: ";
+  if (stack1 = helpers.rank_color) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.rank_color; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">";
   if (stack1 = helpers.rank_name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.rank_name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)

@@ -2,7 +2,7 @@
  * Created by okunishitaka on 10/7/13.
  */
 var util = require('../../../util/u.obj'),
-    toIdMap = util['obj']['toIdMap'],
+    toIdMap = util['toIdMap'],
     should = require('should');
 
 exports.toIdMapTest = function (test) {

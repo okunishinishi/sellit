@@ -37,6 +37,7 @@ function find(condition, limit, skip, callback) {
                     rank = ranks[model.rank_id];
                 model.industry_name = industry && industry.name || '';
                 model.rank_name = rank && rank.name || '';
+                model.rank_color = rank && rank.color || '#AAA';
                 return model;
             });
             callback(result);

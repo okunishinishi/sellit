@@ -20,6 +20,7 @@
         "revalidator": "*",
         "tek": "*",
         "tek-web": "*",
-        "sqlite3": "*"
+        "sqlite3": "*",
+        "onecolor":"*"
     }
 }
