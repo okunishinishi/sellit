@@ -9,8 +9,10 @@ var excelbuilder = require('msexcel-builder'),
     models = db['models'],
     Client = models['Client'],
     Industry = models['Industry'],
+    findAllModels = util['mdl']['findAllModels'],
     l = require('../locale')['en'],
     Product = models['Product'],
+    Rank = models['Rank'],
     resolve = require('path')['resolve'];
 
 
@@ -19,30 +21,32 @@ exports.csvData = function (callback) {
         clients: [],
         products: []
     };
-    Industry.findAll(function (industries) {
-        var industryMap = toIdMap(industries);
-        Product.findAll(function (products) {
-            products.forEach(function (product) {
-                var line = [product.name];
-                result.products.push(line);
-            });
-            var productMap = toIdMap(products);
-            Client.findAll(function (clients) {
-                result.clients.push([
-                    l.lbl.client,
-                    l.lbl.industry
-                ]);
-                result.clients = result.clients.concat(
-                    clients.map(function (client) {
-                        var industry = industryMap[client.industry_id];
-                        return [
-                            client.name,
-                            industry && industry.name || ''
-                        ];
-                    })
-                );
-                callback(result);
-            });
+    findAllModels([Industry, Product, Rank], function (industries, products, ranks) {
+        var industryMap = toIdMap(industries),
+            ranksMap = toIdMap(ranks);
+        products.forEach(function (product) {
+            var line = [product.name];
+            result.products.push(line);
+        });
+        var productMap = toIdMap(products);
+        Client.findAll(function (clients) {
+            result.clients.push([
+                l.lbl.client,
+                l.lbl.industry,
+                l.lbl.rank
+            ]);
+            result.clients = result.clients.concat(
+                clients.map(function (client) {
+                    var industry = industryMap[client.industry_id],
+                        rank = ranksMap[client.rank_id];
+                    return [
+                        client.name,
+                        industry && industry.name || '',
+                        rank && rank.name || ''
+                    ];
+                })
+            );
+            callback(result);
         });
     });
 };
@@ -63,6 +67,7 @@ exports.generateWorkbook = function (dirpath, filename, callback) {
                     var col = j + 1,
                         row = i + 1;
                     sheet.set(col, row, data);
+                    sheet.width(col, 24);
                     sheet.border(col, row, {left: 'thin', top: 'thin', right: 'thin', bottom: 'thin'});
                 });
             });

@@ -4,6 +4,7 @@ var tek = require('tek'),
     Client = db.models['Client'],
     util = require('../util'),
     toIdMap = util['obj']['toIdMap'],
+    findAllModels = util['mdl']['findAllModels'],
     Industry = db.models['Industry'],
     Product = db.models['Product'],
     Rank = db.models['Rank'];
@@ -28,19 +29,17 @@ function findOne(_id, callback) {
  */
 function find(condition, limit, skip, callback) {
     return Client.findByCondition(condition,function (models) {
-        Industry.findByCondition({}, function (industries) {
-            Rank.findByCondition({}, function (ranks) {
-                ranks = toIdMap(ranks);
-                industries = toIdMap(industries);
-                var result = models.splice(skip, limit).map(function (model) {
-                    var industry = industries[model.industry_id],
-                        rank = ranks[model.rank_id];
-                    model.industry_name = industry && industry.name || '';
-                    model.rank_name = rank && rank.name || '';
-                    return model;
-                });
-                callback(result);
+        findAllModels([Industry, Rank], function (industries, ranks) {
+            ranks = toIdMap(ranks);
+            industries = toIdMap(industries);
+            var result = models.splice(skip, limit).map(function (model) {
+                var industry = industries[model.industry_id],
+                    rank = ranks[model.rank_id];
+                model.industry_name = industry && industry.name || '';
+                model.rank_name = rank && rank.name || '';
+                return model;
             });
+            callback(result);
         });
     }).limit(limit).skip(skip);
 }
@@ -63,22 +62,17 @@ exports.index = function (req, res) {
         notFound(res);
         return;
     }
-    Industry.findAll(function (industries) {
-        Product.findAll(function (products) {
-            Rank.findAll(function (ranks) {
-                var productIds = client.product_ids || [];
-                if (productIds instanceof Array) {
-                    client.product_ids = productIds.join(',');
-                }
-                res.render('client/index.jade', {
-                    products: products,
-                    industries: industries,
-                    ranks: ranks,
-                    selected_client: client
-                });
-            });
+    findAllModels([Industry, Product, Rank], function (industries, products, ranks) {
+        var productIds = client.product_ids || [];
+        if (productIds instanceof Array) {
+            client.product_ids = productIds.join(',');
+        }
+        res.render('client/index.jade', {
+            products: products,
+            industries: industries,
+            ranks: ranks,
+            selected_client: client
         });
-
     });
 };
 
