@@ -108,7 +108,7 @@ app.all('*', function (req, res, next) {
         fs.readdirSync(dirpath).reverse().forEach(function (filename, i) {
             if (filename.match(/^\./)) return;
             var filepath = resolve(dirpath, filename);
-            if (backup.max_count-1 <= i) {
+            if (backup.max_count - 1 <= i) {
                 fs.unlinkSync(filepath);
             }
         });

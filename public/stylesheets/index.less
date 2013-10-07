@@ -15,6 +15,7 @@ body {
   color: lighten(@black, 30);
   .etched(0.5);
   line-height: 1em;
+  cursor: default;
 }
 
 body{
@@ -42,5 +43,13 @@ li {
   .label {
     margin-left: 20px;
 
+  }
+}
+
+.hop{
+  position: relative;
+  &:hover{
+    top:-2px;
+    opacity: 0.9;
   }
 }

@@ -15,7 +15,7 @@
                         editForm = li.findByName('edit-form'),
                         detailLink = li.findByRole('detail-link');
                     detailLink.attr({
-                        href:'/client/' + editForm.findByName('_id').val()
+                        href: '/client/' + editForm.findByName('_id').val()
                     });
                 })
                 .destroyableListItem(true)
@@ -40,6 +40,18 @@
                 ul.clientList(data);
             }).submit();
             return section;
+        },
+        largeLogo: function () {
+            var logo = $(this),
+                text = logo.text() || '';
+            logo.click(function () {
+                location.reload && location.reload();
+            });
+            var html = text.split('').map(function (t) {
+                return "<span class='hop'>" + t + "</span>";
+            }).join('');
+            logo.html(html);
+            return logo;
         }
     });
 
@@ -47,5 +59,7 @@
         var body = $(document.body);
 
         $('#client-list-section', body).clientListSection();
+
+        $('#large-logo').largeLogo();
     });
 })(jQuery);

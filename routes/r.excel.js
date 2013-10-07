@@ -7,6 +7,7 @@ var excelbuilder = require('msexcel-builder'),
     util = require('../util'),
     toIdMap = util['obj']['toIdMap'],
     models = db['models'],
+    teK = require('tek'),
     Client = models['Client'],
     Industry = models['Industry'],
     findAllModels = util['mdl']['findAllModels'],
@@ -38,12 +39,16 @@ exports.csvData = function (callback) {
             result.clients = result.clients.concat(
                 clients.map(function (client) {
                     var industry = industryMap[client.industry_id],
-                        rank = ranksMap[client.rank_id];
+                        rank = ranksMap[client.rank_id],
+                        product_ids = client.product_ids || '';
+                    if (product_ids instanceof Array) {
+                        product_ids = product_ids.join(',');
+                    }
                     return [
                         client.name,
                         industry && industry.name || '',
                         rank && rank.name || ''
-                    ];
+                    ]
                 })
             );
             callback(result);
@@ -61,12 +66,16 @@ exports.generateWorkbook = function (dirpath, filename, callback) {
         Object.keys(csvData).forEach(function (sheetName) {
             var data = csvData[sheetName];
             if (!data.length) return;
-            var sheet = workbook.createSheet(sheetName, data[0].length + 2, data.length + 2);
+            var rows = data.length + 2,
+                cols = teK.math.max(data.map(function (data) {
+                    return data.length || 0
+                })) + 2;
+            var sheet = workbook.createSheet(sheetName, cols, rows);
             data.forEach(function (data, i) {
                 data.forEach(function (data, j) {
                     var col = j + 1,
                         row = i + 1;
-                    sheet.set(col, row, data);
+                    sheet.set(col, row, data || '');
                     sheet.width(col, 24);
                     sheet.border(col, row, {left: 'thin', top: 'thin', right: 'thin', bottom: 'thin'});
                 });

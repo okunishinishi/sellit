@@ -22,9 +22,20 @@
             $('select,input', form).change(function () {
                 form.submit();
             });
-            $('textarea').blur(function(){
-                form.submit();
-            });
+            $('textarea')
+                .blur(function () {
+                    form.submit();
+                })
+                .keypress(function (e) {
+                    var KEY_CODE = $.ui.keyCode;
+                    switch (e.keyCode) {
+                        case KEY_CODE.ENTER:
+                            if (e.metaKey || e.ctrlKey) {
+                                form.submit();
+                            }
+                            break;
+                    }
+                });
             return form;
         },
         clientDetailSection: function () {
