@@ -1,0 +1,15 @@
+extends ../layout
+
+block stylesheets
+    link(rel='stylesheet', href='/stylesheets/master.css')
+
+block javascripts
+    script(src='/javascripts/p.master.js')
+    script(src='/javascripts/p.product.js')
+
+block content
+
+    section
+        include ../product/_list
+
+

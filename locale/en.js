@@ -37,14 +37,11 @@ lbl.search = 'search';
 lbl.understand = 'I understand consequences.';
 
 lbl.client_name = 'client name';
-lbl.department = 'department';
 lbl.products = 'products';
-lbl.department_name = [lbl.department, 'name'].join(' ');
 
 var plh = exports.plh = {};
 plh.search = lbl.search;
 plh.client_name = lbl.client_name;
-plh.department_name = lbl.department_name;
 
 
 var alt = exports.alt = {};

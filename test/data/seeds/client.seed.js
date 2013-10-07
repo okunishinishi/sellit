@@ -8,7 +8,8 @@ module.exports = {
     entries: [
         {
             _id: "${padZero(rownum, 24)}",
-            name: '${flower}${choice("商事,コーポレーション,株式会社,グループ".split(","))}'
+            name: '${flower}${choice("商事,コーポレーション,株式会社,グループ".split(","))}',
+            product_ids: "2${padZero(parseInt(rownum/4), 23)},2${padZero(parseInt(rownum/3), 23)}"
         }.repeat(10)
     ]
 };

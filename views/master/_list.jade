@@ -1,0 +1,12 @@
+section.list-section#__model_name__-list-section
+    form#__model_name__-list-form.block-list-header(
+    data-role='search-form',action='/api/__model_name__.json',method='get')
+        input(type='search', name='search_word')
+        input(type='hidden', name='skip', value='0')
+        input(type='hidden', name='limit', value='500')
+        input.btn(type='submit')=l.lbl.search
+    ul#__model_name___list.block-list
+
+    a.add-btn.wide-btn#__model_name__-add-btn(
+    href='javascript:void(0)', data-role='add-btn')
+        | #{l.btn.new}

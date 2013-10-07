@@ -35,13 +35,6 @@ post('/api/client/destroy', client.api.destroy);
 get('/api/client.json', client.api.list);
 get('/api/client/:_id', client.api.one);
 
-var department = r['department'];
-get('/department', department.index);
-post('/api/department/save', department.api.save);
-post('/api/department/destroy', department.api.destroy);
-get('/api/department.json', department.api.list);
-get('/api/department/:_id', department.api.one);
-
 var product = r['product'];
 get('/product', product.index);
 post('/api/product/save', product.api.save);
@@ -51,3 +44,6 @@ get('/api/product/:_id', product.api.one);
 
 var excel = r['excel'];
 get('/excel/download', excel.download);
+
+var master = r['master'];
+get('/master', master.index);

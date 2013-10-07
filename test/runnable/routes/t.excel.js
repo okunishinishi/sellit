@@ -3,6 +3,7 @@ var should = require('should'),
 
 exports.csvDataTest = function (test) {
     route.csvData(function (data) {
+        console.log(data);
         should.exist(data);
         test.done();
     });
