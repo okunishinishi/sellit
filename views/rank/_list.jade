@@ -1,0 +1,12 @@
+section.list-section#rank-list-section
+    form#rank-list-form.block-list-header(
+    data-role='search-form',action='/api/rank.json',method='get')
+        input(type='search', name='search_word')
+        input(type='hidden', name='skip', value='0')
+        input(type='hidden', name='limit', value='500')
+        input.btn(type='submit')=l.lbl.search
+    ul#rank_list.block-list
+
+    a.add-btn.wide-btn#rank-add-btn(
+    href='javascript:void(0)', data-role='add-btn')
+        | #{l.btn.new}

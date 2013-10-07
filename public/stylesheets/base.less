@@ -9,7 +9,8 @@
 
 body {
   margin: 0 auto;
-  height:100%;
+  height: 100%;
+  font-siz:18px;
   padding: 20px 20px;
   .theme-clean(@base, @main, @accent);
   background-image: url('../images/brickwall/brickwall.png');
@@ -40,7 +41,7 @@ body {
     background-image: none;
     .black-back(0.2);
   }
-  .title{
+  .title {
     margin: 0 10px;
     font-size: 1.5em;
     font-weight: bold;
@@ -219,4 +220,16 @@ header {
   padding: 2px 4px;
   .rotate(10deg);
   margin: 0 5px;
+}
+
+.rank-label {
+  display: inline-block;
+  padding: 4px 6px;
+  font-weight: bold;
+  font-size: 0.75em;
+  .border-radius(50%);
+  @back: lighten(@black, 10);
+  margin: 0 10px;
+  background-color: fadeout(@back, 60);
+  color: @white;
 }

@@ -33,7 +33,11 @@ function program1(depth0,data) {
   if (stack1 = helpers._id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0._id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\"></a>\n    <form class=\"inline-form\" action=\"/api/client/save\"\n          method=\"post\" name=\"edit-form\">\n        <input type=\"hidden\" value=\"";
+    + "\"></a>\n\n    <span class=\"float-left rank-label\">";
+  if (stack1 = helpers.rank_name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.rank_name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "</span>\n\n    <form class=\"inline-form\" action=\"/api/client/save\"\n          method=\"post\" name=\"edit-form\">\n        <input type=\"hidden\" value=\"";
   if (stack1 = helpers._id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0._id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -167,6 +171,35 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
     + "\"/>\n    </form>\n    <div class=\"stick-right stick-top block-list-item-control\">\n        <a href=\"javascript:void(0)\" data-role='edit-btn'>\n            <i class=\"icon icon-pencil\"></i>\n        </a>\n\n        <form class=\"inline-form\" action=\"/api/product/destroy\"\n              method=\"post\" name=\"destroy-form\">\n            <input type=\"hidden\" value=\"";
+  if (stack1 = helpers._id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0._id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" name=\"_id\"/>\n            <a href=\"javascript:void(0)\" data-role='submit-btn'>\n                <i class=\"icon icon-trash\"></i>\n            </a>\n        </form>\n    </div>\n</li>";
+  return buffer;
+  }
+	);
+})();(function() {
+	var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
+	templates['rank-list-item'] = template(
+	function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<li class=\"rank-list-item positioned\">\n    <a class=\"cover\" data-role=\"detail-link\" href=\"/rank/?_id=";
+  if (stack1 = helpers._id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0._id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\"></a>\n    <form class=\"inline-form\" action=\"/api/rank/save\"\n          method=\"post\" name=\"edit-form\">\n        <input type=\"hidden\" value=\"";
+  if (stack1 = helpers._id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0._id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" name=\"_id\"/>\n        <input type=\"text\" data-role=\"editable-text\" name=\"name\" value=\"";
+  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\"/>\n    </form>\n    <div class=\"stick-right stick-top block-list-item-control\">\n        <a href=\"javascript:void(0)\" data-role='edit-btn'>\n            <i class=\"icon icon-pencil\"></i>\n        </a>\n\n        <form class=\"inline-form\" action=\"/api/rank/destroy\"\n              method=\"post\" name=\"destroy-form\">\n            <input type=\"hidden\" value=\"";
   if (stack1 = helpers._id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0._id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)

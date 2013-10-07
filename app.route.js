@@ -54,3 +54,10 @@ post('/api/industry/save', industry.api.save);
 post('/api/industry/destroy', industry.api.destroy);
 get('/api/industry.json', industry.api.list);
 get('/api/industry/:_id', industry.api.one);
+
+var rank = r['rank'];
+get('/rank', rank.index);
+post('/api/rank/save', rank.api.save);
+post('/api/rank/destroy', rank.api.destroy);
+get('/api/rank.json', rank.api.list);
+get('/api/rank/:_id', rank.api.one);

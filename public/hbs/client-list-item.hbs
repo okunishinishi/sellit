@@ -1,5 +1,8 @@
 <li class="client-list-item positioned">
     <a class="cover" data-role="detail-link" href="/client/{{_id}}"></a>
+
+    <span class="float-left rank-label">{{rank_name}}</span>
+
     <form class="inline-form" action="/api/client/save"
           method="post" name="edit-form">
         <input type="hidden" value="{{_id}}" name="_id"/>

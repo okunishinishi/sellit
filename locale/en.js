@@ -40,12 +40,14 @@ lbl.client_name = 'client name';
 lbl.client_description = 'description';
 lbl.products = 'products';
 lbl.industry = 'industry';
+lbl.rank = 'rank';
 
 var plh = exports.plh = {};
 plh.search = lbl.search;
 plh.client_name = lbl.client_name;
 plh.industry = lbl.industry;
 plh.client_description = lbl.client_description;
+plh.rank = lbl.rank;
 
 
 var alt = exports.alt = {};
