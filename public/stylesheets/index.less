@@ -18,9 +18,9 @@ body {
   cursor: default;
 }
 
-body{
-  .block-list{
-    li{
+body {
+  .block-list {
+    li {
       background-color: fadeout(@white, 4);
     }
   }
@@ -46,10 +46,24 @@ li {
   }
 }
 
-.hop{
+.hop {
   position: relative;
-  &:hover{
-    top:-2px;
+  &:hover {
+    top: -2px;
     opacity: 0.9;
   }
+}
+
+.rank-label {
+}
+
+.rank-label-container {
+  display: inline-block;
+  position: relative;
+  top: 6px;
+  min-width: 30px;
+}
+
+.block-list-item-control {
+  top: 9px;
 }

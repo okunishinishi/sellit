@@ -10,7 +10,7 @@
 body {
   margin: 0 auto;
   height: 100%;
-  font-siz:18px;
+  font-siz: 18px;
   padding: 20px 20px;
   .theme-clean(@base, @main, @accent);
   background-image: url('../images/brickwall/brickwall.png');
@@ -67,6 +67,13 @@ header {
     height: @h;
     float: right;
     .nav-item {
+      .icon {
+        display: inline-block;
+        opacity: 0.7;
+        position: relative;
+        top: 1px;
+        margin:0 4px;
+      }
       line-height: 18px;
       float: left;
       padding: 5px 10px;
@@ -218,18 +225,20 @@ header {
   color: darken(@white, 20);
   display: inline-block;
   padding: 2px 4px;
-  .rotate(10deg);
+  .rotate(5deg);
   margin: 0 5px;
+  position: relative;
+  top:-1px;
 }
 
 .rank-label {
   display: inline-block;
-  padding: 4px 6px;
+  padding: 4px 6px 3px;
+  margin:0;
   font-weight: bold;
   font-size: 0.75em;
   .border-radius(50%);
   @back: lighten(@black, 10);
-  margin: 0 10px;
   background-color: fadeout(@back, 60);
   color: @white;
 }
