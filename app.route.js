@@ -47,3 +47,10 @@ get('/excel/download', excel.download);
 
 var master = r['master'];
 get('/master', master.index);
+
+var industry = r['industry'];
+get('/industry', industry.index);
+post('/api/industry/save', industry.api.save);
+post('/api/industry/destroy', industry.api.destroy);
+get('/api/industry.json', industry.api.list);
+get('/api/industry/:_id', industry.api.one);

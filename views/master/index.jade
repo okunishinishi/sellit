@@ -5,11 +5,15 @@ block stylesheets
 
 block javascripts
     script(src='/javascripts/p.master.js')
+    script(src='/javascripts/p.industry.js')
     script(src='/javascripts/p.product.js')
 
 block content
 
     section
         include ../product/_list
+
+    section
+        include ../industry/_list
 
 

@@ -7,10 +7,9 @@ module.exports = {
     /** データ定義 **/
     entries: [
         {
-            _id: "${padZero(rownum, 24)}",
-            name: '${flower}${choice("商事,コーポレーション,株式会社,グループ".split(","))}',
-            industry:"5${padZero(rownum, 23)}",
+            _id: "5${padZero(rownum, 23)}",
+            name: '${atom}界',
             product_ids: "2${padZero(parseInt(rownum/4), 23)},2${padZero(parseInt(rownum/3), 23)}"
-        }.repeat(40)
+        }.repeat(10)
     ]
 };

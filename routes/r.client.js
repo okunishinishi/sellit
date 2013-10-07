@@ -2,6 +2,7 @@ var tek = require('tek'),
     copy = tek['meta']['copy'],
     db = require('../db'),
     Client = db.models['Client'],
+    Industry = db.models['Industry'],
     Product = db.models['Product'];
 
 /**
@@ -46,10 +47,13 @@ exports.index = function (req, res) {
         notFound(res);
         return;
     }
-    Product.findAll(function(products){
-        res.render('client/index.jade', {
-            products:products,
-            selected_client: client
+    Industry.findAll(function (industries) {
+        Product.findAll(function (products) {
+            res.render('client/index.jade', {
+                products: products,
+                industries: industries,
+                selected_client: client
+            });
         });
 
     });

@@ -5,6 +5,10 @@ section#client-detail-section.paper
         h1
             input(type='text', data-role='editable-text', name='name', value=selected_client.name)
 
+        select#industry-select
+            for industry in industries
+                option(value=industry._id)=industry.name
+
 
         fieldset#product-fieldset
             legend=l.lbl.products
