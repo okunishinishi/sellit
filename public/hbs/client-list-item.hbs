@@ -1,10 +1,11 @@
 <li class="client-list-item positioned">
-    <a class="cover" data-role="detail-link" href="/client/{{_id}}"></a>
+    <a class="cover" data-role="detail-link" href="/client/{{_id}}?t={{t}}"></a>
     <span class="rank-label-container">
         {{#if rank_name}}
-        <span class="float-left rank-label" style="background-color: {{rank_color}}">{{rank_name}}</span>
+            <span class="float-left rank-label" style="background-color: {{rank_color}}">{{rank_name}}</span>
         {{/if}}
     </span>
+
     <form class="inline-form" action="/api/client/save"
           method="post" name="edit-form">
         <input type="hidden" value="{{_id}}" name="_id"/>

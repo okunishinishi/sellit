@@ -22,7 +22,11 @@
                 .editableListItem();
         },
         clientList: function (data) {
+            var t = new Date().getTime();
             var ul = $(this);
+            data && data.forEach(function (date) {
+                date.t = t;
+            });
             ul.htmlHandlebars(tmpl.li, data)
                 .find('li')
                 .clientListItem();

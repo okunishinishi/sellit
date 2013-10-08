@@ -21,7 +21,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\n        <span class=\"float-left rank-label\" style=\"background-color: ";
+  buffer += "\n            <span class=\"float-left rank-label\" style=\"background-color: ";
   if (stack1 = helpers.rank_color) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.rank_color; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -48,10 +48,14 @@ function program3(depth0,data) {
   if (stack1 = helpers._id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0._id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
+    + "?t=";
+  if (stack1 = helpers['t']) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0['t']; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
     + "\"></a>\n    <span class=\"rank-label-container\">\n        ";
   stack1 = helpers['if'].call(depth0, depth0.rank_name, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n    </span>\n    <form class=\"inline-form\" action=\"/api/client/save\"\n          method=\"post\" name=\"edit-form\">\n        <input type=\"hidden\" value=\"";
+  buffer += "\n    </span>\n\n    <form class=\"inline-form\" action=\"/api/client/save\"\n          method=\"post\" name=\"edit-form\">\n        <input type=\"hidden\" value=\"";
   if (stack1 = helpers._id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0._id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
