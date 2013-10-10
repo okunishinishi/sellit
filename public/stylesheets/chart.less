@@ -1,1 +1,19 @@
 @import "lib/tek";
+
+.sortable-th {
+  cursor: pointer;
+  .icon-chevron-down,
+  .icon-chevron-up {
+    display: none;
+  }
+  &.desc {
+    .icon-chevron-up {
+      display: inline-block;
+    }
+  }
+  &.asc {
+    .icon-chevron-down {
+      display: inline-block;
+    }
+  }
+}
