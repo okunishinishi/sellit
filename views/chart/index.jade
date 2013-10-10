@@ -8,9 +8,12 @@ block javascripts
 
 block content
 
-    h1=l.lbl.chart_table
-
     table#chart-list-table.stripe-table
+        caption
+            span.center-lbl=l.lbl.chart_table
+            small.float-right.count-label
+                span=l.lbl.data_count
+                b=rows.length
         thead
             tr
                 th=l.lbl.client_name

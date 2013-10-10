@@ -65,17 +65,28 @@
         chartListTable: function () {
             var table = $(this),
                 thead = table.find('thead'),
-                tbody = table.find('tbody');
-            var headRow = $('tr', thead);
+                tbody = table.find('tbody'),
+                maxCol = 0;
             $('tr', tbody).each(function () {
                 var tr = $(this),
-                    size = tr.find('th,td').size();
-                var larger = size - headRow.find('th,td').size();
-                if (larger > 0) {
-                    var cell = headRow.find('th,td').last(),
-                        colspan = parseInt(cell.attr("colspan") || 1);
-                    cell.attr('colspan', colspan + larger);
-
+                    col = tr.find('th,td').size();
+                if (maxCol < col) {
+                    maxCol = col;
+                }
+            });
+            $('tr', thead).each(function () {
+                var tr = $(this);
+                var cell = tr.find('th,td').last(),
+                    colspan = parseInt(cell.attr("colspan") || 1);
+                if (colspan < maxCol) {
+                    cell.attr('colspan', maxCol - colspan);
+                }
+            });
+            $('tr', tbody).each(function () {
+                var tr = $(this),
+                    cols = tr.find('th,td').size();
+                for(var i=cols;i<maxCol; i++){
+                    tr.append('<td></td>');
                 }
             });
             table.sortableTable();

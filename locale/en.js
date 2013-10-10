@@ -43,6 +43,7 @@ lbl.products = 'products';
 lbl.industry = 'industry';
 lbl.rank = 'rank';
 lbl.chart_table = 'list data';
+lbl.data_count = 'count: ';
 
 var plh = exports.plh = {};
 plh.search = lbl.search;
