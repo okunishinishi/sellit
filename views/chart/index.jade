@@ -1,0 +1,19 @@
+extends ../layout
+
+block stylesheets
+    link(rel='stylesheet', href='/stylesheets/chart.css')
+
+block javascripts
+    script(src='/javascripts/p.chart.js')
+
+block content
+
+
+    table
+        thead
+        tbody
+            for row in rows
+                tr
+                    for data in row
+                        td=data
+

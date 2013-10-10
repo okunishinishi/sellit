@@ -61,3 +61,7 @@ post('/api/rank/save', rank.api.save);
 post('/api/rank/destroy', rank.api.destroy);
 get('/api/rank.json', rank.api.list);
 get('/api/rank/:_id', rank.api.one);
+
+
+var chart = r['chart'];
+get('/chart', chart.index);
