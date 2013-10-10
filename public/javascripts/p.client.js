@@ -13,36 +13,27 @@
     };
     $.fn.extend({
         clientDetailForm: function () {
-            var form = $(this);
+            var form = $(this),
+                msgBalloon = $('#save-done-msg', form)
+                    .hide()
+                ;
+            msgBalloon.click(function(){
+                msgBalloon.fadeOut();
+            });
             form.ajaxForm(function () {
-
+                msgBalloon.show();
             });
             form.findByRole('editable-text')
                 .editableText();
-            $('select,input', form).change(function () {
-                form.submit();
+            $('input,select,textarea', form).not(':submit').on("click change", function () {
+                msgBalloon.hide();
             });
-            $('textarea')
-                .blur(function () {
-                    form.submit();
-                })
-                .keypress(function (e) {
-                    var KEY_CODE = $.ui.keyCode;
-                    switch (e.keyCode) {
-                        case KEY_CODE.ENTER:
-                            if (e.metaKey || e.ctrlKey) {
-                                form.submit();
-                            }
-                            break;
-                    }
-                });
             return form;
         },
         clientDetailSection: function () {
             var section = $(this),
                 form = $('#client-detail-form', section);
             form.clientDetailForm();
-
             return section;
         },
         clientProductForm: function (data, callback) {

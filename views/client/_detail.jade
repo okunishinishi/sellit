@@ -1,52 +1,60 @@
 section#client-detail-section
     form#client-detail-form(method='post', action='/api/client/save'
-    ).posotioned.paper
-        .paper-content
-            input(type='hidden', name='_id', value=selected_client._id)
-            h1
-                input(type='text', data-role='editable-text', name='name', value=selected_client.name).full-width
+    )
+        .posotioned.paper
+            .paper-content
+                #save-done-msg.stick-right.stick-top
+                    .msg-balloon
+                        span=l.msg.save_done
+
+                input(type='hidden', name='_id', value=selected_client._id)
+                h1
+                    input(type='text', data-role='editable-text', name='name', value=selected_client.name).full-width
 
 
-            div.half.float-left
-                table.wide-table
-                    tbody
-                        tr
-                            th
-                                label(for="industry-select")=l.lbl.industry
-                            td
-                                select#industry-select(name="industry_id")
-                                    option(value="") -- #{l.plh.industry} --
-                                    for industry in industries
-                                        option(value=industry._id,selected=industry._id==selected_client.industry_id
-                                        )=industry.name
+                div.half.float-left
+                    table.wide-table
+                        tbody
+                            tr
+                                th
+                                    label(for="industry-select")=l.lbl.industry
+                                td
+                                    select#industry-select(name="industry_id")
+                                        option(value="") -- #{l.plh.industry} --
+                                        for industry in industries
+                                            option(value=industry._id,selected=industry._id==selected_client.industry_id
+                                            )=industry.name
 
-                        tr
-                            th
-                                label(for="rank-select")=l.lbl.rank
-                            td
-                                select#rank-select(name="rank_id")
-                                    option(value="") -- #{l.plh.rank} --
-                                    for rank in ranks
-                                        option(value=rank._id,selected=rank._id==selected_client.rank_id)=rank.name
+                            tr
+                                th
+                                    label(for="rank-select")=l.lbl.rank
+                                td
+                                    select#rank-select(name="rank_id")
+                                        option(value="") -- #{l.plh.rank} --
+                                        for rank in ranks
+                                            option(value=rank._id,selected=rank._id==selected_client.rank_id)=rank.name
 
-                        tr
-                            th
-                                label(for="description-input")=l.lbl.client_description
-                            td
-                                textarea.full-width#description-input(
-                                name="description",placeholder=l.plh.client_description)=selected_client.description
+                            tr
+                                th
+                                    label(for="description-input")=l.lbl.client_description
+                                td
+                                    textarea.full-width#description-input(
+                                    name="description",placeholder=l.plh.client_description)=selected_client.description
 
-            div.half.float-right
-                fieldset#product-fieldset
-                    legend=l.lbl.products
-                    for product in products
-                        label(for="product-#{product._id}")
-                            input(
-                            name='product_ids',
-                            type="checkbox",
-                            checked=selected_client.product_ids&&(selected_client.product_ids.match(product._id))
-                            id="product-#{product._id}",
-                            value=product._id)
-                            span=product.name
+                div.half.float-right
+                    fieldset#product-fieldset
+                        legend=l.lbl.products
+                        for product in products
+                            label(for="product-#{product._id}")
+                                input(
+                                name='product_ids',
+                                type="checkbox",
+                                checked=selected_client.product_ids&&(selected_client.product_ids.match(product._id))
+                                id="product-#{product._id}",
+                                value=product._id)
+                                span=product.name
 
-            br.clear
+                br.clear
+                br
+                input#save-btn.btn.wide-btn(type="submit", value=l.btn.save)
+

@@ -8,9 +8,16 @@ block javascripts
 
 block content
 
+    h1=l.lbl.chart_table
 
-    table
+    table#chart-list-table.stripe-table
         thead
+            tr
+                th=l.lbl.client_name
+                th=l.lbl.rank
+                th=l.lbl.industry
+                th=l.lbl.products
+
         tbody
             for row in rows
                 tr

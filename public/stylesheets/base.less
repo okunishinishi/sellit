@@ -33,6 +33,14 @@ body {
           background-color: @back;
         }
       }
+      .icon {
+        .border-radius(50px);
+        &:hover {
+          @back: lighten(@yellow, 10);
+          background-color: @back;
+          .box-shadow(0 0 40px @back);
+        }
+      }
     }
   }
   .block-list-header {
@@ -47,6 +55,13 @@ body {
     font-weight: bold;
     text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
     color: #888;
+  }
+  .stripe-table {
+    tr:nth-child(odd) {
+      th, td {
+        background-color: darken(@white, 2);
+      }
+    }
   }
 }
 
@@ -72,7 +87,7 @@ header {
         opacity: 0.7;
         position: relative;
         top: 1px;
-        margin:0 4px;
+        margin: 0 4px;
       }
       line-height: 18px;
       float: left;
@@ -228,17 +243,31 @@ header {
   .rotate(5deg);
   margin: 0 5px;
   position: relative;
-  top:-1px;
+  top: -1px;
 }
 
 .rank-label {
   display: inline-block;
   padding: 4px 6px 3px;
-  margin:0;
+  margin: 0;
   font-weight: bold;
   font-size: 0.75em;
   .border-radius(50%);
   @back: lighten(@black, 10);
   background-color: fadeout(@back, 60);
   color: @white;
+}
+
+.msg-balloon {
+  padding: 5px 10px;
+  display: block;
+  .border-radius(4px);
+  .box-shadow(1px 1px 2px, 0.5);
+  .box-sizing(border-box);
+  text-align: center;
+  @back: #D2FFF4;
+  background-color: @back;
+  border: 4px solid darken(@back, 4);
+  width: 100%;
+  color: darken(@back, 40);
 }

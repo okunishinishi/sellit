@@ -19,7 +19,7 @@
                     });
                 })
                 .destroyableListItem(true)
-                .editableListItem();
+                .editableListItem('dblclick');
         },
         clientList: function (data) {
             var t = new Date().getTime();

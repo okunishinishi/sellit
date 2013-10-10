@@ -3,41 +3,29 @@
         li: Handlebars.templates['chart-list-item']
     };
     $.fn.extend({
-        chartSearchForm: function (callback) {
-            var form = $(this);
-            form.searchForm(callback);
-            return form;
-        },
-        chartListItem: function () {
-            return $(this)
-                .destroyableListItem()
-                .editableListItem();
-        },
-        chartList: function (data) {
-            var ul = $(this);
-            ul.htmlHandlebars(tmpl.li, data)
-                .find('li')
-                .chartListItem();
-            return ul;
-        },
-        chartListSection: function () {
-            var section = $(this),
-                addBtn = section.findByRole('add-btn'),
-                ul = section.find('ul'),
-                searchForm = section.findByRole('search-form');
-            ul.appendableList(tmpl.li, addBtn, function (li) {
-                li.chartListItem();
+        chartListTable: function () {
+            var table = $(this),
+                thead = table.find('thead'),
+                tbody = table.find('tbody');
+            var headRow = $('tr', thead);
+            $('tr', tbody).each(function () {
+                var tr = $(this),
+                    size = tr.find('th,td').size();
+                var larger = size - headRow.find('th,td').size();
+                if (larger > 0) {
+                    var cell = headRow.find('th,td').last(),
+                        colspan = parseInt(cell.attr("colspan") || 1);
+                    cell.attr('colspan', colspan + larger);
+
+                }
             });
-            searchForm.chartSearchForm(function (data) {
-                ul.chartList(data);
-            }).submit();
-            return section;
+            return table;
         }
     });
 
     $(function () {
         var body = $(document.body);
 
-        $('#chart-list-section', body).chartListSection();
+        $('#chart-list-table', body).chartListTable();
     });
 })(jQuery);

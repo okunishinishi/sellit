@@ -13,6 +13,7 @@ app.description = 'sales management system';
 var msg = exports.msg = {};
 msg.sure = 'Are ABSOLUTELY your sure?';
 msg.never_go_back = 'Once this done, there will be no way to go back.';
+msg.save_done ='save done!';
 
 
 var err = exports.err = {};
@@ -41,6 +42,7 @@ lbl.client_description = 'description';
 lbl.products = 'products';
 lbl.industry = 'industry';
 lbl.rank = 'rank';
+lbl.chart_table = 'list data';
 
 var plh = exports.plh = {};
 plh.search = lbl.search;

@@ -39,6 +39,7 @@ exports.index = function (req, res) {
                 industry && industry.name,
             ].concat(products)
         });
+
         res.render('chart/index.jade', {
             rows: rows
         });
