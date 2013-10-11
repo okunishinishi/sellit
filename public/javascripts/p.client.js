@@ -24,7 +24,6 @@
                             input = $('#' + label.attr('for'));
                         if (!input.size()) return;
                         var checked = input.is(':checked');
-                        console.log('checked', checked);
                         if (checked) {
                             label.show();
                         } else {

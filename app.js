@@ -9,13 +9,14 @@ var path = require('path'),
     db = require('./db'),
     express = require('express'),
     util = require('./util'),
+    config = require('./app.config'),
     locale = require('./locale');
 
 
 var app = express();
 
+//noinspection JSUnresolvedFunction
 app.configure('all', function () {
-    var config = require('./app.config');
     Object.keys(config.set).forEach(function (key) {
         app.set(key, config.set[key]);
     });
@@ -27,16 +28,19 @@ app.configure('all', function () {
     app.use(app['router']);
 });
 
+//noinspection JSUnresolvedFunction
 app.configure('development', function () {
     var errorHandler = express['errorHandler'];
     app.use(errorHandler());
-
-    var config = require('./app.config');
 
     var hbs = require('./util/u.hbs');
     hbs.precompileAll(config.hbsDir, config.hbsTemplateFile, function () {
         console.log('precompile templates file:', config.hbsTemplateFile);
     });
+});
+
+app.locals({
+    version: config.package.version
 });
 
 app.all('*', function (req, res, next) {
@@ -85,7 +89,7 @@ app.all('*', function (req, res, next) {
 })(app.response.__proto__.render);
 
 
-(function (config) {
+(function () {
     var backup = config['backup'],
         db = config['db'];
     var tek = require('tek'),
@@ -128,7 +132,7 @@ app.all('*', function (req, res, next) {
     };
     setInterval(takeBackup, backup.interval);
     takeBackup();
-})(require('./app.config'));
+})();
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));

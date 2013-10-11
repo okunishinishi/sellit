@@ -1,10 +1,10 @@
 extends ../layout
 
 block stylesheets
-    link(rel='stylesheet', href='/stylesheets/client.css')
+    link(rel='stylesheet', href='/stylesheets/client.css?v=#{version}')
 
 block javascripts
-    script(src='/javascripts/p.client.js')
+    script(src='/javascripts/p.client.js?v=#{version}')
 
 block content
 

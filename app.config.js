@@ -43,3 +43,5 @@ exports.backup = {
     max_count: 3,
     dirpath: resolve(__dirname, 'backup')
 };
+
+exports.package = require('./package.json');

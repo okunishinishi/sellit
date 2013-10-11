@@ -1,10 +1,10 @@
 extends layout
 
 block stylesheets
-    link(rel='stylesheet', href='/stylesheets/index.css')
+    link(rel='stylesheet', href='/stylesheets/index.css?v=#{version}')
 
 block javascripts
-    script(src='/javascripts/p.index.js')
+    script(src='/javascripts/p.index.js?v=#{version}')
 
 block content
 
