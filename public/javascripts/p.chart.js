@@ -22,7 +22,7 @@
                 tr.find('th,td').each(function () {
                     var cell = $(this);
                     data.push({
-                        sort_num: cell.data('sort_num'),
+                        sort_num: cell.data('sort_num') || undefined,
                         text: cell.text() || '',
                         href: cell.find('a').attr('href')
                     });
@@ -44,18 +44,20 @@
                 data
                     .sort(function (a, b) {
                         var order = (asc ? 1 : -1);
-                        if (a[i].sort_num !== undefined) {
-                            return (a[i]['sort_num'] - b[i]['sort_num']) * order;
-                        } else {
-                            return a[i]['text'].localeCompare(b[i]['text']) * order;
+                        if (typeof(a[i].sort_num) === "undefined") {
+                            var sort = a[i]['text'].localeCompare(b[i]['text']) * order;
+                            if (sort) {
+                                return  sort;
+                            }
                         }
+                        return (a[i]['sort_num'] - b[i]['sort_num']) * order;
                     })
                     .forEach(function (data) {
                         var rowHtml = "<tr>";
                         data.forEach(function (data) {
                             var html = data.text;
                             if (data.href) html = '<a href="' + data.href + '">' + html + '</a>';
-                            rowHtml += ["<td data-sort_num='" + data.sort_num + "'>", html, "</td>"].join('');
+                            rowHtml += ["<td data-sort_num='" + (data.sort_num || '') + "'>", html, "</td>"].join('');
                         });
                         rowHtml += "</tr>";
                         bodyHTML += rowHtml;

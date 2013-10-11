@@ -40,7 +40,7 @@ exports.index = function (req, res) {
                 },
                 {
                     text: rank && rank.name,
-                    sort_num: rank && rank.sort_num
+                    sort_num: rank && rank.sort_num || ''
                 },
                 industry && industry.name
             ].concat(products)
