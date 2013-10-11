@@ -34,9 +34,10 @@ exports.index = function (req, res) {
                 return product && product.name;
             });
             return [
-                client.name,
+                {text: client.name,
+                    href: ['/client/' + client._id, 't='+res.locals.time].join('?')},
                 rank && rank.name,
-                industry && industry.name,
+                industry && industry.name
             ].concat(products)
         });
 

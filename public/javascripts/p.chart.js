@@ -20,9 +20,11 @@
                 var tr = $(this);
                 var data = [];
                 tr.find('th,td').each(function () {
-                    var cell = $(this),
-                        text = cell.text() || '';
-                    data.push(text);
+                    var cell = $(this);
+                    data.push({
+                        text: cell.text() || '',
+                        href: cell.find('a').attr('href')
+                    });
                 });
                 result.body.push(data);
             });
@@ -45,7 +47,9 @@
                     .forEach(function (data) {
                         var rowHtml = "<tr>";
                         data.forEach(function (data) {
-                            rowHtml += ["<td>", data , "</td>"].join('');
+                            var html = data.text;
+                            if (data.href) html = '<a href="' + data.href + '">' + html + '</a>';
+                            rowHtml += ["<td>", html, "</td>"].join('');
                         });
                         rowHtml += "</tr>";
                         bodyHTML += rowHtml;
@@ -85,7 +89,7 @@
             $('tr', tbody).each(function () {
                 var tr = $(this),
                     cols = tr.find('th,td').size();
-                for(var i=cols;i<maxCol; i++){
+                for (var i = cols; i < maxCol; i++) {
                     tr.append('<td></td>');
                 }
             });
