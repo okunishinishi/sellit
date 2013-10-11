@@ -1,14 +1,16 @@
 section#client-detail-section.positioned
-    a.float-right#edit-btn(href='javascript:void(0)')=l.btn.edit
+    a.float-right#edit-btn(href='javascript:void(0)')
+        i.icon.icon-pencil
+        sapn=l.btn.edit
     br.clear
+    #save-done-msg.stick-left.stick-top
+        .msg-balloon
+            span=l.msg.save_done
     form#client-detail-form(method='post', action='/api/client/save'
     )
         #client-detail-form-cover.cover
         .posotioned.paper
             .paper-content
-                #save-done-msg.stick-right.stick-top
-                    .msg-balloon
-                        span=l.msg.save_done
 
                 input(type='hidden', name='_id', value=selected_client._id)
                 h1

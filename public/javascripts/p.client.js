@@ -40,10 +40,10 @@
         clientDetailForm: function () {
             var form = $(this),
                 editBtn = $('#edit-btn'),
-                msgBalloon = $('#save-done-msg', form).hide(),
+                msgBalloon = $('#save-done-msg').hide(),
                 cover = $('#client-detail-form-cover', form);
-            cover.click(function () {
-                msgBalloon.hide();
+            cover.dblclick(function () {
+                editBtn.click();
             });
             form.ajaxForm(function () {
                 msgBalloon.show();
@@ -57,6 +57,10 @@
                 form.editableForm('edit');
                 msgBalloon.hide();
                 editBtn.hide();
+            });
+            msgBalloon.click(function (e) {
+                e.stopPropagation();
+                msgBalloon.hide();
             });
             form.editableForm('view');
 //            form.editableForm('edit'); //TODO remove
