@@ -15,7 +15,8 @@
         editableForm: function (mode) {
             var form = $(this);
             var editableText = form.findByRole('editable-text')
-                .editableText('dblclick');
+                .editableText('dblclick')
+                .off('change');
             var $checkable = $('.checkable-label', form);
             switch (mode) {
                 case 'view':
@@ -42,10 +43,11 @@
         clientDetailForm: function () {
             var form = $(this),
                 editBtn = $('#edit-btn'),
+                submitBtn = $(':submit', form),
                 msgBalloon = $('#save-done-msg').hide(),
                 cover = $('#client-detail-form-cover', form);
             cover
-                .click(function(){
+                .click(function () {
                     msgBalloon.hide();
                 })
                 .dblclick(function () {
@@ -55,6 +57,7 @@
                 msgBalloon.show();
                 editBtn.show();
                 form.editableForm('view');
+                submitBtn.removeAttr('disabled');
             });
             $('input,select,textarea', form).not(':submit').on("click change", function () {
                 msgBalloon.hide();
@@ -68,8 +71,10 @@
                 e.stopPropagation();
                 msgBalloon.hide();
             });
+            form.submit(function () {
+                submitBtn.attr('disabled', 'disabled');
+            });
             form.editableForm('view');
-//            form.editableForm('edit'); //TODO remove
             return form;
         },
         clientDetailSection: function () {

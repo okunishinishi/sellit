@@ -383,7 +383,7 @@
                         label.text(val).show();
                     })
                     .change(function () {
-//                        input.trigger('tk-editable-text-fix');
+                        input.trigger('tk-editable-text-fix');
                     });
                 if (input.val()) input.change();
             });
