@@ -71,7 +71,7 @@
          */
         editableListItem: function (trigger) {
             return this.each(function () {
-                var li = $(this);
+                var li = $(this).addClass('editable-list-item');
                 var editableTxt = li.findByRole('editable-text')
                     .editableText(trigger)
                     .change(function () {
@@ -85,15 +85,17 @@
                         if (data.valid) {
                             form.setFormValue(data.model);
                             form.trigger('edit-done');
+                            li.attr('data-on-edit', false);
                         }
                     });
                 li.findByRole('edit-btn').click(function () {
-                    var onEdit = editableTxt.filter(':visible');
-                    if (onEdit.length) {
+                    var onEdit = !!editableTxt.filter(':visible').length;
+                    if (onEdit) {
                         editableTxt.trigger('tk-editable-text-edit');
                     } else {
                         editableTxt.trigger('tk-editable-text-edit');
                     }
+                    li.attr('data-on-edit', !onEdit);
 
                 });
             });
@@ -135,6 +137,13 @@
             });
             $(':submit', form).hide();
             return form;
+        },
+        nav: function (key) {
+            var nav = $(this);
+            nav.findByAttr('key', key)
+                .addClass('active')
+                .siblings('active').removeClass('active');
+            return nav;
         }
     });
     $(function () {

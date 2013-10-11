@@ -5,7 +5,12 @@ block stylesheets
 
 block javascripts
     script(src='/javascripts/p.chart.js')
-
+    script.
+        (function($){
+            $(function(){
+                $('header nav').nav('list');
+            });
+        })(jQuery);
 block content
 
     table#chart-list-table.stripe-table

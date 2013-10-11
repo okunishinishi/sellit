@@ -8,6 +8,12 @@ block javascripts
     script(src='/javascripts/p.industry.js')
     script(src='/javascripts/p.product.js')
     script(src='/javascripts/p.rank.js')
+    script.
+        (function($){
+            $(function(){
+                $('header nav').nav('master');
+            });
+        })(jQuery);
 
 block content
 

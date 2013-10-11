@@ -73,15 +73,7 @@ function program3(depth0,data) {
   return buffer;
   }
 
-  buffer += "<li class=\"client-list-item positioned\">\n    <a class=\"cover\" data-role=\"detail-link\" href=\"/client/";
-  if (stack1 = helpers._id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0._id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "?t=";
-  if (stack1 = helpers['t']) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0['t']; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "\"></a>\n    <span class=\"rank-label-container\">\n        ";
+  buffer += "<li class=\"client-list-item positioned\">\n    <span class=\"rank-label-container\">\n        ";
   stack1 = helpers['if'].call(depth0, depth0.rank_name, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n    </span>\n\n    <form class=\"inline-form\" action=\"/api/client/save\"\n          method=\"post\" name=\"edit-form\">\n        <input type=\"hidden\" value=\"";
@@ -98,7 +90,15 @@ function program3(depth0,data) {
     + "\"/>\n    </form>\n\n    ";
   stack2 = helpers['if'].call(depth0, depth0.industry_name, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n\n\n    <div class=\"stick-right stick-top block-list-item-control\">\n        <a href=\"javascript:void(0)\" data-role='edit-btn'>\n            <i class=\"icon icon-pencil\"></i>\n        </a>\n\n        <form class=\"inline-form\" action=\"/api/client/destroy\"\n              method=\"post\" name=\"destroy-form\">\n            <input type=\"hidden\" value=\"";
+  buffer += "\n\n    <a class=\"cover\" data-role=\"detail-link\" href=\"/client/";
+  if (stack2 = helpers._id) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0._id; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
+    + "?t=";
+  if (stack2 = helpers['t']) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0['t']; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
+    + "\"></a>\n\n\n    <div class=\"stick-right stick-top block-list-item-control\">\n        <a href=\"javascript:void(0)\" data-role='edit-btn'>\n            <i class=\"icon icon-pencil\"></i>\n        </a>\n\n        <form class=\"inline-form\" action=\"/api/client/destroy\"\n              method=\"post\" name=\"destroy-form\">\n            <input type=\"hidden\" value=\"";
   if (stack2 = helpers._id) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0._id; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)

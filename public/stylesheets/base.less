@@ -96,11 +96,16 @@ header {
       line-height: 18px;
       float: left;
       padding: 5px 10px;
+      opacity: 0.8;
       &:hover {
-
+        opacity: 1;
       }
       &.active {
         background-image: none;
+        opacity: 1;
+        &:hover {
+          text-decoration: none;
+        }
       }
     }
   }
@@ -274,4 +279,13 @@ header {
   border: 4px solid darken(@back, 4);
   width: 100%;
   color: darken(@back, 40);
+}
+
+.editable-list-item {
+  &[data-on-edit="true"] {
+    [data-role="detail-link"] {
+      display: none;
+    }
+  }
+
 }
