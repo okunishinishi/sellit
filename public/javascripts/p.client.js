@@ -12,22 +12,55 @@
         departmentLi: Handlebars.templates['department-list-item']
     };
     $.fn.extend({
+        editableForm: function (mode) {
+            var form = $(this);
+            form.findByRole('editable-text')
+                .editableText('dblclick');
+            var $checkable = $('.checkable-label', form);
+            switch (mode) {
+                case 'view':
+                    $checkable.each(function () {
+                        var label = $(this),
+                            input = $('#' + label.attr('for'));
+                        if (!input.size()) return;
+                        var checked = input.is(':checked');
+                        console.log('checked', checked);
+                        if (checked) {
+                            label.show();
+                        } else {
+                            label.hide();
+                        }
+                    });
+                    break;
+                case 'edit':
+                    $checkable.show();
+                    break;
+            }
+            form.attr('data-mode', mode);
+        },
         clientDetailForm: function () {
             var form = $(this),
-                msgBalloon = $('#save-done-msg', form)
-                    .hide()
-                ;
-            msgBalloon.click(function(){
-                msgBalloon.fadeOut();
+                editBtn = $('#edit-btn'),
+                msgBalloon = $('#save-done-msg', form).hide(),
+                cover = $('#client-detail-form-cover', form);
+            cover.click(function () {
+                msgBalloon.hide();
             });
             form.ajaxForm(function () {
                 msgBalloon.show();
+                editBtn.show();
+                form.editableForm('view');
             });
-            form.findByRole('editable-text')
-                .editableText();
             $('input,select,textarea', form).not(':submit').on("click change", function () {
                 msgBalloon.hide();
             });
+            editBtn.click(function () {
+                form.editableForm('edit');
+                msgBalloon.hide();
+                editBtn.hide();
+            });
+            form.editableForm('view');
+//            form.editableForm('edit'); //TODO remove
             return form;
         },
         clientDetailSection: function () {

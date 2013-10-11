@@ -1,6 +1,9 @@
-section#client-detail-section
+section#client-detail-section.positioned
+    a.float-right#edit-btn(href='javascript:void(0)')=l.btn.edit
+    br.clear
     form#client-detail-form(method='post', action='/api/client/save'
     )
+        #client-detail-form-cover.cover
         .posotioned.paper
             .paper-content
                 #save-done-msg.stick-right.stick-top
@@ -39,13 +42,14 @@ section#client-detail-section
                                     label(for="description-input")=l.lbl.client_description
                                 td
                                     textarea.full-width#description-input(
+                                    data-role='editable-text',
                                     name="description",placeholder=l.plh.client_description)=selected_client.description
 
                 div.half.float-right
                     fieldset#product-fieldset
                         legend=l.lbl.products
                         for product in products
-                            label(for="product-#{product._id}")
+                            label.checkable-label(for="product-#{product._id}")
                                 input(
                                 name='product_ids',
                                 type="checkbox",
@@ -57,4 +61,5 @@ section#client-detail-section
                 br.clear
                 br
                 input#save-btn.btn.wide-btn(type="submit", value=l.btn.save)
+
 

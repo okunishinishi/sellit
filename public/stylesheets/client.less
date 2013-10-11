@@ -54,3 +54,27 @@ form.tk-loading {
   right: -20px;
 }
 
+#edit-btn {
+  margin-right: 5px;
+}
+
+#client-detail-form {
+  position: relative;
+  #client-detail-form-cover {
+    display: none;
+  }
+  &[data-mode="edit"] {
+    #client-detail-form-cover {
+      display: none;
+    }
+  }
+  &[data-mode="view"] {
+    #client-detail-form-cover {
+      display: block;
+    }
+    input, textarea {
+      display: none;
+    }
+  }
+}
+
