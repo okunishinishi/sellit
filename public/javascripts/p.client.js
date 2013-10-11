@@ -14,7 +14,7 @@
     $.fn.extend({
         editableForm: function (mode) {
             var form = $(this);
-            form.findByRole('editable-text')
+            var editableText = form.findByRole('editable-text')
                 .editableText('dblclick');
             var $checkable = $('.checkable-label', form);
             switch (mode) {
@@ -30,9 +30,11 @@
                             label.hide();
                         }
                     });
+                    editableText.trigger('tk-editable-text-fix');
                     break;
                 case 'edit':
                     $checkable.show();
+                    editableText.trigger('tk-editable-text-edit');
                     break;
             }
             form.attr('data-mode', mode);
@@ -42,9 +44,13 @@
                 editBtn = $('#edit-btn'),
                 msgBalloon = $('#save-done-msg').hide(),
                 cover = $('#client-detail-form-cover', form);
-            cover.dblclick(function () {
-                editBtn.click();
-            });
+            cover
+                .click(function(){
+                    msgBalloon.hide();
+                })
+                .dblclick(function () {
+                    editBtn.click();
+                });
             form.ajaxForm(function () {
                 msgBalloon.show();
                 editBtn.show();

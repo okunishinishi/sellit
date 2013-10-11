@@ -11,7 +11,7 @@
         productListItem: function () {
             return $(this)
                 .destroyableListItem()
-                .editableListItem();
+                .editableListItem("dblclick");
         },
         productList: function (data) {
             var ul = $(this);

@@ -11,7 +11,7 @@
         rankListItem: function () {
             return $(this)
                 .destroyableListItem()
-                .editableListItem();
+                .editableListItem("dblclick");
         },
         rankList: function (data) {
             var ul = $(this);

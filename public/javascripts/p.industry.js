@@ -11,7 +11,7 @@
         industryListItem: function () {
             return $(this)
                 .destroyableListItem()
-                .editableListItem();
+                .editableListItem("dblclick");
         },
         industryList: function (data) {
             var ul = $(this);
