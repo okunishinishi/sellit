@@ -9,17 +9,24 @@
             return form;
         },
         clientListItem: function () {
-            return $(this)
-                .on('edit-done', function () {
-                    var li = $(this),
-                        editForm = li.findByName('edit-form'),
-                        detailLink = li.findByRole('detail-link');
-                    detailLink.attr({
-                        href: '/client/' + editForm.findByName('_id').val()
-                    });
-                })
-                .destroyableListItem(true)
-                .editableListItem('dblclick');
+            return $(this).each(function () {
+                var li = $(this);
+                li
+                    .on('edit-done', function () {
+                        var li = $(this),
+                            editForm = li.findByName('edit-form'),
+                            detailLink = li.findByRole('detail-link');
+                        detailLink.attr({
+                            href: '/client/' + editForm.findByName('_id').val()
+                        });
+                    })
+                    .destroyableListItem(true)
+                    .editableListItem('dblclick');
+
+                $('.rank-label-container,.label', li).click(function () {
+                    location.href = li.findByRole('detail-link').attr('href');
+                });
+            });
         },
         clientList: function (data) {
             var t = new Date().getTime();
