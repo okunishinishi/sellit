@@ -8,7 +8,7 @@ section.list-section#product-list-section
         input(type='hidden', name='limit', value='500')
         input.btn(type='submit')=l.lbl.search
         br.clear
-    ul#product_list.block-list
+    ul#product_list.block-list(data-model="Product")
 
     a.add-btn.wide-btn#product-add-btn(
     href='javascript:void(0)', data-role='add-btn')

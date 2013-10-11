@@ -7,7 +7,7 @@ section.list-section#rank-list-section
         input(type='hidden', name='limit', value='500')
         input.btn(type='submit')=l.lbl.search
         br.clear
-    ul#rank_list.block-list
+    ul#rank_list.block-list(data-model="Rank")
 
     a.add-btn.wide-btn#rank-add-btn(
     href='javascript:void(0)', data-role='add-btn')

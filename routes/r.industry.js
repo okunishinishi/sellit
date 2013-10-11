@@ -77,7 +77,9 @@ exports.api = {
         }
 
         find(condition, limit, skip, function (models) {
-            res.json(models);
+            res.json(models.sort(function (a, b) {
+                return a.sort_num - b.sort_num;
+            }));
         });
     },
 

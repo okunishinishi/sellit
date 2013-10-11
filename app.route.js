@@ -47,6 +47,7 @@ get('/excel/download', excel.download);
 
 var master = r['master'];
 get('/master', master.index);
+post('/master/sort', master.sort);
 
 var industry = r['industry'];
 get('/industry', industry.index);

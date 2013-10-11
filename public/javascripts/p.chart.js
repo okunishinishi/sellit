@@ -22,6 +22,7 @@
                 tr.find('th,td').each(function () {
                     var cell = $(this);
                     data.push({
+                        sort_num: cell.data('sort_num'),
                         text: cell.text() || '',
                         href: cell.find('a').attr('href')
                     });
@@ -36,20 +37,25 @@
                 tbody = table.find('tbody');
             $('th', thead).addClass('sortable-th').click(function () {
                 var th = $(this),
-                    index = th.prevAll('th').size() || 0,
+                    i = th.prevAll('th').size() || 0,
                     asc = th.data('asc');
                 var data = table.tableData()['body'],
                     bodyHTML = '';
                 data
                     .sort(function (a, b) {
-                        return a[index].localeCompare(b[index]) * (asc ? 1 : -1);
+                        var order = (asc ? 1 : -1);
+                        if (a[i].sort_num !== undefined) {
+                            return (a[i]['sort_num'] - b[i]['sort_num']) * order;
+                        } else {
+                            return a[i]['text'].localeCompare(b[i]['text']) * order;
+                        }
                     })
                     .forEach(function (data) {
                         var rowHtml = "<tr>";
                         data.forEach(function (data) {
                             var html = data.text;
                             if (data.href) html = '<a href="' + data.href + '">' + html + '</a>';
-                            rowHtml += ["<td>", html, "</td>"].join('');
+                            rowHtml += ["<td data-sort_num='" + data.sort_num + "'>", html, "</td>"].join('');
                         });
                         rowHtml += "</tr>";
                         bodyHTML += rowHtml;

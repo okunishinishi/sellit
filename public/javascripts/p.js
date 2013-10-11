@@ -144,6 +144,30 @@
                 .addClass('active')
                 .siblings('active').removeClass('active');
             return nav;
+        },
+        sortableList: function (callback) {
+            var ul = $(this).addClass('sortable-list');
+            ul.sortable({
+                axis: 'y',
+                containment: "parent",
+                stop: function (e, ui) {
+                    var sorted = $(this);
+                    sorted.find('li').each(function (index) {
+                        var li = $(this),
+                            form = li.findByName('edit-form');
+                        var input = form.findByName('sort_num');
+                        if (!input.size()) {
+                            input = $('<input/>').attr({
+                                name: 'sort_num',
+                                type: 'hidden'
+                            }).appendTo(form);
+                        }
+                        input.val(index);
+                    });
+                    callback.call(sorted);
+                }
+            });
+            return ul;
         }
     });
     $(function () {

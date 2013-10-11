@@ -7,7 +7,7 @@ section.list-section#industry-list-section
         input(type='hidden', name='limit', value='500')
         input.btn(type='submit')=l.lbl.search
         br.clear
-    ul#industry_list.block-list
+    ul#industry_list.block-list(data-model="Industry")
 
     a.add-btn.wide-btn#industry-add-btn(
     href='javascript:void(0)', data-role='add-btn')
