@@ -47,6 +47,7 @@ app.all('*', function (req, res, next) {
     var Client = db.models.Client;
     Client.findByCondition({}, function (clients) {
         res.locals.clients = clients;
+        res.locals.time = new Date().getTime();
 
         //    var lang = util['lang'];
 //    res.locals.lang = lang.fromRequest(req);

@@ -23,8 +23,9 @@
                     .destroyableListItem(true)
                     .editableListItem('dblclick');
 
-                $('.rank-label-container,.label', li).click(function () {
-                    location.href = li.findByRole('detail-link').attr('href');
+                $('[name="edit-form"],.rank-label-container,.label', li).click(function () {
+                    var href = li.findByRole('detail-link').attr('href');
+                    if (href) location.href = href;
                 });
             });
         },
