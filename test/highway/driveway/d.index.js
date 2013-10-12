@@ -115,3 +115,11 @@ exports.goChart = function (rider, callback) {
         })
         .then(callback);
 };
+exports.goMaster = function (rider, callback) {
+    rider.findAllBySelector('header nav .nav-item')
+        .then(function (items) {
+            items[2].click()
+
+        })
+        .then(callback);
+};

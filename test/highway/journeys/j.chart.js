@@ -17,7 +17,7 @@ module.exports = define({
     },
     prototype: Journey,
     properties: {
-        _priority: 1000,
+        _priority: 10,
         takeoff: function (callback) {
             var s = this,
                 rider = s.rider,

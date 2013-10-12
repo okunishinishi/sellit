@@ -57,6 +57,10 @@ var prototype = {
                 return !found.match(className);
             });
         }, time || 1000);
+    },
+    acceptAlert: function () {
+        var rider = this;
+        rider.switchTo().alert().accept();
     }
 };
 

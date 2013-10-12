@@ -14,7 +14,7 @@ exports.doTest = function (test) {
                     Journey.journey_name = name;
                     return Journey;
                 }).sort(function (a, b) {
-                    return b._priority - a._priority;
+                    return b.prototype._priority - a.prototype._priority;
                 }).map(function (Journey) {
                     return function (next) {
                         var journey = new Journey().quiteDelay(100);
