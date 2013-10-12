@@ -18,7 +18,8 @@ module.exports = define({
         takeoff: function (callback) {
             var s = this,
                 rider = s.rider,
-                index = driveway.index;
+                index = driveway.index,
+                client = driveway.client;
             new JobQueue()
                 .push(function (next) {
                     index.goTop(rider, next);
@@ -32,9 +33,20 @@ module.exports = define({
                     });
                 })
                 .push(function (next) {
-                    index.addModel(rider, {name: 'やまだhighway'}, function () {
-                        next();
+                    index.addModel(rider, {name: 'やまだhighway'}, function (li) {
+                        index.goDetail(rider, li, function () {
+                            next();
+                        });
                     })
+                })
+                .push(function (next) {
+                    rider.getCurrentUrl().then(function (url) {
+                        client.editMode(rider, function(){
+
+                        });
+                        console.log('url', url);
+                        next();
+                    });
                 })
                 .execute(callback);
         }

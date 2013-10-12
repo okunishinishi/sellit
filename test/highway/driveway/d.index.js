@@ -13,6 +13,7 @@ exports.goTop = function (rider, callback) {
 };
 
 exports.addModel = function (rider, values, callback) {
+    var listItem = null;
     rider.findById('client-list-form')
         .then(function (form) {
             rider.waitToClassRemove(form, 'tk-loading')
@@ -20,19 +21,32 @@ exports.addModel = function (rider, values, callback) {
         .then(function () {
             rider.findById('client-add-btn').click();
             rider.findAllBySelector('ul#client_list li').then(function (li) {
-                var last = li[li.length - 1];
-                Object.keys(values).forEach(function (name) {
-                    var value = values[name],
-                        input = last.findByName(name);
-                    rider.setValue(input, value);
-                    input.sendKeys(Key.ENTER);
-                });
+                listItem = li[li.length - 1];
+                listItem.findByName('edit-form')
+                    .then(function (form) {
+                        Object.keys(values).forEach(function (name) {
+                            var value = values[name],
+                                input = form.findByName(name);
+                            rider.setValue(input, value);
+                            input.sendKeys(Key.ENTER);
+                        });
+                        return form;
+                    })
+                    .then(function (form) {
+                        rider.waitToClassRemove(form, 'tk-loading');
+                    });
             })
-                .then(function () {
-                    callback();
-                })
+        })
+        .then(function () {
+            callback(listItem);
         })
     ;
+};
+
+exports.goDetail = function (rider, li, callback) {
+    li.findBySelector('[data-role="detail-link"]').click().then(function () {
+        callback();
+    })
 };
 
 
