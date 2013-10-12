@@ -5,7 +5,7 @@ var tek = require('tek'),
     define = tek['meta']['define'];
 
 module.exports = define({
-    attrAccessor: "quiteDelay".split(','),
+    attrAccessor: "quiteDelay,priority".split(','),
     properties: {
         _quiteDelay: 5000,
         newRider: require('./new_rider'),

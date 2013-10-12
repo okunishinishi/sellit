@@ -49,6 +49,26 @@ exports.goDetail = function (rider, li, callback) {
     })
 };
 
+exports.destroyLastModel = function (rider, callback) {
+    rider.findById('client-list-form')
+        .then(function (form) {
+            rider.waitToClassRemove(form, 'tk-loading')
+        })
+        .then(function () {
+            rider.findAllBySelector('ul#client_list li').then(function (li) {
+                var last = li[li.length - 1];
+                last.findByName('destroy-form')
+                    .then(function (form) {
+                        form.findBySelector('[data-role="submit-btn"]').click();
+                        rider.findBySelector('[for="confirm-dialog-check"]').click();
+                        rider.findBySelector('.confirm-dialog form input[type="submit"]').click();
+                        rider.waitToClassRemove(form, 'tk-loading')
+                    })
+
+            })
+        })
+        .then(callback);
+};
 
 exports.searchClient = function (rider, searchWord, callback) {
     function waitFormLoading(form) {
@@ -60,14 +80,6 @@ exports.searchClient = function (rider, searchWord, callback) {
         return form;
     }
 
-    function waitUntilVisible(element) {
-        rider.wait(function () {
-            return element.isDisplayed().then(function (displayed) {
-                return displayed;
-            });
-        }, 1000);
-        return element;
-    }
 
     var result = [];
     rider.findById('client-list-form')
@@ -93,4 +105,13 @@ exports.searchClient = function (rider, searchWord, callback) {
                     callback && callback(result);
                 });
         })
+};
+
+exports.goChart = function (rider, callback) {
+    rider.findAllBySelector('header nav .nav-item')
+        .then(function (items) {
+            items[0].click()
+
+        })
+        .then(callback);
 };

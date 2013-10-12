@@ -15,6 +15,7 @@ module.exports = define({
     },
     prototype: Journey,
     properties: {
+        _priority: 10,
         takeoff: function (callback) {
             var s = this,
                 rider = s.rider,
@@ -48,7 +49,7 @@ module.exports = define({
                 .push(function (next) {
                     client.update(rider, {
                         name: '新しい名前',
-                        description: '更新されしdescription'
+                        description: '更新された描写'
                     }, function () {
                         client.goTop(rider, function () {
                             next();
@@ -56,7 +57,7 @@ module.exports = define({
                     });
                 })
                 .push(function (next) {
-                    next();
+                    index.destroyLastModel(rider, next);
                 })
                 .execute(callback);
         }
