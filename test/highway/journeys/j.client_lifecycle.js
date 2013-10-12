@@ -31,6 +31,11 @@ module.exports = define({
                         next();
                     });
                 })
+                .push(function (next) {
+                    index.addModel(rider, {name: 'やまだhighway'}, function () {
+                        next();
+                    })
+                })
                 .execute(callback);
         }
     }

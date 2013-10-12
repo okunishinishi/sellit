@@ -12,6 +12,30 @@ exports.goTop = function (rider, callback) {
     rider.get(url.top).then(callback);
 };
 
+exports.addModel = function (rider, values, callback) {
+    rider.findById('client-list-form')
+        .then(function (form) {
+            rider.waitToClassRemove(form, 'tk-loading')
+        })
+        .then(function () {
+            rider.findById('client-add-btn').click();
+            rider.findAllBySelector('ul#client_list li').then(function (li) {
+                var last = li[li.length - 1];
+                Object.keys(values).forEach(function (name) {
+                    var value = values[name],
+                        input = last.findByName(name);
+                    rider.setValue(input, value);
+                    input.sendKeys(Key.ENTER);
+                });
+            })
+                .then(function () {
+                    callback();
+                })
+        })
+    ;
+};
+
+
 exports.searchClient = function (rider, searchWord, callback) {
     function waitFormLoading(form) {
         rider.wait(function () {

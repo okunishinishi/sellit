@@ -49,6 +49,14 @@ var prototype = {
         var script = '$(arguments[0]).val(decodeURIComponent("' + encodeURIComponent(value) + '"));';
         return rider.executeScript(script, input);
         ;
+    },
+    waitToClassRemove: function (elm, className, time) {
+        var rider = this;
+        return rider.wait(function () {
+            return elm.getAttribute('class').then(function (found) {
+                return !found.match(className);
+            });
+        }, time || 1000);
     }
 };
 
