@@ -21,6 +21,7 @@ module.exports = define({
                 index = driveway.index,
                 client = driveway.client;
             new JobQueue()
+                .timeout(500000)
                 .push(function (next) {
                     index.goTop(rider, next);
                 })
@@ -40,12 +41,18 @@ module.exports = define({
                     })
                 })
                 .push(function (next) {
-                    rider.getCurrentUrl().then(function (url) {
-                        client.editMode(rider, function(){
-
-                        });
-                        console.log('url', url);
+                    client.editMode(rider, function () {
                         next();
+                    });
+                })
+                .push(function (next) {
+                    client.update(rider, {
+                        name: '新しい名前',
+                        description: '更新されしdescription'
+                    }, function () {
+                        client.goTop(rider, function () {
+                            next();
+                        });
                     });
                 })
                 .execute(callback);

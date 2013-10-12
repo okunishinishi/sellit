@@ -6,7 +6,7 @@ var journeys = require('./journeys'),
 
 exports.doTest = function (test) {
     new JobQueue()
-        .timeout(5000)
+        .timeout(50000)
         .pushAll(Object.keys(journeys).map(function (name) {
             var journey = new journeys[name]().quiteDelay(1000);
             return function (next) {
