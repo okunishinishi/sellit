@@ -4,7 +4,6 @@
 
 var url = require('./url'),
     webdriver = require('selenium-webdriver'),
-    should = require('should'),
     By = webdriver['By'],
     Key = webdriver['Key'];
 
@@ -13,7 +12,7 @@ exports.goTop = function (rider, callback) {
     rider.get(url.top).then(callback);
 };
 
-exports.addClient = function (rider, name, callback) {
+exports.searchClient = function (rider, searchWord, callback) {
     function waitFormLoading(form) {
         rider.wait(function () {
             return form.getAttribute('class').then(function (styleClass) {
@@ -32,12 +31,13 @@ exports.addClient = function (rider, name, callback) {
         return element;
     }
 
+    var result = [];
     rider.findById('client-list-form')
         .then(function (form) {
             waitFormLoading(form)
                 .then(function () {
                     rider.findByName('search_word').then(function (input) {
-                        rider.setValue(input, '商事');
+                        rider.setValue(input, searchWord);
                         form.submit();
                     });
                 });
@@ -46,11 +46,13 @@ exports.addClient = function (rider, name, callback) {
                     rider.findAllBySelector('.client-list-item').then(function (li) {
                         li.forEach(function (li) {
                             li.getText().then(function (text) {
-                                should.exist(text.match('商事'));
+                                result.push(text);
                             });
                         });
                     });
                 })
-                .then(callback);
+                .then(function () {
+                    callback && callback(result);
+                });
         })
 };

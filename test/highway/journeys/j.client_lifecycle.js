@@ -4,6 +4,7 @@
 var tek = require('tek'),
     define = tek['meta']['define'],
     driveway = require('../driveway'),
+    should = require('should'),
     JobQueue = tek['JobQueue'],
     Journey = require('./journey');
 
@@ -23,7 +24,12 @@ module.exports = define({
                     index.goTop(rider, next);
                 })
                 .push(function (next) {
-                    index.addClient(rider, 'あいうえお', next);
+                    index.searchClient(rider, '商事', function (data) {
+                        data.forEach(function (text) {
+                            should.exist(text.match('商事'));
+                        });
+                        next();
+                    });
                 })
                 .execute(callback);
         }
