@@ -74,10 +74,10 @@ exports.generateWorkbook = function (dirpath, filename, callback) {
         Object.keys(csvData).forEach(function (sheetName) {
             var data = csvData[sheetName];
             if (!data.length) return;
-            var rows = data.length + 2,
+            var rows = data.length + 1,
                 cols = teK.math.max(data.map(function (data) {
                     return data.length || 0
-                })) + 2;
+                })) + 1;
             var sheet = workbook.createSheet(sheetName, cols, rows);
             data.forEach(function (data, i) {
                 data.forEach(function (data, j) {
@@ -85,9 +85,13 @@ exports.generateWorkbook = function (dirpath, filename, callback) {
                         row = i + 1;
                     sheet.set(col, row, data || '');
                     sheet.width(col, 24);
-                    sheet.border(col, row, {left: 'thin', top: 'thin', right: 'thin', bottom: 'thin'});
                 });
             });
+            for (var row = 1; row < rows; row++) {
+                for (var col = 1; col < cols; col++) {
+                    sheet.border(col, row, {left: 'thin', top: 'thin', right: 'thin', bottom: 'thin'});
+                }
+            }
         });
         workbook.save(function (err) {
             if (err) {

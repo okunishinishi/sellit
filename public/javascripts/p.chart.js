@@ -23,6 +23,7 @@
                     var cell = $(this);
                     data.push({
                         sort_num: cell.data('sort_num') || undefined,
+                        color: cell.data('color') || undefined,
                         text: cell.text() || '',
                         href: cell.find('a').attr('href')
                     });
@@ -31,7 +32,7 @@
             });
             return result;
         },
-        sortableTable: function () {
+        sortableTable: function (callback) {
             var table = $(this),
                 thead = table.find('thead'),
                 tbody = table.find('tbody');
@@ -57,7 +58,11 @@
                         data.forEach(function (data) {
                             var html = data.text;
                             if (data.href) html = '<a href="' + data.href + '">' + html + '</a>';
-                            rowHtml += ["<td data-sort_num='" + (data.sort_num || '') + "'>", html, "</td>"].join('');
+                            rowHtml += [
+                                "<td data-sort_num='" + (data.sort_num || '') + "' data-color='" + data.color + "'>",
+                                html,
+                                "</td>"
+                            ].join('');
                         });
                         rowHtml += "</tr>";
                         bodyHTML += rowHtml;
@@ -71,6 +76,7 @@
                 th.siblings().removeClass('asc').removeClass('desc');
                 th.data('asc', !asc);
                 tbody.html(bodyHTML);
+                callback && callback();
             }).prepend('<i class="icon icon-chevron-up"></i><i class="icon icon-chevron-down"></i>');
             return table;
         },
@@ -101,7 +107,20 @@
                     tr.append('<td></td>');
                 }
             });
-            table.sortableTable();
+
+            function recolor() {
+                $('td', tbody).each(function () {
+                    var td = $(this),
+                        color = td.data('color');
+                    if (!color) return;
+                    td.prepend('<span class="color-label" style="background-color:' + color + ';"></span>');
+                })
+            }
+
+            table.sortableTable(function () {
+                recolor();
+            });
+            recolor();
             return table;
         }
     });

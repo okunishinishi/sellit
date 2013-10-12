@@ -40,6 +40,7 @@ exports.index = function (req, res) {
                 },
                 {
                     text: rank && rank.name,
+                    color: rank && rank.color,
                     sort_num: rank && rank.sort_num || ''
                 },
                 industry && industry.name

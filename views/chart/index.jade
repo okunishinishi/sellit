@@ -33,7 +33,7 @@ block content
                         if typeof(data) === 'string'
                             td=data
                         else
-                            td(data-sort_num=data.sort_num||'')
+                            td(data-sort_num=data.sort_num||'', data-color=data.color||'')
                                 if data.href
                                     a(href=data.href)
                                         span=data.text
