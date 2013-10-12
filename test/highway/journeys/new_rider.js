@@ -42,8 +42,20 @@ var methods = {
 copy(methods, webdriver.WebDriver.prototype);
 copy(methods, webdriver.WebElement.prototype);
 
+
+var prototype = {
+    setValue: function (input, value) {
+        var rider = this;
+        var script = '$(arguments[0]).val(decodeURIComponent("' + encodeURIComponent(value) + '"));';
+        return rider.executeScript(script, input);
+        ;
+    }
+};
+
 module.exports = function () {
-    return new webdriver.Builder()
+    var rider = new webdriver.Builder()
         .withCapabilities(webdriver.Capabilities.chrome())
         .build();
+    copy(prototype, rider);
+    return  rider;
 };

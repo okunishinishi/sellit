@@ -4,6 +4,7 @@
 
 var url = require('./url'),
     webdriver = require('selenium-webdriver'),
+    should = require('should'),
     By = webdriver['By'],
     Key = webdriver['Key'];
 
@@ -32,21 +33,24 @@ exports.addClient = function (rider, name, callback) {
     }
 
     rider.findById('client-list-form')
-        .then(waitFormLoading)
-        .then(function () {
-            rider.findById('client-add-btn').click();
-            rider.findAllBySelector("#client_list li").then(function (li) {
-                var lastLi = li[li.length - 1];
-                lastLi.findByName('name').then(function (input) {
-                    waitUntilVisible(input);
-                    input.sendKeys(name);
-                    input.sendKeys(Key.RETURN)
+        .then(function (form) {
+            waitFormLoading(form)
+                .then(function () {
+                    rider.findByName('search_word').then(function (input) {
+                        rider.setValue(input, '商事');
+                        form.submit();
+                    });
                 });
-                lastLi.findByName('edit-form').then(function (form) {
-                    form.submit();
-                    waitFormLoading(form);
-                });
-            });
+            waitFormLoading(form)
+                .then(function () {
+                    rider.findAllBySelector('.client-list-item').then(function (li) {
+                        li.forEach(function (li) {
+                            li.getText().then(function (text) {
+                                should.exist(text.match('商事'));
+                            });
+                        });
+                    });
+                })
+                .then(callback);
         })
-        .then(callback);
 };
