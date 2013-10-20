@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 
 var tek = require('tek'),
+    tekHTML = require('tek-html'),
     file = tek['file'],
     hbs = tek['hbs'],
+
     resolve = require('path')['resolve'];
 
 
@@ -15,6 +17,27 @@ var tek = require('tek'),
     });
 })(hbs.precompileDir);
 
+
+var config = require('../app.config'),
+    JobQueue = tek['JobQueue'],
+    publicDir = config.publicDir;
+
+(function (js_filenames) {
+    var out_dir = resolve(publicDir, 'javascripts', 'lib');
+    var publishQueue = new JobQueue;
+    js_filenames.forEach(function (filename) {
+        publishQueue.push(function (next) {
+            tekHTML.publish(filename, out_dir, next);
+        });
+    });
+    publishQueue.execute(function () {
+        console.log('js publish done');
+    });
+})([
+        'tek.js',
+        'tek.view.js',
+        'jquery.treeview.js'
+    ]);
 
 
 

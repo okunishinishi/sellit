@@ -13,7 +13,7 @@ app.description = 'sales management system';
 var msg = exports.msg = {};
 msg.sure = 'Are ABSOLUTELY your sure?';
 msg.never_go_back = 'Once this done, there will be no way to go back.';
-msg.save_done ='save done!';
+msg.save_done = 'save done!';
 
 
 var err = exports.err = {};

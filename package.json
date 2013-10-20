@@ -9,6 +9,7 @@
         "should": "1.2.1",
         "nodeunit": "*",
         "test-data-printer": "*",
+        "tek-html": "*",
         "selenium-webdriver": "*"
     },
     "dependencies": {
