@@ -14,3 +14,8 @@ quick start
     npm install
     node app.js
 ```
+
+license
+-------
+This software is released under the [MIT License](https://raw.github.com/okunishinishi/sellit/master/LICENSE).
+
