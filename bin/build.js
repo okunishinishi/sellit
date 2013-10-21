@@ -39,6 +39,23 @@ var config = require('../app.config'),
         'jquery.treeview.js'
     ]);
 
+(function (less_filenames) {
+    var out_dir = resolve(publicDir, 'stylesheets', 'lib');
+    var publishQueue = new JobQueue;
+    less_filenames.forEach(function (filename) {
+        publishQueue.push(function (next) {
+            tekHTML.publish(filename, out_dir, next);
+        });
+    });
+    publishQueue.execute(function () {
+        console.log('less publish done');
+    });
+})([
+        'tek-mixin.less',
+        'tek-theme-clean.less',
+        'jquery.treeview.less'
+    ]);
+
 
 
 

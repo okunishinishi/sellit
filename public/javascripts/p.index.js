@@ -32,10 +32,19 @@
         clientList: function (data) {
             var t = new Date().getTime();
             var ul = $(this);
+
+            var tv = $.treeview,
+                items = [];
+
             data && data.forEach(function (date) {
                 date.t = t;
+                var item = new tv.Item(tmpl.li(data));
+                items.push(item);
             });
-            ul.htmlHandlebars(tmpl.li, data)
+
+            ul.treeview(items);
+
+            ul
                 .find('li')
                 .clientListItem();
             return ul;

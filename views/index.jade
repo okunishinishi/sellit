@@ -1,9 +1,11 @@
 extends layout
 
 block stylesheets
+    link(rel='stylesheet', href='/stylesheets/lib/jquery.treeview.css')
     link(rel='stylesheet', href='/stylesheets/index.css?v=#{version}')
 
 block javascripts
+    script(src='/javascripts/lib/jquery.treeview.js')
     script(src='/javascripts/p.index.js?v=#{version}')
 
 block content
