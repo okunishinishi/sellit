@@ -108,7 +108,7 @@
                 li.findByRole('edit-btn').off('click').click(function (e) {
                     var onEdit = editableTxt.filter(':visible');
                     if (onEdit.length) {
-                        editableTxt.trigger('tk-editable-text-edit');
+                        editableTxt.trigger('tk-editable-text-fix');
                     } else {
                         editableTxt.trigger('tk-editable-text-edit');
                     }

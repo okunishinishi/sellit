@@ -125,10 +125,27 @@
         clientListSection: function () {
             var section = $(this),
                 addBtn = section.findByRole('add-btn'),
-                ul = section.find('ul'),
+                ul = section.find('#client_list'),
                 searchForm = section.findByRole('search-form');
-            ul.appendableList(tmpl.li, addBtn, function (li) {
-                li.clientListItem();
+            addBtn.click(function () {
+                var group = $(this).data('group'),
+                    html = tmpl.liContent({
+                        group: group,
+                        children_ids: group ? '[]' : undefined
+                    }),
+                    item = new tv.Item(html)
+                        .children(group ? [] : null);
+                ul.append(item.toHTML())
+                    .find('li')
+                    .last()
+                    .clientListItem();
+                ul.treeview('reload')
+                    .find('li')
+                    .find('.tk-editable-text').removeClass('tk-editable-text')
+                    .end()
+                    .each(function(){
+                        $(this).clientListItem();
+                    });
             });
             searchForm.clientSearchForm(function (data) {
                 ul.clientList(data);
