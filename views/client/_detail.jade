@@ -20,14 +20,6 @@ section#client-detail-section.positioned
                 div.half.float-left
                     table.wide-table
                         tbody
-                            tr
-                                th
-                                    label(for="rank-select")=l.lbl.rank
-                                td
-                                    select#rank-select(name="rank_id")
-                                        option(value="") -- #{l.plh.rank} --
-                                        for rank in ranks
-                                            option(value=rank._id,selected=rank._id==selected_client.rank_id)=rank.name
 
                 div.half.float-right
                     fieldset#product-fieldset

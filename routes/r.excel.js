@@ -12,7 +12,6 @@ var excelbuilder = require('msexcel-builder'),
     findAllModels = util['mdl']['findAllModels'],
     l = require('../locale')['en'],
     Product = models['Product'],
-    Rank = models['Rank'],
     resolve = require('path')['resolve'];
 
 
@@ -21,8 +20,7 @@ exports.csvData = function (callback) {
         clients: [],
         products: []
     };
-    findAllModels([Product, Rank], function (products, ranks) {
-        var ranksMap = toIdMap(ranks);
+    findAllModels([Product], function (products) {
         products.forEach(function (product) {
             var line = [product.name];
             result.products.push(line);
@@ -36,14 +34,12 @@ exports.csvData = function (callback) {
             ]);
             result.clients = result.clients.concat(
                 clients.map(function (client) {
-                    var rank = ranksMap[client.rank_id],
-                        product_ids = client.product_ids || '';
+                    var product_ids = client.product_ids || '';
                     if (product_ids instanceof Array) {
                         product_ids = product_ids.join(',');
                     }
                     return [
                         client.name,
-                        rank && rank.name || ''
                     ]
                         .concat(product_ids.split(',').map(function (product_id) {
                             var product = productMap[product_id];

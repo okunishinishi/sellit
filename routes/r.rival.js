@@ -1,11 +1,7 @@
 var tek = require('tek'),
     copy = tek['meta']['copy'],
     db = require('../db'),
-    Client = db.models['Client'],
-    util = require('../util'),
-    toIdMap = util['obj']['toIdMap'],
-    findAllModels = util['mdl']['findAllModels'],
-    Product = db.models['Product'];
+    Rival = db.models['Rival'];
 
 /**
  * find single model
@@ -14,7 +10,7 @@ var tek = require('tek'),
  * @returns {*}
  */
 function findOne(_id, callback) {
-    return Client.findById(_id, callback);
+    return Rival.findById(_id, callback);
 }
 
 /**
@@ -26,19 +22,9 @@ function findOne(_id, callback) {
  * @returns {*|Cursor}
  */
 function find(condition, limit, skip, callback) {
-    return Client.findByCondition(condition,function (models) {
-        findAllModels([], function () {
-            var result = models.splice(skip, limit).map(function (model) {
-                return model;
-            });
-            callback(result);
-        });
+    return Rival.findByCondition(condition,function (models) {
+        callback(models.splice(skip, limit));
     }).limit(limit).skip(skip);
-}
-
-
-function notFound(res) {
-    res.redirect('/404');
 }
 
 /**
@@ -47,24 +33,7 @@ function notFound(res) {
  * @param res
  */
 exports.index = function (req, res) {
-    var p = req.params,
-        clientId = p['client_id'];
-    var client = clientId && res.getClient(clientId);
-    if (!client) {
-        notFound(res);
-        return;
-    }
-    findAllModels([Product], function (products, ranks) {
-        var productIds = client.product_ids || [];
-        if (productIds instanceof Array) {
-            client.product_ids = productIds.join(',');
-        }
-        res.render('client/index.jade', {
-            products: products,
-            ranks: ranks,
-            selected_client: client
-        });
-    });
+    res.render('rival/index.jade', {});
 };
 
 
@@ -118,18 +87,29 @@ exports.api = {
      * @param res
      */
     save: function (req, res) {
-        var client = new Client(req.body);
-        var result = client.validate();
+        var rival = new Rival(req.body);
+        var result = rival.validate();
         if (!result.valid) {
             res.json(result);
             return;
         }
-        findOne(client._id, function (duplicate) {
+        findOne(rival._id, function (duplicate) {
             var action = duplicate ? 'update' : 'save';
-            client[action](function (client) {
+            if (duplicate) {
+                var vr = rival._vr,
+                    conflict = vr && (vr != duplicate._vr);
+                if (conflict) {
+                    res.json({
+                        valid: false,
+                        errors: [res.l("err.conflict")]
+                    });
+                    return;
+                }
+            }
+            rival[action](function (rival) {
                 res.json({
                     valid: true,
-                    model: client,
+                    model: rival,
                     action: action
                 });
             });
@@ -143,9 +123,9 @@ exports.api = {
      */
     destroy: function (req, res) {
         var _id = req.body['_id'];
-        findOne(_id, function (client) {
-            if (client) {
-                client.remove(function () {
+        findOne(_id, function (rival) {
+            if (rival) {
+                rival.remove(function () {
                     res.json({count: 1});
                 });
             } else {

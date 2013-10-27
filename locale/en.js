@@ -41,15 +41,15 @@ lbl.client_group = 'group';
 lbl.client_name = 'client name';
 lbl.client_description = 'description';
 lbl.products = 'products';
-lbl.rank = 'rank';
 lbl.chart_table = 'list data';
 lbl.data_count = 'count: ';
+lbl.salesman = 'salesman';
+lbl.rival = 'rival';
 
 var plh = exports.plh = {};
 plh.search = lbl.search;
 plh.client_name = lbl.client_name;
 plh.client_description = lbl.client_description;
-plh.rank = lbl.rank;
 
 
 var alt = exports.alt = {};

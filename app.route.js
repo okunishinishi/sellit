@@ -50,13 +50,6 @@ get('/master', master.index);
 post('/master/sort', master.sort);
 
 
-var rank = r['rank'];
-get('/rank', rank.index);
-post('/api/rank/save', rank.api.save);
-post('/api/rank/destroy', rank.api.destroy);
-get('/api/rank.json', rank.api.list);
-get('/api/rank/:_id', rank.api.one);
-
 
 var chart = r['chart'];
 get('/chart', chart.index);
@@ -67,3 +60,10 @@ post('/api/salesman/save', salesman.api.save);
 post('/api/salesman/destroy', salesman.api.destroy);
 get('/api/salesman.json', salesman.api.list);
 get('/api/salesman/:_id', salesman.api.one);
+
+var rival = r['rival'];
+get('/rival', rival.index);
+post('/api/rival/save', rival.api.save);
+post('/api/rival/destroy', rival.api.destroy);
+get('/api/rival.json', rival.api.list);
+get('/api/rival/:_id', rival.api.one);

@@ -1,15 +1,15 @@
-section.list-section#salesman-list-section
-    form#salesman-list-form.positioned.block-list-header(
-    data-role='search-form',action=url('/api/salesman.json'),method='get')
-        label.title=l.lbl.salesman
+section.list-section#rival-list-section
+    form#rival-list-form.positioned.block-list-header(
+    data-role='search-form',action=url('/api/rival.json'),method='get')
+        label.title=l.lbl.rival
         input(type='search', name='search_word', results).float-right
         input(type='hidden', name='skip', value='0')
         input(type='hidden', name='limit', value='500')
         input.btn(type='submit')=l.lbl.search
         br.clear
-    ul#salesman_list.block-list(data-model="Salesman")
+    ul#rival_list.block-list
 
 
-    a.add-btn.wide-btn#salesman-add-btn(
+    a.add-btn.wide-btn#rival-add-btn(
     href='javascript:void(0)', data-role='add-btn')
         | #{l.btn.new}
