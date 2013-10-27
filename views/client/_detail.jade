@@ -29,14 +29,6 @@ section#client-detail-section.positioned
                                         for rank in ranks
                                             option(value=rank._id,selected=rank._id==selected_client.rank_id)=rank.name
 
-                            tr
-                                th
-                                    label(for="description-input")=l.lbl.client_description
-                                td
-                                    textarea.full-width#description-input(
-                                    data-role='editable-text',
-                                    name="description",placeholder=l.plh.client_description)=selected_client.description
-
                 div.half.float-right
                     fieldset#product-fieldset
                         legend=l.lbl.products

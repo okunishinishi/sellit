@@ -17,7 +17,6 @@ exports.uploadDir = resolve(exports.publicDir, 'uploaded');
 exports.jsDir = resolve(exports.publicDir, 'javascripts');
 exports.imgDir = resolve(exports.publicDir, 'images');
 exports.cssDir = resolve(exports.publicDir, 'stylesheets');
-
 exports.hbsDir = resolve(exports.publicDir, 'hbs');
 exports.hbsTemplateFile = resolve(exports.publicDir, "javascripts/templates.js");
 

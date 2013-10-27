@@ -60,3 +60,10 @@ get('/api/rank/:_id', rank.api.one);
 
 var chart = r['chart'];
 get('/chart', chart.index);
+
+var salesman = r['salesman'];
+get('/salesman', salesman.index);
+post('/api/salesman/save', salesman.api.save);
+post('/api/salesman/destroy', salesman.api.destroy);
+get('/api/salesman.json', salesman.api.list);
+get('/api/salesman/:_id', salesman.api.one);

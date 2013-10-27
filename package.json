@@ -1,6 +1,6 @@
 {
     "name": "sellit",
-    "version": "0.1.8",
+    "version": "0.1.9",
     "private": true,
     "scripts": {
         "start": "node app"
@@ -21,6 +21,7 @@
         "revalidator": "*",
         "tek": "*",
         "tek-web": "*",
+        "uglify-js":"*",
         "sqlite3": "*",
         "onecolor": "*"
     }
