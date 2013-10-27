@@ -7,6 +7,7 @@ var tek = require('tek'),
     findAllModels = util['mdl']['findAllModels'],
     Product = db.models['Product'];
 
+
 /**
  * find single model
  * @param _id

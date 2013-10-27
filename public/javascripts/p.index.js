@@ -33,7 +33,18 @@
             var li = $(this)
                 .destroyableListItem()
                 .editableListItem('__never_call__');
-            li.findByRole('editable-text')
+
+            function getForm(li) {
+                return li.children('.tv-label').findByName('edit-form');
+            }
+
+            li.children('.tv-label').dblclick(function(){
+                var link = li.children('.tv-label').findByRole('detail-link').attr('href');
+                if(link) location.href = link;
+            });
+
+            getForm(li)
+                .findByRole('editable-text')
                 .keydown(function (e) {
                     var text = $(this);
                     switch (e.keyCode) {
@@ -46,9 +57,6 @@
                 .on('tv-drop', function (e) {
                     e.stopPropagation();
 
-                    function getForm(li) {
-                        return li.children('.tv-label').findByName('edit-form');
-                    }
 
                     var li = $(this),
                         parent = li.parent('.tv-children').parent('li'),
