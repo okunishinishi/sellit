@@ -11,39 +11,39 @@ var excelbuilder = require('msexcel-builder'),
     Client = models['Client'],
     findAllModels = util['mdl']['findAllModels'],
     l = require('../locale')['en'],
-    Product = models['Product'],
+    System = models['System'],
     resolve = require('path')['resolve'];
 
 
 exports.csvData = function (callback) {
     var result = {
         clients: [],
-        products: []
+        systems: []
     };
-    findAllModels([Product], function (products) {
-        products.forEach(function (product) {
-            var line = [product.name];
-            result.products.push(line);
+    findAllModels([System], function (systems) {
+        systems.forEach(function (system) {
+            var line = [system.name];
+            result.systems.push(line);
         });
-        var productMap = toIdMap(products);
+        var systemMap = toIdMap(systems);
         Client.findAll(function (clients) {
             result.clients.push([
                 l.lbl.client,
                 l.lbl.rank,
-                l.lbl.products
+                l.lbl.systems
             ]);
             result.clients = result.clients.concat(
                 clients.map(function (client) {
-                    var product_ids = client.product_ids || '';
-                    if (product_ids instanceof Array) {
-                        product_ids = product_ids.join(',');
+                    var system_ids = client.system_ids || '';
+                    if (system_ids instanceof Array) {
+                        system_ids = system_ids.join(',');
                     }
                     return [
                         client.name,
                     ]
-                        .concat(product_ids.split(',').map(function (product_id) {
-                            var product = productMap[product_id];
-                            return product && product.name || '';
+                        .concat(system_ids.split(',').map(function (system_id) {
+                            var system = systemMap[system_id];
+                            return system && system.name || '';
                         })).filter(function (v) {
                             return !!v;
                         })

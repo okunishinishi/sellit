@@ -10,16 +10,18 @@ var tek = require('tek'),
     Schema = DB['Schema'],
     defineModel = DB['defineModel'];
 
-var Product = module.exports = defineModel({
+var System = module.exports = defineModel({
     //properties
+    parent_id: null,
+    children_ids: []
 });
 
-Product.schema = new Schema({
+System.schema = new Schema({
     //schemas
 
 });
 
-Product.prototype.validate = function () {
+System.prototype.validate = function () {
     var s = this;
-    return Product.schema.validate(s);
+    return System.schema.validate(s);
 };

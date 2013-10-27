@@ -1,7 +1,7 @@
 var tek = require('tek'),
     copy = tek['meta']['copy'],
     db = require('../db'),
-    Product = db.models['Product'];
+    System = db.models['System'];
 
 /**
  * find single model
@@ -10,7 +10,7 @@ var tek = require('tek'),
  * @returns {*}
  */
 function findOne(_id, callback) {
-    return Product.findById(_id, callback);
+    return System.findById(_id, callback);
 }
 
 /**
@@ -22,7 +22,7 @@ function findOne(_id, callback) {
  * @returns {*|Cursor}
  */
 function find(condition, limit, skip, callback) {
-    return Product.findByCondition(condition,function (models) {
+    return System.findByCondition(condition,function (models) {
         callback(models.splice(skip, limit));
     }).limit(limit).skip(skip);
 }
@@ -33,7 +33,7 @@ function find(condition, limit, skip, callback) {
  * @param res
  */
 exports.index = function (req, res) {
-    res.render('product/index.jade', {});
+    res.render('system/index.jade', {});
 };
 
 
@@ -77,9 +77,7 @@ exports.api = {
         }
 
         find(condition, limit, skip, function (models) {
-            res.json(models.sort(function (a, b) {
-                return a.sort_num - b.sort_num;
-            }));
+            res.json(models);
         });
     },
 
@@ -89,18 +87,29 @@ exports.api = {
      * @param res
      */
     save: function (req, res) {
-        var product = new Product(req.body);
-        var result = product.validate();
+        var system = new System(req.body);
+        var result = system.validate();
         if (!result.valid) {
             res.json(result);
             return;
         }
-        findOne(product._id, function (duplicate) {
+        findOne(system._id, function (duplicate) {
             var action = duplicate ? 'update' : 'save';
-            product[action](function (product) {
+            if (duplicate) {
+                var vr = system._vr,
+                    conflict = vr && (vr != duplicate._vr);
+                if (conflict) {
+                    res.json({
+                        valid: false,
+                        errors: [res.l("err.conflict")]
+                    });
+                    return;
+                }
+            }
+            system[action](function (system) {
                 res.json({
                     valid: true,
-                    model: product,
+                    model: system,
                     action: action
                 });
             });
@@ -114,9 +123,9 @@ exports.api = {
      */
     destroy: function (req, res) {
         var _id = req.body['_id'];
-        findOne(_id, function (product) {
-            if (product) {
-                product.remove(function () {
+        findOne(_id, function (system) {
+            if (system) {
+                system.remove(function () {
                     res.json({count: 1});
                 });
             } else {

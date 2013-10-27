@@ -1,35 +1,44 @@
-(function ($) {
+/**
+ * public script for system
+ *
+ *  -- namespaces --
+ *  $ : jQuery
+ *  l : message resource
+ *  Hbs : handlebars
+ *
+ */
+(function ($, l, Hbs) {
     var tmpl = {
-        li: Handlebars.templates['product-list-item']
+        li: Hbs.templates['system-list-item']
     };
     $.fn.extend({
-        productSearchForm: function (callback) {
+        systemSearchForm: function (callback) {
             var form = $(this);
             form.searchForm(callback);
             return form;
         },
-        productListItem: function () {
+        systemListItem: function () {
             return $(this)
                 .destroyableListItem()
-                .editableListItem("dblclick");
+                .editableListItem('dblclick');
         },
-        productList: function (data) {
+        systemList: function (data) {
             var ul = $(this);
             ul.htmlHandlebars(tmpl.li, data)
                 .find('li')
-                .productListItem();
+                .systemListItem();
             return ul;
         },
-        productListSection: function () {
+        systemListSection: function () {
             var section = $(this),
                 addBtn = section.findByRole('add-btn'),
                 ul = section.find('ul'),
                 searchForm = section.findByRole('search-form');
             ul.appendableList(tmpl.li, addBtn, function (li) {
-                li.productListItem();
+                li.systemListItem();
             });
-            searchForm.productSearchForm(function (data) {
-                ul.productList(data);
+            searchForm.systemSearchForm(function (data) {
+                ul.systemList(data);
             }).submit();
             return section;
         }
@@ -38,6 +47,6 @@
     $(function () {
         var body = $(document.body);
 
-        $('#product-list-section', body).productListSection();
+        $('#system-list-section', body).systemListSection();
     });
-})(jQuery);
+})(jQuery, window['l'], Handlebars);

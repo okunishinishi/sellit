@@ -4,10 +4,11 @@ block stylesheets
     link(rel='stylesheet', href='/stylesheets/master.css')
 
 block javascripts
-    script(src='/javascripts/p.product.js')
     script(src='/javascripts/p.salesman.js')
     script(src='/javascripts/p.rival.js')
     script(src='/javascripts/p.master.js')
+    script(src='/javascripts/p.system.js')
+
     script.
         (function($){
             $(function(){
@@ -17,8 +18,7 @@ block javascripts
 
 block content
 
-    include ../product/_list
-
+    include ../system/_list
     include ../salesman/_list
     include ../rival/_list
 

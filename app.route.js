@@ -35,12 +35,6 @@ post('/api/client/destroy', client.api.destroy);
 get('/api/client.json', client.api.list);
 get('/api/client/:_id', client.api.one);
 
-var product = r['product'];
-get('/product', product.index);
-post('/api/product/save', product.api.save);
-post('/api/product/destroy', product.api.destroy);
-get('/api/product.json', product.api.list);
-get('/api/product/:_id', product.api.one);
 
 var excel = r['excel'];
 get('/excel/download', excel.download);
@@ -67,3 +61,10 @@ post('/api/rival/save', rival.api.save);
 post('/api/rival/destroy', rival.api.destroy);
 get('/api/rival.json', rival.api.list);
 get('/api/rival/:_id', rival.api.one);
+
+var system = r['system'];
+get('/system', system.index);
+post('/api/system/save', system.api.save);
+post('/api/system/destroy', system.api.destroy);
+get('/api/system.json', system.api.list);
+get('/api/system/:_id', system.api.one);

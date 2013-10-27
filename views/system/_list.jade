@@ -1,0 +1,15 @@
+section.list-section#system-list-section
+    form#system-list-form.positioned.block-list-header(
+    data-role='search-form',action=url('/api/system.json'),method='get')
+        label.title=l.lbl.system
+        input(type='search', name='search_word', results).float-right
+        input(type='hidden', name='skip', value='0')
+        input(type='hidden', name='limit', value='500')
+        input.btn(type='submit')=l.lbl.search
+        br.clear
+    ul#system_list.block-list(data-model="System")
+
+
+    a.add-btn.wide-btn#system-add-btn(
+    href='javascript:void(0)', data-role='add-btn')
+        | #{l.btn.new}

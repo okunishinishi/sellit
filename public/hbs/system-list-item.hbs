@@ -1,17 +1,17 @@
-<li class="product-list-item positioned">
-    <a class="cover detail-link" data-role="detail-link" href="/product/?_id={{_id}}"></a>
-    <form class="inline-form" action="/api/product/save"
+<li class="system-list-item positioned">
+    <a class="cover detail-link" data-role="detail-link" href="{{ctx}}/system/?_id={{_id}}&t={{t}}"></a>
+    <form class="inline-form" action="{{ctx}}/api/system/save"
           method="post" name="edit-form">
         <input type="hidden" value="{{_id}}" name="_id"/>
+        <input type="hidden" value="{{_vr}}" name="_vr"/>
         <input type="text" data-role="editable-text" name="name" value="{{name}}"/>
-        <input type="hidden" value="{{sort_num}}" name="sort_num"/>
     </form>
     <div class="stick-right stick-top block-list-item-control">
         <a href="javascript:void(0)" data-role='edit-btn'>
             <i class="icon icon-pencil"></i>
         </a>
 
-        <form class="inline-form" action="/api/product/destroy"
+        <form class="inline-form" action="{{ctx}}/api/system/destroy"
               method="post" name="destroy-form">
             <input type="hidden" value="{{_id}}" name="_id"/>
             <a href="javascript:void(0)" data-role='submit-btn'>
