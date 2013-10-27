@@ -5,31 +5,28 @@ html
         meta(name="viewport", content="width=device-width")
         title=l.app.name
 
-        link(rel='shortcut icon', href='/fav.ico')
-        link(rel="apple-touch-icon", href="/touch.ico")
-        link(rel='stylesheet', href='/stylesheets/base.css?v=#{version}')
+        link(rel='shortcut icon', href=url('fav.ico'))
+        link(rel="apple-touch-icon", href=url('touch.ico'))
+        link(rel='stylesheet', href=url.css("base.css"))
+
+
         block stylesheets
 
-        script(src='/javascripts/lib/tek.js')
-
-        script(src='/javascripts/lib/jquery.js')
-        script(src='/javascripts/lib/jquery-ui.custom.js')
-        
-
-        script(src='/javascripts/lib/spin.js')
-        script(src='/javascripts/lib/handlebars.runtime.min.js')
+        if NODE_ENV == 'production'
+            script(src=url.js('lib.min.js'))
+        else
+            script(src=url.js('lib/tek.js'))
+            script(src=url.js('lib/jquery.js'))
+            script(src=url.js('lib/jquery-ui.custom.js'))
+            script(src=url.js('lib/spin.js'))
+            script(src=url.js('lib/handlebars.runtime.min.js'))
+            script(src=url.js('lib/tek.view.js'))
 
         script.
             window.l = !{JSON.stringify(l)};
-            Handlebars.registerHelper('l' , function(name, options){
-                return name && eval(["window","l"].concat(name).join('.'));
-            });
-
-        script(src='/javascripts/lib/tek.view.js')
-
-        script(src='/javascripts/templates.js?v=#{version}')
-
-        script(src='/javascripts/p.js?v=#{version}')
+            window.ctx = "#{context}";
+        script(src=url.js('templates.js'))
+        script(src=url.js('p.js'))
 
         block javascripts
 
@@ -40,7 +37,7 @@ html
         header
             include _nav
             h2.logo.float-left
-                a(href='/')
+                a(href=url('/'))
                     | #{l.app.name}
             include _client_select
 

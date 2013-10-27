@@ -1,12 +1,12 @@
 nav
-    a.nav-item(href='/chart?t=#{time}', key='list')
+    a.nav-item(href=url('/chart?t=#{time}'), key='list')
         i.icon.icon-th
         | list
 
-    a.nav-item(href='/excel/download', target="_blank")
+    a.nav-item(href=url('/excel/download'), target="_blank")
         i.icon.icon-download
         | download
-    a.nav-item(href='/master', key='master')
+    a.nav-item(href=url('/master'), key='master')
         i.icon.icon-wrench
         | master
 

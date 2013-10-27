@@ -14,6 +14,10 @@ var lessMiddleware = require('less-middleware'),
 exports.viewDir = resolve(__dirname, 'views');
 exports.publicDir = resolve(__dirname, 'public');
 exports.uploadDir = resolve(exports.publicDir, 'uploaded');
+exports.jsDir = resolve(exports.publicDir, 'javascripts');
+exports.imgDir = resolve(exports.publicDir, 'images');
+exports.cssDir = resolve(exports.publicDir, 'stylesheets');
+
 exports.hbsDir = resolve(exports.publicDir, 'hbs');
 exports.hbsTemplateFile = resolve(exports.publicDir, "javascripts/templates.js");
 
@@ -44,4 +48,5 @@ exports.backup = {
     dirpath: resolve(__dirname, 'backup')
 };
 
+exports.context = '';
 exports.package = require('./package.json');

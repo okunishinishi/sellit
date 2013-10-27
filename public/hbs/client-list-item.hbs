@@ -1,31 +1,30 @@
-<li class="client-list-item positioned">
-    <span class="rank-label-container">
-        {{#if rank_name}}
-            <span class="float-left rank-label" style="background-color: {{rank_color}}">{{rank_name}}</span>
-        {{/if}}
-    </span>
+<div class="inline-div">
+    {{#if group}}
+        <form class="inline-form" action="{{ctx}}/api/client/save"
+              method="post" name="edit-form">
+            <input type="hidden" value="{{_id}}" name="_id"/>
+            <input type="hidden" value="{{_vr}}" name="_vr"/>
+            <input type="hidden" value="{{parent_id}}" name="parent_id"/>
+            <input type="hidden" value="{{children_ids}}" name="children_ids"/>
+            <input type="text" data-role="editable-text" name="name" value="{{name}}"/>
+        </form>
+    {{else}}
+        <a class="cover detail-link" data-role="detail-link" href="{{ctx}}/client/?_id={{_id}}&t={{t}}"></a>
 
-    <form class="inline-form" action="/api/client/save"
-          method="post" name="edit-form">
-        <input type="hidden" value="{{_id}}" name="_id"/>
-        <input type="text" data-role="editable-text" name="name"
-               placeholder="{{l 'plh.client_name'}}"
-               value="{{name}}"/>
-    </form>
-
-    {{#if industry_name}}
-        <span class="label">{{industry_name}}</span>
+        <form class="inline-form" action="{{ctx}}/api/client/save"
+              method="post" name="edit-form">
+            <input type="hidden" value="{{_id}}" name="_id"/>
+            <input type="hidden" value="{{_vr}}" name="_vr"/>
+            <input type="hidden" value="{{parent_id}}" name="parent_id"/>
+            <input type="text" data-role="editable-text" name="name" value="{{name}}"/>
+        </form>
     {{/if}}
-
-    <a class="cover" data-role="detail-link" href="/client/{{_id}}?t={{t}}"></a>
-
-
     <div class="stick-right stick-top block-list-item-control">
         <a href="javascript:void(0)" data-role='edit-btn'>
             <i class="icon icon-pencil"></i>
         </a>
 
-        <form class="inline-form" action="/api/client/destroy"
+        <form class="inline-form" action="{{ctx}}/api/client/destroy"
               method="post" name="destroy-form">
             <input type="hidden" value="{{_id}}" name="_id"/>
             <a href="javascript:void(0)" data-role='submit-btn'>
@@ -33,4 +32,4 @@
             </a>
         </form>
     </div>
-</li>
+</div>

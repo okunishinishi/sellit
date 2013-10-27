@@ -1,18 +1,31 @@
 /**
- * User: okunishitaka
- * Date: 9/21/13
- * Time: 4:08 PM
+ * public script for all pages
+ *
+ *  -- namespaces --
+ *  $ : jQuery
+ *  l : message resource
+ *  Hbs : handlebars
+ *
  */
+(function ($, l, Hbs) {
+    Hbs.registerHelper('l', function (name, options) {
+        return name && eval(["window", "l"].concat(name).join('.'));
+    });
+    Hbs.registerHelper('t', function () {
+        return new Date().getTime();
+    });
+    Hbs.registerHelper('ctx', function () {
+        var ctx = window['ctx'];
+        return ctx ? '/' + ctx : '';
+    });
 
-
-(function ($, l, Handlebars) {
     $.extend({
         confirmRemove: function (name, callback) {
-            var tmpl = Handlebars.templates['confirm-dialog'],
+            var tmpl = Hbs.templates['confirm-dialog'],
                 html = tmpl({
                     name: name,
                     label: name
-                }).replace('{{it}}', name);
+                }).replace(/\{\{name\}\}/g, name);
             var dialog = $(html).appendTo(document.body),
                 inner = $('.confirm-dialog-inner', dialog),
                 form = dialog.find('form'),
@@ -71,7 +84,7 @@
          */
         editableListItem: function (trigger) {
             return this.each(function () {
-                var li = $(this).addClass('editable-list-item');
+                var li = $(this);
                 var editableTxt = li.findByRole('editable-text')
                     .editableText(trigger)
                     .change(function () {
@@ -85,18 +98,21 @@
                         if (data.valid) {
                             form.setFormValue(data.model);
                             form.trigger('edit-done');
-                            li.attr('data-on-edit', false);
+                        } else {
+                            var errors = data['errors'];
+                            if (errors && errors.length) {
+                                alert(errors[0]); //TODO
+                            }
                         }
                     });
-                li.findByRole('edit-btn').click(function () {
-                    var onEdit = !!editableTxt.filter(':visible').length;
-                    if (onEdit) {
+                li.findByRole('edit-btn').off('click').click(function (e) {
+                    var onEdit = editableTxt.filter(':visible');
+                    if (onEdit.length) {
                         editableTxt.trigger('tk-editable-text-edit');
                     } else {
                         editableTxt.trigger('tk-editable-text-edit');
                     }
-                    li.attr('data-on-edit', !onEdit);
-
+                    e.stopPropagation();
                 });
             });
         },
@@ -137,37 +153,6 @@
             });
             $(':submit', form).hide();
             return form;
-        },
-        nav: function (key) {
-            var nav = $(this);
-            nav.findByAttr('key', key)
-                .addClass('active')
-                .siblings('active').removeClass('active');
-            return nav;
-        },
-        sortableList: function (callback) {
-            var ul = $(this).addClass('sortable-list');
-            ul.sortable({
-                axis: 'y',
-                containment: "parent",
-                stop: function (e, ui) {
-                    var sorted = $(this);
-                    sorted.find('li').each(function (index) {
-                        var li = $(this),
-                            form = li.findByName('edit-form');
-                        var input = form.findByName('sort_num');
-                        if (!input.size()) {
-                            input = $('<input/>').attr({
-                                name: 'sort_num',
-                                type: 'hidden'
-                            }).appendTo(form);
-                        }
-                        input.val(index);
-                    });
-                    callback.call(sorted);
-                }
-            });
-            return ul;
         }
     });
     $(function () {

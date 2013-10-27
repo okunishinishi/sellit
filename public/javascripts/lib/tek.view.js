@@ -1,13 +1,25 @@
-(function (dependencies, undefined) {
+/**
+ * tek.view.js
+ * - javascript library for tek -
+ * @version v0.1.16
+ * @author Taka Okunishi
+ * @date 2013-10-27
+ *
+ */
+(function (dependencies, window, undefined) {
 
     var valid = true;
-    Object.keys(dependencies).forEach(function (name) {
+    for(var name in dependencies){
+        if (!dependencies.hasOwnProperty(name)) continue;
         if (!dependencies[name]) {
             console.error('[tek.view.js] dependency missing: ', name + 'not found.');
             valid = false;
         }
-    });
+    };
     if (!valid) return;
+
+
+    tek.crossBrowser(window);
 
 	/** tek.view for $ **/
 	(function (global, undefined) {
@@ -485,4 +497,4 @@
     $: this['$'],
     Handlebars: this['Handlebars'],
     tek: this['tek']
-}, undefined);
+}, window, undefined);

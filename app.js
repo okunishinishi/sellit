@@ -9,6 +9,7 @@ var path = require('path'),
     db = require('./db'),
     express = require('express'),
     util = require('./util'),
+    NODE_ENV = process.env.NODE_ENV,
     config = require('./app.config'),
     locale = require('./locale');
 
@@ -40,7 +41,10 @@ app.configure('development', function () {
 });
 
 app.locals({
-    version: config.package.version
+    version: config.package.version,
+    context: config.context || '',
+    url: util.url.publicResolver(config),
+    NODE_ENV: NODE_ENV
 });
 
 app.all('*', function (req, res, next) {

@@ -1,18 +1,18 @@
 extends layout
 
 block stylesheets
-    link(rel='stylesheet', href='/stylesheets/lib/jquery.treeview.css')
-    link(rel='stylesheet', href='/stylesheets/index.css?v=#{version}')
+    link(rel='stylesheet', href=url.css('/lib/jquery.treeview.css'))
+    link(rel='stylesheet', href=url.css('/index.css'))
 
 block javascripts
-    script(src='/javascripts/lib/jquery.treeview.js')
-    script(src='/javascripts/p.index.js?v=#{version}')
+    script(src=url.js('/lib/jquery.treeview.js'))
+    script(src=url.js('/p.index.js'))
 
 block content
 
     aside.float-right.positioned
         include client/_list
 
-    article
+    article.inline-article
         h1#large-logo=l.app.name
         p.description=l.app.description
