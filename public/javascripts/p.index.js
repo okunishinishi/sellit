@@ -116,7 +116,12 @@
                 });
             })(items);
 
-            ul.treeview(items);
+            ul.treeview(items, {
+                action: function (selected) {
+                    var link = selected.findByRole('detail-link').attr('href');
+                    if (link) location.href = link;
+                }
+            });
             ul
                 .find('li')
                 .clientListItem();
@@ -143,7 +148,7 @@
                     .find('li')
                     .find('.tk-editable-text').removeClass('tk-editable-text')
                     .end()
-                    .each(function(){
+                    .each(function () {
                         $(this).clientListItem();
                     });
             });

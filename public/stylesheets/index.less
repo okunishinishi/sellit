@@ -3,10 +3,10 @@
 header {
   background-color: transparent;
   .box-shadow(none);
-  .logo{
+  .logo {
     display: none;
   }
-  select{
+  select {
     display: none;
   }
 }
@@ -75,15 +75,57 @@ li {
 
 .block-list-item-control {
   top: 4px;
+  right: -52px;
 }
 
-.tv-label{
-  > div > .block-list-item-control{
-    opacity: 0.2;
-  }
-  &:hover{
-    > div > .block-list-item-control{
-      opacity: 1;
+.tv-label {
+  > div {
+    > .detail-link {
+      opacity: .1;
+      display: inline-block;
+      padding: 7px 9px;
+      top: 0;
+      right: 0;
+      height: 100%;
+      box-sizing: border-box;
+      border-left: 1px solid transparent;
     }
+    > .block-list-item-control {
+      opacity: 0.1;
+      a {
+        .box-shadow(50%);
+        display: inline-block;
+        &:hover {
+          background-color: fadeout(@yellow, 20);
+          .box-shadow(0 0 10px fadeout(@yellow, 30));
+        }
+      }
+    }
+  }
+  input[type="text"] {
+    width: 200px;
+  }
+  &:hover {
+    > div {
+      > .block-list-item-control {
+        opacity: 8;
+      }
+      > .detail-link {
+        opacity: 1;
+        &:hover {
+          @back: lighten(@blue, 30);
+          border-left-color: darken(@back, 5);
+          background-color: @back;
+        }
+      }
+    }
+  }
+}
+
+.tv-selected > .tv-label,
+.tv-selected > .tv-label:active {
+  > div > .detail-link {
+    opacity: 1;
+    background-color: #704AFF;
   }
 }

@@ -9,7 +9,10 @@
             <input type="text" data-role="editable-text" name="name" value="{{name}}"/>
         </form>
     {{else}}
-        <a class="cover detail-link" data-role="detail-link" href="{{ctx}}/client/{{_id}}?t={{t}}"></a>
+        <a class="detail-link stick-right stick-top"
+           data-role="detail-link" href="{{ctx}}/client/{{_id}}?t={{t}}">
+            <i class="icon icon-chevron-right"></i>
+        </a>
 
         <form class="inline-form" action="{{ctx}}/api/client/save"
               method="post" name="edit-form">
