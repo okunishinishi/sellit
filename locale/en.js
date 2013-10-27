@@ -37,10 +37,10 @@ lbl.search = 'search';
 lbl.understand = 'I understand consequences.';
 
 lbl.client = 'client';
+lbl.client_group = 'group';
 lbl.client_name = 'client name';
 lbl.client_description = 'description';
 lbl.products = 'products';
-lbl.industry = 'industry';
 lbl.rank = 'rank';
 lbl.chart_table = 'list data';
 lbl.data_count = 'count: ';
@@ -48,7 +48,6 @@ lbl.data_count = 'count: ';
 var plh = exports.plh = {};
 plh.search = lbl.search;
 plh.client_name = lbl.client_name;
-plh.industry = lbl.industry;
 plh.client_description = lbl.client_description;
 plh.rank = lbl.rank;
 

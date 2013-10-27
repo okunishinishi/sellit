@@ -5,7 +5,6 @@ var tek = require('tek'),
     toIdMap = util['obj']['toIdMap'],
     db = require('../db'),
     models = db.models,
-    Industry = models['Industry'],
     Product = models['Product'],
     Rank = models['Rank'],
     Client = models['Client'];
@@ -18,13 +17,11 @@ var tek = require('tek'),
  * @param res
  */
 exports.index = function (req, res) {
-    findAllModels([Client, Rank, Industry, Product], function (clients, rank, industries, products) {
+    findAllModels([Client, Rank, Product], function (clients, rank, industries, products) {
         var rankMap = toIdMap(rank),
-            industryMap = toIdMap(industries),
             productMap = toIdMap(products);
         var rows = clients.map(function (client) {
             var rank = rankMap[client.rank_id],
-                industry = industryMap[client.industry_id],
                 product_ids = client.product_ids || '';
             if (product_ids instanceof Array) {
                 product_ids = product_ids.join(',');
@@ -42,8 +39,7 @@ exports.index = function (req, res) {
                     text: rank && rank.name,
                     color: rank && rank.color,
                     sort_num: rank && rank.sort_num || ''
-                },
-                industry && industry.name
+                }
             ].concat(products)
         });
 

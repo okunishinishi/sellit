@@ -1,5 +1,5 @@
 /**
- * public script for sun_shine
+ * public script for index
  *
  *  -- namespaces --
  *  $ : jQuery

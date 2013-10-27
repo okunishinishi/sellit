@@ -22,7 +22,6 @@ module.exports = define({
                 rider = s.rider,
                 index = driveway.index,
                 rank = driveway.rank,
-                industry = driveway.industry,
                 product = driveway.product;
             new JobQueue()
                 .timeout(500000)
@@ -56,36 +55,6 @@ module.exports = define({
                     },
                     function (next) {
                         rank.removeModel(rider, function () {
-                            next();
-                        });
-                    }
-                ])
-                .pushAll([
-
-                    //industry tests
-
-                    function (next) {
-                        rider.executeScript("location.href='#industry_list'");
-                        var searchWord = 'ネオン';
-                        industry.searchModel(rider, searchWord, function (result) {
-                            result && result.forEach(function (text) {
-                                should.exist(text.match(searchWord));
-                            });
-                            next();
-                        });
-                    },
-                    function (next) {
-                        industry.addModel(rider, {name: 'new_industry'}, function () {
-                            next();
-                        });
-                    },
-                    function (next) {
-                        industry.updateModel(rider, {name: 'new_industry_renamed'}, function () {
-                            next();
-                        });
-                    },
-                    function (next) {
-                        industry.removeModel(rider, function () {
                             next();
                         });
                     }

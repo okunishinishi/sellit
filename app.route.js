@@ -49,12 +49,6 @@ var master = r['master'];
 get('/master', master.index);
 post('/master/sort', master.sort);
 
-var industry = r['industry'];
-get('/industry', industry.index);
-post('/api/industry/save', industry.api.save);
-post('/api/industry/destroy', industry.api.destroy);
-get('/api/industry.json', industry.api.list);
-get('/api/industry/:_id', industry.api.one);
 
 var rank = r['rank'];
 get('/rank', rank.index);
