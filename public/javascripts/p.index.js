@@ -140,17 +140,16 @@
                     }),
                     item = new tv.Item(html)
                         .children(group ? [] : null);
-                ul.append(item.toHTML())
-                    .find('li')
-                    .last()
-                    .clientListItem();
-                ul.treeview('reload')
-                    .find('li')
+                ul.append(item.toHTML());
+                ul.treeview('reload');
+                ul
                     .find('.tk-editable-text').removeClass('tk-editable-text')
-                    .end()
-                    .each(function () {
-                        $(this).clientListItem();
-                    });
+                    .end();
+                ul
+                    .find('.tk-editable-label').remove()
+                    .end();
+                ul
+                    .find('li').clientListItem();
             });
             searchForm.clientSearchForm(function (data) {
                 ul.clientList(data);
