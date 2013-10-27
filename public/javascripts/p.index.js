@@ -32,7 +32,7 @@
         clientListItem: function () {
             var li = $(this)
                 .destroyableListItem()
-                .editableListItem('dblclick');
+                .editableListItem('__never_call__');
             li.findByRole('editable-text')
                 .keydown(function (e) {
                     var text = $(this);
