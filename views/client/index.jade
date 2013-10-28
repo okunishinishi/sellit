@@ -1,11 +1,14 @@
 extends ../layout
 
 block stylesheets
-    link(rel='stylesheet', href='/stylesheets/client.css?v=#{version}')
+    link(rel='stylesheet', href=url.css('/lib/jquery.treeview.css'))
+    link(rel='stylesheet', href=url.css('client.css'))
 
 block javascripts
-    script(src='/javascripts/p.client.js?v=#{version}')
+    script(src=url.js('/lib/jquery.treeview.js'))
+    script(src=url.js('p.client.js'))
 
 block content
-
+    aside.stick-left
+        include _list
     include _detail

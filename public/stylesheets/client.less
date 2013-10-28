@@ -1,6 +1,21 @@
 @import "lib/tek";
 @import "lib/tek.rich.less";
 
+body {
+  padding: 28px 0;
+}
+.paper-content{
+  padding: 5px 0 0;
+}
+
+header {
+  z-index: 999;
+}
+
+#main {
+  margin: 0 0 0 300px;
+}
+
 #salesman-fieldset {
   label {
     margin-right: 15px;
@@ -9,13 +24,14 @@
   margin: 0 5px;
 }
 
-section{
+section {
   padding: 20px 40px;
   background-color: @white;
-  .box-shadow(2px 2px 4px;.5);
-  .border-radius(4px);
-  border:1px solid @gray;
+  .box-shadow(2px 2px 4px; .5);
+  .border-radius(0);
+  border: 1px solid @gray;
 }
+
 section .half {
   width: 49%;
   box-sizing: border-box;
@@ -38,6 +54,7 @@ form.tk-loading {
 }
 
 #client-detail-section {
+  min-height: 300px;
   h1 {
     font-size: 2em;
   }
@@ -149,12 +166,12 @@ input[disabled] {
       background-color: transparent;
       border: 1px solid darken(@white, 10);
     }
-    th{
-      border-left-width:0;
-      width:80px;
+    th {
+      border-left-width: 0;
+      width: 80px;
     }
-    td{
-      border-right-width:0;
+    td {
+      border-right-width: 0;
     }
     tr:nth-child(even) {
       th, td {
@@ -162,9 +179,8 @@ input[disabled] {
       }
     }
     caption {
-      position: relative;
       padding: 10px 0;
-      color:@gray;
+      color: @gray;
       font-weight: bold;
       input, label {
         font-size: 1.25em;
@@ -194,8 +210,106 @@ input[disabled] {
   }
 
 }
-#new-system-btn{
-  width:300px;
+
+#new-system-btn {
+  width: 300px;
   margin: 5px auto;
-  font-size:1.5em;
+  font-size: 1.5em;
+}
+
+aside {
+  z-index: 500;
+  width: 300px;
+  min-height: 200px;
+  &.stick-left {
+    left: 0;
+  }
+  .block-list-header {
+    .border-radius(0);
+  }
+  .block-list {
+    li {
+      background-color: fadeout(@white, 4);
+    }
+  }
+
+  .block-list-item-control {
+    display: none;
+  }
+
+  .tv-label {
+    > div {
+      > .detail-link {
+        opacity: .2;
+        display: inline-block;
+        padding: 7px 9px;
+        top: 0;
+        right: 0;
+        height: 100%;
+        box-sizing: border-box;
+        border-left: 1px solid transparent;
+      }
+      > .block-list-item-control {
+        opacity: 0.4;
+        a {
+          .box-shadow(50%);
+          display: inline-block;
+          &:hover {
+            background-color: fadeout(@yellow, 20);
+            .box-shadow(0 0 10px fadeout(@yellow, 30));
+          }
+        }
+      }
+    }
+    input[type="text"] {
+      width: 200px;
+    }
+    &:hover {
+      > div {
+        > .block-list-item-control {
+          opacity: 8;
+        }
+        > .detail-link {
+          opacity: 1;
+          &:hover {
+            @back: lighten(@blue, 30);
+            border-left-color: darken(@back, 5);
+            background-color: @back;
+          }
+        }
+      }
+    }
+  }
+
+  .tv-selected > .tv-label,
+  .tv-selected > .tv-label:active {
+    z-index: 100;
+    > div > .detail-link {
+      opacity: 1;
+      background-color: #704AFF;
+    }
+  }
+  .current-client > .tv-label{
+    @back:#338;
+    background-color: @back;
+    border-color:@back;
+    color:@white;
+    .detail-link {
+      display: none !important;
+    }
+  }
+
+  #client-list-section {
+    margin: 0;
+    padding: 0;
+    min-height: 300px;
+    background-color: @white;
+    .box-shadow(none);
+  }
+  .tv-children {
+    padding-left: 30px;
+  }
+}
+textarea{
+  height: 60px;
 }

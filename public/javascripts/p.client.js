@@ -7,20 +7,11 @@
  *  Hbs : handlebars
  *
  */
-(function ($) {
-    Array.prototype.contains = function (val) {
-        var s = this, hit = false;
-        for (var i = 0; i < s.length; i++) {
-            hit = s[i] === val;
-            if (hit) return true;
-        }
-        return false;
-    };
+(function ($, l, Hbs) {
 
-
+    var tv = $.treeview;
     var tmpl = {
-        clientLi: Handlebars.templates['client-list-item'],
-        departmentLi: Handlebars.templates['department-list-item']
+        liContent: Hbs.templates['client-list-item']
     };
     $.fn.extend({
         editableForm: function (mode) {
@@ -142,38 +133,189 @@
             ul.find('li').systemListItem();
             return ul;
         },
-        clientProductForm: function (data, callback) {
+        clientSearchForm: function (callback) {
             var form = $(this);
-            if (!form.hasClass('ajax-form')) {
-                form
-                    .addClass('ajax-form')
-                    .ajaxForm(function (data) {
-                        callback(data.model);
-                    })
-                    .find(':checkbox').change(function () {
-                        form.submit();
-                    });
-            }
-            form.findByName('_id').val(data._id);
-            var salesman_ids = data.salesman_ids && data.salesman_ids.split(',') || [];
-            form.findByName('salesman_ids').each(function () {
-                var checkbox = this,
-                    $checkbox = $(checkbox);
-                checkbox.checked = salesman_ids.contains($checkbox.val());
-            });
+            form.searchForm(callback);
             return form;
+        },
+        clientListItem: function () {
+            var li = $(this)
+                .destroyableListItem()
+                .editableListItem('__never_call__');
+
+            function getForm(li) {
+                return li.children('.tv-label').findByName('edit-form');
+            }
+
+            li.children('.tv-label').dblclick(function () {
+                var link = $(this).findByRole('detail-link').attr('href');
+                if (link) location.href = link;
+            });
+
+            getForm(li)
+                .submit(function (e) {
+                    e.stopPropagation();
+                })
+                .findByRole('editable-text')
+                .keydown(function (e) {
+                    var text = $(this);
+                    switch (e.keyCode) {
+                        case $.ui.keyCode.ENTER:
+                            text.change();
+                            break;
+                    }
+                });
+            li
+                .on('tv-drop', function (e) {
+                    e.stopPropagation();
+
+
+                    var li = $(this),
+                        parent = li.parent('.tv-children').parent('li'),
+                        parentForm = getForm(parent),
+                        parentId = parentForm.findByName('_id').val(),
+                        children_ids = [];
+
+                    li.siblings('li').add(li).each(function () {
+                        var child = $(this),
+                            childForm = getForm(child),
+                            childId = childForm.findByName('_id').val();
+                        children_ids.push(childId);
+                    });
+                    var form = getForm(li);
+                    form.findByName('parent_id').val(parentId);
+                    form.submit();
+                    setTimeout(function () {
+                        parentForm.findByName('children_ids').val(JSON.stringify(children_ids));
+                        parentForm.submit();
+                    }, 100);
+                });
+            li.find(':text').keydown(function (e) {
+                e.stopPropagation();
+            })
+            return  li;
+        },
+        clientList: function (data) {
+            var ul = $(this);
+            var items = data.map(function createItem(data) {
+                var children_ids = $.parseJSONSafely(data.children_ids);
+                data.group = !!children_ids;
+                var html = tmpl.liContent(data);
+                var item = new tv.Item(html);
+                item.data = {
+                    children_ids: children_ids,
+                    _id: data._id
+                };
+                return  item;
+            });
+
+            items = (function makeHierarchy(array) {
+                var hash = {};
+                array.forEach(function (item) {
+                    var data = item.data;
+                    hash[data._id] = item;
+                    return item;
+                });
+                array.forEach(function (item) {
+                    var data = item.data,
+                        _id = data._id,
+                        children_ids = data.children_ids;
+                    if (children_ids) {
+                        var children = children_ids
+                            .map(function (child_id) {
+                                var child = hash[child_id];
+                                if (!child) return null;
+                                child.data.parent_id = _id;
+                                return  child;
+                            })
+                            .filter(function (child) {
+                                return !!child;
+                            });
+                        item.children(children);
+                    }
+                });
+                return array.filter(function (item) {
+                    return !item.data.parent_id;
+                });
+            })(items);
+
+            ul.treeview(items, {
+                action: function (selected) {
+                    var link = selected.findByRole('detail-link').attr('href');
+                    if (link) location.href = link;
+                }
+            });
+            ul
+                .find('li')
+                .clientListItem();
+            return ul;
+        },
+        clientListSection: function () {
+            var section = $(this),
+                addBtn = section.findByRole('add-btn'),
+                ul = section.find('#client_list'),
+                searchForm = section.findByRole('search-form');
+            addBtn.click(function () {
+                var group = $(this).data('group'),
+                    html = tmpl.liContent({
+                        group: group,
+                        children_ids: group ? '[]' : undefined
+                    }),
+                    item = new tv.Item(html)
+                        .children(group ? [] : null);
+                ul.append(item.toHTML());
+                ul.treeview('reload');
+                ul
+                    .find('.tk-editable-text').removeClass('tk-editable-text')
+                    .end();
+                ul
+                    .find('.tk-editable-label').remove()
+                    .end();
+                ul
+                    .find('li').clientListItem();
+            });
+            searchForm.clientSearchForm(function (data) {
+                ul.clientList(data);
+                var selectedClient = $('#client-select').val();
+
+                var li = $('#client-li-content-' + selectedClient).parent('label').parent('li');
+                li
+                    .addClass('tv-selected')
+                    .addClass('current-client');
+            }).submit();
+
+            var editBtn = $('#client-list-edit-btn'),
+                editDoneBtn = $('#client-list-edit-done-btn').hide();
+            editBtn.click(function () {
+                $('.detail-link', section).hide();
+                $('.block-list-item-control', section).show();
+                editDoneBtn.show();
+                editBtn.hide();
+            });
+            editDoneBtn.click(function () {
+                $('.detail-link', section).show();
+                $('.block-list-item-control', section).hide();
+                editBtn.show();
+                editDoneBtn.hide();
+            });
+            ul.on('edit-done', function () {
+                editDoneBtn.click();
+            });
+            return section;
         }
     })
     ;
 
     $(function () {
-        var body = $(document.body);
+        var body = $(document.body),
+            aside = $('aside', body);
         $('#client-detail-section', body).clientDetailSection();
+
+        $('#client-list-section', aside).clientListSection();
 
 
 //        $('#edit-btn').click(); //FIXME;
 
 
     });
-})
-    (jQuery);
+})(jQuery, window['l'], Handlebars);

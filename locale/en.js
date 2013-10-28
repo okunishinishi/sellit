@@ -23,6 +23,7 @@ err.page_not_found = 'sorry! page not found';
 var btn = exports.btn = {};
 btn.new = 'new';
 btn.edit = 'edit';
+btn.done = 'done';
 btn.save = 'save';
 btn.cancel = 'cancel';
 btn.remove = 'remove';
@@ -53,6 +54,9 @@ lbl.code = 'code';
 lbl.scale = 'scale';
 lbl.scale_unit = 'man-month';
 lbl.provider ='provider';
+lbl.login = 'login';
+lbl.username = 'username';
+lbl.passowrd = 'password';
 
 var plh = exports.plh = {};
 plh.search = lbl.search;

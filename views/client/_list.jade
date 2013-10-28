@@ -1,10 +1,12 @@
 section.list-section#client-list-section
     form#client-list-form.block-list-header(
     data-role='search-form',action='/api/client.json',method='get')
-        input(type='search', name='search_word', placeholder=l.plh.search).float-right
+        input(type='search', name='search_word', placeholder=l.plh.search, results).float-left
         input(type='hidden', name='skip', value='0')
         input(type='hidden', name='limit', value='500')
         input.btn(type='submit')=l.lbl.search
+        a.btn.float-right#client-list-edit-btn=l.btn.edit
+        a.btn.float-right#client-list-edit-done-btn=l.btn.done
         br.clear
     ul#client_list.no-style-list
 
