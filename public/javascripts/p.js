@@ -19,6 +19,7 @@
         return ctx ? '/' + ctx : '';
     });
 
+
     $.extend({
         parseJSONSafely: function (string) {
             if (!string) return string;

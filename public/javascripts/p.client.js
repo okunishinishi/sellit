@@ -95,7 +95,7 @@
                 selectListItem.each(function () {
                     var li = $(this),
                         text = li.find('a').text();
-                    var hit = text.match(input.val().trim());
+                    var hit = text.match($.trim(input.val()));
                     if (hit) {
                         li.show();
                     } else {
@@ -120,12 +120,12 @@
                 })
                 .keydown(function (e) {
                     var KEY = $.ui.keyCode;
+                    var selected = selectListItem.filter('.selected:visible');
                     switch (e.keyCode) {
                         case KEY.ENTER:
-                            selectListItem.filter('.selected:visible').find('a').click();
+                            selected.find('a').click();
                             break;
                         case KEY.UP:
-                            var selected = selectListItem.filter('.selected:visible');
                             var prev = selected.prev(':visible');
                             if (prev.size()) {
                                 selectListItem
@@ -134,7 +134,6 @@
                             }
                             break;
                         case KEY.DOWN:
-                            var selected = selectListItem.filter('.selected:visible');
                             if (selected.size()) {
                                 var next = selected.next(':visible');
                                 if (next.size()) {
@@ -151,6 +150,7 @@
                     }
                 })
                 .textchange(function () {
+                    selectList.show();
                     input.filterSelect();
                 });
 
