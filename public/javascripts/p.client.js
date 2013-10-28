@@ -413,9 +413,5 @@
 
         $('#client-list-section', aside).clientListSection();
 
-
-        $('#edit-btn').click(); //FIXME;
-
-
     });
 })(jQuery, window['l'], Handlebars);
