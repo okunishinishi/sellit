@@ -1,3 +1,11 @@
+mixin system(index, data)
+    dt
+        input(type='hidden', name='systems[#{index}].index')
+        input(type='text', data-role='editable-text',
+                value=data.name,
+                name='systems[#{index}].name').full-width.large-input
+    dd
+
 section#client-detail-section.positioned
     a.float-right#edit-btn(href='javascript:void(0)')
         i.icon.icon-pencil
@@ -37,11 +45,17 @@ section#client-detail-section.positioned
                 br.clear
 
                 h3=l.lbl.systems
-                dl#system-list
-                    dt
-                    input(type='text', data-role='editable-text', name='system.name').full-width.large-input
-                    dd
 
+                dl#system-list
+                    for system in selected_client.systems
+                        +system(system.index, system)
+                    +system(0,"a")
+                    +system(1,"b")
+                    +system(2,"c")
+
+                a#new-system-btn.wide-btn(href='javascript:void(0)')=l.btn.new
+
+                br.clear
                 br.clear
                 input#save-btn.btn.wide-btn(type="submit", value=l.btn.save)
 
