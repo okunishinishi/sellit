@@ -141,6 +141,8 @@
                     .findByRole('submit-btn')
                     .click(function () {
                         var btn = $(this);
+                        if (btn.data('destroy-form-submit-btn')) return;
+                        btn.data('destroy-form-submit-btn', true);
                         if (showDialog) {
                             var name = li.findByName('name').val();
                             $.confirmRemove(name, function () {
