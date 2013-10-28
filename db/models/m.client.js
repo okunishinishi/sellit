@@ -12,6 +12,7 @@ var tek = require('tek'),
 
 var Client = module.exports = defineModel({
     //properties
+    systems: []
 });
 
 Client.schema = new Schema({

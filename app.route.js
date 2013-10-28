@@ -61,10 +61,3 @@ post('/api/rival/save', rival.api.save);
 post('/api/rival/destroy', rival.api.destroy);
 get('/api/rival.json', rival.api.list);
 get('/api/rival/:_id', rival.api.one);
-
-var system = r['system'];
-get('/system', system.index);
-post('/api/system/save', system.api.save);
-post('/api/system/destroy', system.api.destroy);
-get('/api/system.json', system.api.list);
-get('/api/system/:_id', system.api.one);

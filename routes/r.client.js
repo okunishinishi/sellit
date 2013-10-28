@@ -5,8 +5,7 @@ var tek = require('tek'),
     util = require('../util'),
     toIdMap = util['obj']['toIdMap'],
     findAllModels = util['mdl']['findAllModels'],
-    Salesman = db.models['Salesman'],
-    System = db.models['System'];
+    Salesman = db.models['Salesman'];
 
 
 /**
@@ -64,11 +63,9 @@ exports.index = function (req, res) {
         return ids;
     }
 
-    findAllModels([System, Salesman], function (systems, salesmen) {
-        client.system_ids = ids_string(client.system_ids);
+    findAllModels([Salesman], function (salesmen) {
         client.salesman_ids = ids_string(client.salesman_ids);
         res.render('client/index.jade', {
-            systems: systems,
             salesmen: salesmen,
             selected_client: client
         });

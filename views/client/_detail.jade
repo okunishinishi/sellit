@@ -35,18 +35,12 @@ section#client-detail-section.positioned
                                 span=salesman.name
 
                 br.clear
+
+                h3=l.lbl.systems
                 dl#system-list
-                    for system in systems
-                        dt
-                            label.checkable-label(for="system-#{system._id}")
-                                input(
-                                name='system_ids',
-                                type="checkbox",
-                                checked=selected_client.system_ids.match(system._id)
-                                id="system-#{system._id}",
-                                value=system._id)
-                                span=system.name
-                        dd
+                    dt
+                    input(type='text', data-role='editable-text', name='system.name').full-width.large-input
+                    dd
 
                 br.clear
                 input#save-btn.btn.wide-btn(type="submit", value=l.btn.save)
