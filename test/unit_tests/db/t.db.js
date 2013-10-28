@@ -5,7 +5,7 @@
  */
 
 var should = require('should'),
-    db = require('../../.');
+    db = require('../../../db');
 
 exports.tearDown = function (done) {
     db.close();

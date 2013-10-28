@@ -4,7 +4,9 @@ var tek = require('tek'),
     Client = db.models['Client'],
     Rival = db.models['Rival'],
     util = require('../util'),
-    toIdMap = util['obj']['toIdMap'],
+    obj = util.obj,
+    toIdMap = obj['toIdMap'],
+    distinctAttr = obj['distinctAttr'],
     findAllModels = util['mdl']['findAllModels'],
     Salesman = db.models['Salesman'];
 
@@ -64,13 +66,22 @@ exports.index = function (req, res) {
         return ids;
     }
 
+    var system_names = [].concat((res.locals.clients || [])
+        .map(function (client) {
+            return distinctAttr(client.systems || [], 'name')
+        })
+        .reduce(function (a, b) {
+            return a.concat(b);
+        }));
+
     findAllModels([Salesman, Rival], function (salesmen, rivals) {
         client.salesman_ids = ids_string(client.salesman_ids);
         res.render('client/index.jade', {
             salesmen: salesmen,
             rivals: rivals,
             selected_client: client,
-            rainbow: util.color.rainbow(.2, .9, 40)
+            rainbow: util.color.rainbow(.2, .9, 40),
+            system_names:system_names
         });
     });
 };

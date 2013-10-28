@@ -9,3 +9,13 @@ exports.toIdMap = function (data) {
     });
     return result;
 };
+
+
+exports.distinctAttr = function (data, key) {
+    if (!key) return null;
+    var attrs = {};
+    data && data.map(function (data) {
+        attrs[data[key]] = true;
+    });
+    return Object.keys(attrs);
+};
