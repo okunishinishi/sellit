@@ -185,5 +185,6 @@
         $('#client-list-section', body).clientListSection();
 
         $('#large-logo').largeLogo();
+
     });
 })(jQuery, window['l'], Handlebars);

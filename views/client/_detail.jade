@@ -22,6 +22,15 @@ mixin system(index, data)
                     input(type='text', name='systems[#{index}].scale', value=data.scale)
             tr
                 th
+                    label=l.lbl.provider
+                td
+                    select
+                        option(value='')=l.plh.provider
+                        for rival in rivals
+                            option(value=rival._id)=rival.name
+
+            tr
+                th
                     label=l.lbl.freeword
                 td
                     textarea(name='systems[#{index}].freeword', value=data.freeword)

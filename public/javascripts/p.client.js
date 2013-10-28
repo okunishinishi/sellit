@@ -106,7 +106,7 @@
                             var input = $(this),
                                 name = input.attr('name');
                             input.attr({
-                                name: name.replace(/\[.*\]/, "[" + i + "]")
+                                name: name && name.replace(/\[.*\]/, "[" + i + "]")
                             });
                         });
                     }

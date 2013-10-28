@@ -51,12 +51,14 @@ lbl.rival = 'rival';
 lbl.freeword = 'free word';
 lbl.code = 'code';
 lbl.scale = 'scale';
+lbl.provider ='provider';
 
 var plh = exports.plh = {};
 plh.search = lbl.search;
 plh.client_name = lbl.client_name;
 plh.client_description = lbl.client_description;
 plh.system_name = lbl.system_name;
+plh.provider = ['--', lbl.provider, '--'].join(' ');
 
 var alt = exports.alt = {};
 alt.sure = 'Are your sure?';

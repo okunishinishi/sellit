@@ -2,6 +2,7 @@ var tek = require('tek'),
     copy = tek['meta']['copy'],
     db = require('../db'),
     Client = db.models['Client'],
+    Rival = db.models['Rival'],
     util = require('../util'),
     toIdMap = util['obj']['toIdMap'],
     findAllModels = util['mdl']['findAllModels'],
@@ -63,10 +64,11 @@ exports.index = function (req, res) {
         return ids;
     }
 
-    findAllModels([Salesman], function (salesmen) {
+    findAllModels([Salesman,Rival], function (salesmen, rivals) {
         client.salesman_ids = ids_string(client.salesman_ids);
         res.render('client/index.jade', {
             salesmen: salesmen,
+            rivals:rivals,
             selected_client: client
         });
     });
