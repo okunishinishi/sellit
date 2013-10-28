@@ -4,7 +4,8 @@
 body {
   padding: 28px 0;
 }
-.paper-content{
+
+.paper-content {
   padding: 5px 0 0;
 }
 
@@ -289,11 +290,11 @@ aside {
       background-color: #704AFF;
     }
   }
-  .current-client > .tv-label{
-    @back:#338;
+  .current-client > .tv-label {
+    @back: #338;
     background-color: @back;
-    border-color:@back;
-    color:@white;
+    border-color: @back;
+    color: @white;
     .detail-link {
       display: none !important;
     }
@@ -310,6 +311,41 @@ aside {
     padding-left: 30px;
   }
 }
-textarea{
+
+textarea {
   height: 60px;
+}
+
+#system-name-select-list {
+  position: absolute;
+  @back: @white;
+  text-align: left;
+  background-color: @back;
+  .box-shadow(2px 2px 4px; 0.5);
+  z-index: 20000;
+  li {
+    padding: 0;
+    border: 1px solid darken(@back, 8);
+    margin: 0 0 -1px;
+    width: 100%;
+    display: block;
+    &.selected {
+      a {
+        background-color: @highlight;
+        color: @white;
+      }
+    }
+  }
+  @highlight: @blue;
+  a {
+    display: block;
+    padding: 4px 8px;
+    color: @gray;
+    &:hover {
+      background-color: @highlight;
+      color: @white;
+      text-decoration: none;
+    }
+  }
+
 }

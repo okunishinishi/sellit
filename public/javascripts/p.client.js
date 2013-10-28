@@ -87,6 +87,90 @@
             $('#system-list', section).systemList();
             return section;
         },
+        selectableText: function (selectList) {
+            var input = $(this),
+                selectListItem = selectList.find('li');
+
+            input.filterSelect = function () {
+                selectListItem.each(function () {
+                    var li = $(this),
+                        text = li.find('a').text();
+                    var hit = text.match(input.val().trim());
+                    if (hit) {
+                        li.show();
+                    } else {
+                        li.hide();
+                    }
+                });
+            };
+            input
+                .focus(function () {
+                    selectList.data('selectable-text-active', input);
+                    input.after(selectList);
+                    var o = input.position();
+                    selectList.show()
+                        .css({
+                            left: o.left,
+                            top: o.top + input.outerHeight(true),
+                            width: input.outerWidth()
+                        })
+                        .find('li')
+                        .show();
+                    input.filterSelect();
+                })
+                .keydown(function (e) {
+                    var KEY = $.ui.keyCode;
+                    switch (e.keyCode) {
+                        case KEY.ENTER:
+                            selectListItem.filter('.selected:visible').find('a').click();
+                            break;
+                        case KEY.UP:
+                            var selected = selectListItem.filter('.selected:visible');
+                            var prev = selected.prev(':visible');
+                            if (prev.size()) {
+                                selectListItem
+                                    .not(prev).removeClass('selected');
+                                prev.addClass('selected');
+                            }
+                            break;
+                        case KEY.DOWN:
+                            var selected = selectListItem.filter('.selected:visible');
+                            if (selected.size()) {
+                                var next = selected.next(':visible');
+                                if (next.size()) {
+                                    selectListItem
+                                        .not(next).removeClass('selected');
+                                    next.addClass('selected');
+                                }
+                            } else {
+                                selectList.show();
+                                selectListItem.filter('selected').removeClass('selected');
+                                selectListItem.filter(':visible').first().addClass('selected');
+                            }
+                            break;
+                    }
+                })
+                .textchange(function () {
+                    input.filterSelect();
+                });
+
+            if (!selectList.data('selectable-text-select-list')) {
+                selectList.data('selectable-text-select-list', true);
+                selectList.find('a').click(function () {
+                    var a = $(this),
+                        text = a.text();
+                    selectList.data('selectable-text-active')
+                        .val(text);
+                    selectList.hide();
+                });
+            }
+            return input;
+        },
+        systemNameInput: function () {
+            var input = $(this),
+                selectList = $('#system-name-select-list');
+            return input.selectableText(selectList);
+        },
         systemListItem: function () {
             return $(this).each(function () {
                 var li = $(this),
@@ -97,6 +181,8 @@
                         li.remove();
                     });
                 });
+                li.find('.system-name-input')
+                    .systemNameInput();
             });
         },
         systemList: function () {
@@ -156,12 +242,12 @@
                 .on('edit-done', function (e) {
                     var form = $(this);
                     form.find(':text').each(function () {
-                            var text = $(this),
-                                val = text.val();
-                            text.attr({
-                                value: val
-                            });
+                        var text = $(this),
+                            val = text.val();
+                        text.attr({
+                            value: val
                         });
+                    });
                 })
                 .submit(function (e) {
                     e.stopPropagation();
@@ -328,7 +414,7 @@
         $('#client-list-section', aside).clientListSection();
 
 
-//        $('#edit-btn').click(); //FIXME;
+        $('#edit-btn').click(); //FIXME;
 
 
     });

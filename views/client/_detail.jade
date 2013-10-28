@@ -9,7 +9,7 @@ mixin system(index, data)
                     input(type='text', data-role='editable-text',
                     placeholder=l.plh.system_name,
                     value=data.name,
-                    name='systems[#{index}].name')
+                    name='systems[#{index}].name').system-name-input
 
                 thead
                 tbody
@@ -33,7 +33,7 @@ mixin system(index, data)
                             option(value='')
                             for rival in rivals
                                 option(value=rival._id,
-                                    selected=rival._id==data.provider
+                                selected=rival._id==data.provider
                                 )=rival.name
 
                 tr
@@ -95,5 +95,10 @@ section#client-detail-section.positioned
                 br.clear
             br.clear
             input#save-btn.btn.primary-btn.wide-btn(type="submit", value=l.btn.save)
+
+    ul#system-name-select-list.no-style-list.hidden
+        for system_name in system_names
+            li
+                a(href='javascript:void(0)')=system_name
 
 
