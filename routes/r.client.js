@@ -64,12 +64,13 @@ exports.index = function (req, res) {
         return ids;
     }
 
-    findAllModels([Salesman,Rival], function (salesmen, rivals) {
+    findAllModels([Salesman, Rival], function (salesmen, rivals) {
         client.salesman_ids = ids_string(client.salesman_ids);
         res.render('client/index.jade', {
             salesmen: salesmen,
-            rivals:rivals,
-            selected_client: client
+            rivals: rivals,
+            selected_client: client,
+            rainbow: util.color.rainbow(.2, .9, 40)
         });
     });
 };

@@ -9,6 +9,13 @@
   margin: 0 5px;
 }
 
+section{
+  padding: 20px 40px;
+  background-color: @white;
+  .box-shadow(2px 2px 4px;.5);
+  .border-radius(4px);
+  border:1px solid @gray;
+}
 section .half {
   width: 49%;
   box-sizing: border-box;
@@ -84,8 +91,12 @@ form.tk-loading {
         display: none;
       }
     }
+
   }
   &[data-mode="view"] {
+    #new-system-btn {
+      display: none;
+    }
     #client-detail-form-cover {
       display: block;
     }
@@ -101,6 +112,9 @@ form.tk-loading {
       text-indent: 0.01px;
       text-overflow: '';
       overflow: hidden;
+    }
+    .remove-btn {
+      display: none;
     }
   }
 }
@@ -122,21 +136,66 @@ input[disabled] {
 #system-list {
   li {
     list-style: none;
-    @back: @white;
-    border: 1px solid darken(@back, 4);
-    .border-radius(4px);
-    margin: 5px 10px;
-    background-color: @back;
-    .box-shadow(2px 2px 4px; .4);
-    width:400px;
+    position: relative;
+    margin: 10px 20px 30px;
+    width: 420px;
     float: left;
+    h3 {
+      margin: 0;
+
+    }
+    th, td {
+      background-image: none;
+      background-color: transparent;
+      border: 1px solid darken(@white, 10);
+    }
+    th{
+      border-left-width:0;
+      width:80px;
+    }
+    td{
+      border-right-width:0;
+    }
+    tr:nth-child(even) {
+      th, td {
+        background-color: darken(@white, 2);
+      }
+    }
+    caption {
+      position: relative;
+      padding: 10px 0;
+      color:@gray;
+      font-weight: bold;
+      input, label {
+        font-size: 1.25em;
+      }
+    }
+    &:hover {
+      .remove-btn {
+        opacity: 0.3;
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
   }
-  th{
-    background-image: none;
+  .remove-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 4px 10px;
+    @h: 42px;
+    font-size: @h;
+    line-height: @h;
+    height: @h;
+    .border-radius(0);
+    .box-shadow(none);
+    opacity: 0.2;
   }
-  caption{
-    @back:@white;
-    .linear-gradient(@back, darken(@back,20));
-    padding:10px 0;
-  }
+
+}
+#new-system-btn{
+  width:300px;
+  margin: 5px auto;
+  font-size:1.5em;
 }

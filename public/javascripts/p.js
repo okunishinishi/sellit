@@ -20,6 +20,15 @@
     });
 
     $.extend({
+        parseJSONSafely: function (string) {
+            if (!string) return string;
+            try {
+                return $.parseJSON(string);
+            } catch (e) {
+                console.warn('failed to parse string:', string);
+                return null;
+            }
+        },
         confirmRemove: function (name, callback) {
             var tmpl = Hbs.templates['confirm-dialog'],
                 html = tmpl({
@@ -57,7 +66,13 @@
                 dialog.remove();
                 callback && callback();
             });
-
+        },
+        randomColor: function (saturation, value) {
+            return $.color('#ff0000')
+                .hue(Math.random(), true)
+                .saturation(saturation, true)
+                .value(value, true)
+                .hex();
         }
     });
     $.fn.extend({

@@ -16,6 +16,8 @@
         }
         return false;
     };
+
+
     var tmpl = {
         clientLi: Handlebars.templates['client-list-item'],
         departmentLi: Handlebars.templates['department-list-item']
@@ -94,6 +96,18 @@
             $('#system-list', section).systemList();
             return section;
         },
+        systemListItem: function () {
+            return $(this).each(function () {
+                var li = $(this),
+                    removeBtn = li.findByRole('remove-btn');
+                removeBtn.click(function () {
+                    var name = li.find('caption').find(':text').val();
+                    $.confirmRemove(name, function () {
+                        li.remove();
+                    });
+                });
+            });
+        },
         systemList: function () {
             var ul = $(this),
                 addBtn = $('#new-system-btn'),
@@ -109,16 +123,23 @@
                                 name: name && name.replace(/\[.*\]/, "[" + i + "]")
                             });
                         });
+
                     }
                 );
             }
 
             addBtn.click(function () {
-                ul.append(tmpl);
+                var li = ul.append(tmpl)
+                    .find('li')
+                    .last();
+                li.systemListItem();
                 reindex();
+                li.find('caption').find(':text').focus();
             });
 
             reindex();
+
+            ul.find('li').systemListItem();
             return ul;
         },
         clientProductForm: function (data, callback) {
@@ -150,7 +171,7 @@
         $('#client-detail-section', body).clientDetailSection();
 
 
-        $('#edit-btn').click(); //FIXME;
+//        $('#edit-btn').click(); //FIXME;
 
 
     });

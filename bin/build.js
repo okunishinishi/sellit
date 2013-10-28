@@ -36,7 +36,8 @@ var config = require('../app.config'),
 })([
         'tek.js',
         'tek.view.js',
-        'jquery.treeview.js'
+        'jquery.treeview.js',
+        'one-color.js'
     ]);
 
 (function (less_filenames) {

@@ -1,40 +1,49 @@
 mixin system(index, data)
-    li
-        input(type='hidden', name='systems[#{index}].index')
-        table.full-width
-            caption
-                input(type='text', data-role='editable-text',
-                        placeholder=l.plh.system_name,
-                        value=data.name,
-                        name='systems[#{index}].name')
+    li.paper
+        .paper-content
+            h3=index
+            input(type='hidden', name='systems[#{index}].index', value=data.index)
+            table.full-width
+                caption
+                    a.btn.remove-btn(href='javascript:void(0)',data-role='remove-btn') &times;
+                    input(type='text', data-role='editable-text',
+                    placeholder=l.plh.system_name,
+                    value=data.name,
+                    name='systems[#{index}].name')
 
-            thead
-            tbody
-            tr
-                th
-                    label=l.lbl.code
-                td
-                    input(type='text', name='systems[#{index}].code', value=data.code)
-            tr
-                th
-                    label=l.lbl.scale
-                td
-                    input(type='text', name='systems[#{index}].scale', value=data.scale)
-            tr
-                th
-                    label=l.lbl.provider
-                td
-                    select
-                        option(value='')=l.plh.provider
-                        for rival in rivals
-                            option(value=rival._id)=rival.name
+                thead
+                tbody
+                tr
+                    th
+                        label=l.lbl.code
+                    td
+                        input(type='text', name='systems[#{index}].code', value=data.code)
+                tr
+                    th
+                        label=l.lbl.scale
+                    td
+                        input(type='number', name='systems[#{index}].scale', value=data.scale)
+                        small
+                            i=l.lbl.scale_unit
+                tr
+                    th
+                        label=l.lbl.provider
+                    td
+                        select(name='systems[#{index}].provider')
+                            option(value='')
+                            for rival in rivals
+                                option(value=rival._id,
+                                    selected=rival._id==data.provider
+                                )=rival.name
 
-            tr
-                th
-                    label=l.lbl.freeword
-                td
-                    textarea(name='systems[#{index}].freeword', value=data.freeword)
-
+                tr
+                    th
+                        label=l.lbl.freeword
+                    td
+                        textarea.full-width(name='systems[#{index}].freeword',
+                        placeholder=l.plh.freeword,
+                        value=data.freeword)
+            br.clear
 
 
 section#client-detail-section.positioned
@@ -48,34 +57,34 @@ section#client-detail-section.positioned
     form#client-detail-form(method='post', action='/api/client/save'
     )
         #client-detail-form-cover.cover
-        .posotioned.paper
-            .paper-content
-
-                input(type='hidden', name='_id', value=selected_client._id)
-                h1
-                    input(type='text', data-role='editable-text', name='name', value=selected_client.name).full-width.large-input
+        .posotioned
 
 
-                div.half.float-left
-                    table.wide-table
-                        tbody
+            input(type='hidden', name='_id', value=selected_client._id)
+            h1
+                input(type='text', data-role='editable-text', name='name', value=selected_client.name).full-width.large-input
 
-                div.half.float-right
-                    fieldset#salesman-fieldset
-                        legend=l.lbl.salesman
-                        for salesman in salesmen
-                            label.checkable-label(for="salesman-#{salesman._id}")
-                                input(
-                                name='salesman_ids',
-                                type="checkbox",
-                                checked=selected_client.salesman_ids.match(salesman._id)
-                                id="salesman-#{salesman._id}",
-                                value=salesman._id)
-                                span=salesman.name
 
-                br.clear
+            div.half.float-left
+                table.wide-table
+                    tbody
 
-                h3=l.lbl.systems
+            div.half.float-right
+                fieldset#salesman-fieldset
+                    legend=l.lbl.salesman
+                    for salesman in salesmen
+                        label.checkable-label(for="salesman-#{salesman._id}")
+                            input(
+                            name='salesman_ids',
+                            type="checkbox",
+                            checked=selected_client.salesman_ids.match(salesman._id)
+                            id="salesman-#{salesman._id}",
+                            value=salesman._id)
+                            span=salesman.name
+            br.clear
+
+            fieldset
+                legend=l.lbl.systems
 
                 ul#system-list.no-style-list
                     for system in selected_client.systems
@@ -85,10 +94,11 @@ section#client-detail-section.positioned
                 div#system-list-item-tmpl.hidden
                     +system('',"c")
                 br.clear
-                a#new-system-btn.add-btn.wide-btn(href='javascript:void(0)')=l.btn.new
+                a#new-system-btn.add-btn.wide-btn(
+                href='javascript:void(0)') + #{l.btn.new} #{l.lbl.system}
 
                 br.clear
-                br.clear
-                input#save-btn.btn.wide-btn(type="submit", value=l.btn.save)
+            br.clear
+            input#save-btn.btn.wide-btn(type="submit", value=l.btn.save)
 
 
