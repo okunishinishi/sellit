@@ -153,6 +153,16 @@
             });
 
             getForm(li)
+                .on('edit-done', function (e) {
+                    var form = $(this);
+                    form.find(':text').each(function () {
+                            var text = $(this),
+                                val = text.val();
+                            text.attr({
+                                value: val
+                            });
+                        });
+                })
                 .submit(function (e) {
                     e.stopPropagation();
                 })
@@ -192,7 +202,7 @@
                 });
             li.find(':text').keydown(function (e) {
                 e.stopPropagation();
-            })
+            });
             return  li;
         },
         clientList: function (data) {
@@ -272,7 +282,9 @@
                     .find('.tk-editable-label').remove()
                     .end();
                 ul
-                    .find('li').clientListItem();
+                    .find('li').clientListItem()
+                    .find(':text:visible')
+                    .select();
             });
             searchForm.clientSearchForm(function (data) {
                 ul.clientList(data);
