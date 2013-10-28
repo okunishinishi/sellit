@@ -44,7 +44,6 @@ get('/master', master.index);
 post('/master/sort', master.sort);
 
 
-
 var chart = r['chart'];
 get('/chart', chart.index);
 
@@ -61,3 +60,6 @@ post('/api/rival/save', rival.api.save);
 post('/api/rival/destroy', rival.api.destroy);
 get('/api/rival.json', rival.api.list);
 get('/api/rival/:_id', rival.api.one);
+
+var login = r['login'];
+post('/login', login);

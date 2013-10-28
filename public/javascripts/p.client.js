@@ -289,12 +289,14 @@
             editBtn.click(function () {
                 $('.detail-link', section).hide();
                 $('.block-list-item-control', section).show();
+                $('#client-search-input', section).hide();
                 editDoneBtn.show();
                 editBtn.hide();
             });
             editDoneBtn.click(function () {
                 $('.detail-link', section).show();
                 $('.block-list-item-control', section).hide();
+                $('#client-search-input', section).show();
                 editBtn.show();
                 editDoneBtn.hide();
             });

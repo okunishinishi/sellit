@@ -1,10 +1,10 @@
 extends ../layout
 
 block stylesheets
-    link(rel='stylesheet', href='/stylesheets/system.css')
+    link(rel='stylesheet', href='/stylesheets/chart.css')
 
 block javascripts
-    script(src='/javascripts/p.system.js')
+    script(src='/javascripts/p.chart.js')
     script.
         (function($){
             $(function(){
@@ -12,3 +12,12 @@ block javascripts
             });
         })(jQuery);
 block content
+    table#data-table
+        tbody
+            for row in rows
+                tr
+                    th
+                        a(href=row[0].href)=row[0].text
+                    - for (var i = 1; i < row.length; ++i) {
+                        td=row[i]
+                    - }
