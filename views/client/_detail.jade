@@ -1,10 +1,32 @@
 mixin system(index, data)
-    dt
+    li
         input(type='hidden', name='systems[#{index}].index')
-        input(type='text', data-role='editable-text',
-                value=data.name,
-                name='systems[#{index}].name').full-width.large-input
-    dd
+        table.full-width
+            caption
+                input(type='text', data-role='editable-text',
+                        placeholder=l.plh.system_name,
+                        value=data.name,
+                        name='systems[#{index}].name')
+
+            thead
+            tbody
+            tr
+                th
+                    label=l.lbl.code
+                td
+                    input(type='text', name='systems[#{index}].code', value=data.code)
+            tr
+                th
+                    label=l.lbl.scale
+                td
+                    input(type='text', name='systems[#{index}].scale', value=data.scale)
+            tr
+                th
+                    label=l.lbl.freeword
+                td
+                    textarea(name='systems[#{index}].freeword', value=data.freeword)
+
+
 
 section#client-detail-section.positioned
     a.float-right#edit-btn(href='javascript:void(0)')
@@ -46,14 +68,15 @@ section#client-detail-section.positioned
 
                 h3=l.lbl.systems
 
-                dl#system-list
+                ul#system-list.no-style-list
                     for system in selected_client.systems
-                        +system(system.index, system)
-                    +system(0,"a")
-                    +system(1,"b")
-                    +system(2,"c")
+                        if system
+                            +system(system.index, system)
 
-                a#new-system-btn.wide-btn(href='javascript:void(0)')=l.btn.new
+                div#system-list-item-tmpl.hidden
+                    +system('',"c")
+                br.clear
+                a#new-system-btn.add-btn.wide-btn(href='javascript:void(0)')=l.btn.new
 
                 br.clear
                 br.clear

@@ -77,11 +77,11 @@ form.tk-loading {
     #client-detail-form-cover {
       display: none;
     }
-    .paper{
+    .paper {
       .box-shadow(none);
       &:before,
-      &:after{
-        display:none;
+      &:after {
+        display: none;
       }
     }
   }
@@ -119,11 +119,24 @@ input[disabled] {
   .box-shadow(none) !important;
 }
 
-#system-list{
-  dt{
-    font-size:1.25em;
-    color:@gray;
-    font-weight: bold;
+#system-list {
+  li {
+    list-style: none;
+    @back: @white;
+    border: 1px solid darken(@back, 4);
+    .border-radius(4px);
+    margin: 5px 10px;
+    background-color: @back;
+    .box-shadow(2px 2px 4px; .4);
+    width:400px;
+    float: left;
   }
-
+  th{
+    background-image: none;
+  }
+  caption{
+    @back:@white;
+    .linear-gradient(@back, darken(@back,20));
+    padding:10px 0;
+  }
 }

@@ -90,7 +90,36 @@
             var section = $(this),
                 form = $('#client-detail-form', section);
             form.clientDetailForm();
+
+            $('#system-list', section).systemList();
             return section;
+        },
+        systemList: function () {
+            var ul = $(this),
+                addBtn = $('#new-system-btn'),
+                tmpl = $('#system-list-item-tmpl').html();
+
+            function reindex() {
+                ul.find('li').each(function (i) {
+                        var li = $(this);
+                        li.find('input,select,textarea').each(function () {
+                            var input = $(this),
+                                name = input.attr('name');
+                            input.attr({
+                                name: name.replace(/\[.*\]/, "[" + i + "]")
+                            });
+                        });
+                    }
+                );
+            }
+
+            addBtn.click(function () {
+                ul.append(tmpl);
+                reindex();
+            });
+
+            reindex();
+            return ul;
         },
         clientProductForm: function (data, callback) {
             var form = $(this);
@@ -113,10 +142,17 @@
             });
             return form;
         }
-    });
+    })
+    ;
 
     $(function () {
         var body = $(document.body);
         $('#client-detail-section', body).clientDetailSection();
+
+
+        $('#edit-btn').click(); //FIXME;
+
+
     });
-})(jQuery);
+})
+    (jQuery);
