@@ -5,7 +5,7 @@ var tek = require('tek'),
     toIdMap = util['obj']['toIdMap'],
     db = require('../db'),
     models = db.models,
-    Product = models['Product'],
+    System = models['System'],
     Client = models['Client'];
 
 
@@ -16,23 +16,23 @@ var tek = require('tek'),
  * @param res
  */
 exports.index = function (req, res) {
-    findAllModels([Client, Product], function (clients, products) {
-        var productMap = toIdMap(products);
+    findAllModels([Client, System], function (clients, systems) {
+        var systemMap = toIdMap(systems);
         var rows = clients.map(function (client) {
-            var product_ids = client.product_ids || '';
-            if (product_ids instanceof Array) {
-                product_ids = product_ids.join(',');
+            var system_ids = client.system_ids || '';
+            if (system_ids instanceof Array) {
+                system_ids = system_ids.join(',');
             }
-            var products = product_ids.split(',').map(function (product_id) {
-                var product = productMap[product_id];
-                return product && product.name;
+            var systems = system_ids.split(',').map(function (system_id) {
+                var system = systemMap[system_id];
+                return system && system.name;
             });
             return [
                 {
                     text: client.name,
                     href: ['/client/' + client._id, 't=' + res.locals.time].join('?')
                 }
-            ].concat(products)
+            ].concat(systems)
         });
 
         res.render('chart/index.jade', {

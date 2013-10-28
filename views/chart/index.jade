@@ -1,10 +1,10 @@
 extends ../layout
 
 block stylesheets
-    link(rel='stylesheet', href='/stylesheets/chart.css')
+    link(rel='stylesheet', href='/stylesheets/system.css')
 
 block javascripts
-    script(src='/javascripts/p.chart.js')
+    script(src='/javascripts/p.system.js')
     script.
         (function($){
             $(function(){
@@ -12,29 +12,3 @@ block javascripts
             });
         })(jQuery);
 block content
-
-    table#chart-list-table.stripe-table
-        caption
-            span.center-lbl=l.lbl.chart_table
-            small.float-right.count-label
-                span=l.lbl.data_count
-                b=rows.length
-        thead
-            tr
-                th=l.lbl.client_name
-                th=l.lbl.products
-
-        tbody
-            for row in rows
-                tr
-                    for data in row
-                        if typeof(data) === 'string'
-                            td=data
-                        else
-                            td(data-sort_num=data.sort_num||'', data-color=data.color||'')
-                                if data.href
-                                    a(href=data.href)
-                                        span=data.text
-                                else
-                                    span=data.text
-

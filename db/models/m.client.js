@@ -18,7 +18,15 @@ Client.schema = new Schema({
     //schemas
 
 });
-
+Client.prototype.isGroup = function () {
+    var s = this;
+    try {
+        var children_ids = JSON.parse(s.children_ids);
+        return !!children_ids;
+    } catch (e) {
+        return '';
+    }
+};
 Client.prototype.validate = function () {
     var s = this;
     return Client.schema.validate(s);

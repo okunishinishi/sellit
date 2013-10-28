@@ -50,7 +50,9 @@ app.locals({
 app.all('*', function (req, res, next) {
     var Client = db.models.Client;
     Client.findByCondition({}, function (clients) {
-        res.locals.clients = clients;
+        res.locals.clients = clients.filter(function (client) {
+            return !client.isGroup();
+        });
         res.locals.time = new Date().getTime();
 
         //    var lang = util['lang'];
