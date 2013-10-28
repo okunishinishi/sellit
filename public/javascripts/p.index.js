@@ -39,7 +39,7 @@
             }
 
             li.children('.tv-label').dblclick(function(){
-                var link = li.children('.tv-label').findByRole('detail-link').attr('href');
+                var link = $(this).findByRole('detail-link').attr('href');
                 if(link) location.href = link;
             });
 
