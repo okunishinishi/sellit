@@ -105,11 +105,11 @@
                     });
             }
             form.findByName('_id').val(data._id);
-            var product_ids = data.product_ids && data.product_ids.split(',') || [];
-            form.findByName('product_ids').each(function () {
+            var salesman_ids = data.salesman_ids && data.salesman_ids.split(',') || [];
+            form.findByName('salesman_ids').each(function () {
                 var checkbox = this,
                     $checkbox = $(checkbox);
-                checkbox.checked = product_ids.contains($checkbox.val());
+                checkbox.checked = salesman_ids.contains($checkbox.val());
             });
             return form;
         }

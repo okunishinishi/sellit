@@ -43,6 +43,7 @@ lbl.client_description = 'description';
 lbl.system = 'system';
 lbl.chart_table = 'list data';
 lbl.data_count = 'count: ';
+lbl.system = 'system';
 lbl.salesman = 'salesman';
 lbl.rival = 'rival';
 

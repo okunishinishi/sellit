@@ -5,7 +5,8 @@ var tek = require('tek'),
     util = require('../util'),
     toIdMap = util['obj']['toIdMap'],
     findAllModels = util['mdl']['findAllModels'],
-    Product = db.models['Product'];
+    Salesman = db.models['Salesman'],
+    System = db.models['System'];
 
 
 /**
@@ -55,14 +56,20 @@ exports.index = function (req, res) {
         notFound(res);
         return;
     }
-    findAllModels([Product], function (products, ranks) {
-        var productIds = client.product_ids || [];
-        if (productIds instanceof Array) {
-            client.product_ids = productIds.join(',');
+    function ids_string(ids) {
+        if (!ids) ids = [];
+        if (ids instanceof Array) {
+            return ids.join(',');
         }
+        return ids;
+    }
+
+    findAllModels([System, Salesman], function (systems, salesmen) {
+        client.system_ids = ids_string(client.system_ids);
+        client.salesman_ids = ids_string(client.salesman_ids);
         res.render('client/index.jade', {
-            products: products,
-            ranks: ranks,
+            systems: systems,
+            salesmen: salesmen,
             selected_client: client
         });
     });

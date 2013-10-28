@@ -22,20 +22,33 @@ section#client-detail-section.positioned
                         tbody
 
                 div.half.float-right
-                    fieldset#product-fieldset
-                        legend=l.lbl.products
-                        for product in products
-                            label.checkable-label(for="product-#{product._id}")
+                    fieldset#salesman-fieldset
+                        legend=l.lbl.salesman
+                        for salesman in salesmen
+                            label.checkable-label(for="salesman-#{salesman._id}")
                                 input(
-                                name='product_ids',
+                                name='salesman_ids',
                                 type="checkbox",
-                                checked=selected_client.product_ids&&(selected_client.product_ids.match(product._id))
-                                id="product-#{product._id}",
-                                value=product._id)
-                                span=product.name
+                                checked=selected_client.salesman_ids.match(salesman._id)
+                                id="salesman-#{salesman._id}",
+                                value=salesman._id)
+                                span=salesman.name
 
                 br.clear
-                br
+                dl#system-list
+                    for system in systems
+                        dt
+                            label.checkable-label(for="system-#{system._id}")
+                                input(
+                                name='system_ids',
+                                type="checkbox",
+                                checked=selected_client.system_ids.match(system._id)
+                                id="system-#{system._id}",
+                                value=system._id)
+                                span=system.name
+                        dd
+
+                br.clear
                 input#save-btn.btn.wide-btn(type="submit", value=l.btn.save)
 
 

@@ -1,7 +1,7 @@
 /**
  * tek.view.js
  * - javascript library for tek -
- * @version v0.1.16
+ * @version v0.1.18
  * @author Taka Okunishi
  * @date 2013-10-27
  *
@@ -359,7 +359,8 @@
 		    var KEY_CODE = $.ui.keyCode;
 		    return $(this).each(function () {
 		        var input = $(this);
-		        if (input.hasClass('tk-editable-text')) return;
+		        if (input.data('tk-editable-text')) return;
+		        input.data('tk-editable-text', true);
 		        input.addClass('tk-editable-text');
 		        var label = $('<label class="tk-editable-label"/>')
 		            .insertAfter(input)
