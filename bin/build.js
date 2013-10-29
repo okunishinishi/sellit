@@ -53,7 +53,7 @@ var config = require('../app.config'),
     });
 })([
         'tek-mixin.less',
-        'tek-theme-clean.less',
+        'tek-style-clean.less',
         'jquery.treeview.less'
     ]);
 

@@ -344,3 +344,26 @@ header {
 .full-width{
   width:100%;
 }
+
+
+.tab {
+  .tab();
+  &.tab-selected,
+  &.tab-selected:hover,
+  &.tab-selected:active {
+    @back: darken(desaturate(@accent, 30), 10);
+    cursor: default;
+    background-color: @back;
+    border-color: @back;
+    color: @white;
+  }
+  &.tab-disabled,
+  &.tab-disabled:hover,
+  &.tab-disabled:active {
+    cursor: default;
+    @back: lighten(@gray, 20);
+    background-color: @back;
+    border-color: @back;
+    color: lighten(@back, 20);
+  }
+}
