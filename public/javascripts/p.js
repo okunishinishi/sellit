@@ -202,6 +202,94 @@
                 }
             });
             return ul;
+        },
+        selectableText: function (selectList) {
+            var input = $(this),
+                selectListItem = selectList.find('li');
+
+            input.filterSelect = function () {
+                selectListItem.each(function () {
+                    var li = $(this),
+                        text = li.find('a').text();
+                    var hit = text === input.val();
+                    var match = !!text.match($.trim(input.val()));
+                    if (!hit && match) {
+                        li.show();
+                    } else {
+                        li.hide();
+                    }
+                });
+            };
+            input
+                .focus(function () {
+                    clearTimeout(input.hideTimer);
+                    selectList.data('selectable-text-active', input);
+                    input.after(selectList);
+                    var o = input.position();
+                    selectList.show()
+                        .css({
+                            left: o.left,
+                            top: o.top + input.outerHeight(true),
+                            width: input.outerWidth()
+                        })
+                        .find('li')
+                        .show();
+                    input.filterSelect();
+                })
+                .blur(function(){
+                    input.hideTimer = setTimeout(function(){
+                        selectList.hide();
+                    },500);
+                })
+                .keydown(function (e) {
+                    clearTimeout(input.hideTimer);
+                    var KEY = $.ui.keyCode;
+                    var selected = selectListItem.filter('.selected:visible');
+                    switch (e.keyCode) {
+                        case KEY.ENTER:
+                            selected.find('a').click();
+                            break;
+                        case KEY.UP:
+                            var prev = selected.prev(':visible');
+                            if (prev.size()) {
+                                selectListItem
+                                    .not(prev).removeClass('selected');
+                                prev.addClass('selected');
+                            }
+                            break;
+                        case KEY.DOWN:
+                            if (selected.size()) {
+                                var next = selected.next(':visible');
+                                if (next.size()) {
+                                    selectListItem
+                                        .not(next).removeClass('selected');
+                                    next.addClass('selected');
+                                }
+                            } else {
+                                selectList.show();
+                                selectListItem.filter('selected').removeClass('selected');
+                                selectListItem.filter(':visible').first().addClass('selected');
+                            }
+                            break;
+                    }
+                })
+                .textchange(function () {
+                    clearTimeout(input.hideTimer);
+                    selectList.show();
+                    input.filterSelect();
+                });
+            if (!selectList.data('selectable-text-select-list')) {
+                selectList.data('selectable-text-select-list', true);
+                selectList.find('a').click(function () {
+                    clearTimeout(input.hideTimer);
+                    var a = $(this),
+                        text = a.text();
+                    selectList.data('selectable-text-active')
+                        .val(text);
+                    selectList.hide();
+                });
+            }
+            return input;
         }
     });
     $(function () {
