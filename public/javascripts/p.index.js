@@ -20,7 +20,6 @@
             form.findByName('username')
                 .selectableText(usernameSelectList);
             $('#login-btn').click(function () {
-                console.log('submit');
                 form.submit();
             });
             return form;

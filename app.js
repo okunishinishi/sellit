@@ -58,6 +58,7 @@ app.all('*', function (req, res, next) {
         //    var lang = util['lang'];
 //    res.locals.lang = lang.fromRequest(req);
         res.locals.lang = 'en';//FIXME
+        res.locals.url = app.locals.url;
         next();
 
     });

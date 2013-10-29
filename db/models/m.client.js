@@ -43,3 +43,12 @@ Client.listSystemNames = function (clients) {
             return a.concat(b);
         }))
 };
+Client.listProperties = function (clients) {
+    var hash = {};
+    clients && clients.forEach(function (client) {
+        Object.keys(client).forEach(function (key) {
+            hash[key] = true;
+        });
+    });
+    return Object.keys(hash);
+};

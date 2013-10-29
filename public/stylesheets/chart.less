@@ -1,9 +1,10 @@
 @import "lib/tek";
 
-body{
+body {
   padding: 20px 0;
   margin: 0;
 }
+
 #main {
   width: auto;
 }
@@ -12,10 +13,10 @@ body{
   display: none;
 }
 
-th{
-  a{
+th {
+  a {
     display: block;
-    width:100%;
+    width: 100%;
   }
 }
 
@@ -65,4 +66,11 @@ th{
   display: inline-block;
   .circle(4px);
   margin: 0 6px;
+}
+
+#chart-list-table {
+  .disabled {
+    @back:darken(@white,10);
+    background-color: @back;
+  }
 }

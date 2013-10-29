@@ -83,44 +83,7 @@
         chartListTable: function () {
             var table = $(this),
                 thead = table.find('thead'),
-                tbody = table.find('tbody'),
-                maxCol = 0;
-            $('tr', tbody).each(function () {
-                var tr = $(this),
-                    col = tr.find('th,td').size();
-                if (maxCol < col) {
-                    maxCol = col;
-                }
-            });
-            $('tr', thead).each(function () {
-                var tr = $(this);
-                var cell = tr.find('th,td').last(),
-                    colspan = parseInt(cell.attr("colspan") || 1);
-                if (colspan < maxCol) {
-                    cell.attr('colspan', maxCol - colspan);
-                }
-            });
-            $('tr', tbody).each(function () {
-                var tr = $(this),
-                    cols = tr.find('th,td').size();
-                for (var i = cols; i < maxCol; i++) {
-                    tr.append('<td></td>');
-                }
-            });
-
-            function recolor() {
-                $('td', tbody).each(function () {
-                    var td = $(this),
-                        color = td.data('color');
-                    if (!color) return;
-                    td.prepend('<span class="color-label" style="background-color:' + color + ';"></span>');
-                })
-            }
-
-            table.sortableTable(function () {
-                recolor();
-            });
-            recolor();
+                tbody = table.find('tbody');
             return table;
         }
     });

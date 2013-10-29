@@ -10,14 +10,19 @@ block content
 
     aside.float-right
         section#login-sectiion
-            form#login-form(action='/login', method='post',autocomplete='off')
-
+            form#login-form(action='/login',
+            method='post',
+                class=login_err?'err-form':''
+            autocomplete='off')
+                if login_err
+                    div.err-msg
+                        h5=l.err.login_fail
                 div
                     label.block-label(for='username-input')=l.lbl.username
                     input(type='text', name='username' required)#username-input
                 div
                     label.block-label(for='password-input')=l.lbl.passowrd
-                    input(type='password', name='password')#password-input
+                    input(type='password', name='password', disabled, value='sellit')#password-input
             div
                 input(type='submit', value=l.lbl.login).btn.wide-btn#login-btn
 

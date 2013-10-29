@@ -9,6 +9,14 @@ exports.toIdMap = function (data) {
     });
     return result;
 };
+exports.toNameMap = function (data) {
+    var result = {};
+    data && data.forEach(function (data) {
+        result[data.name] = data;
+    });
+    return result;
+};
+exports.compact
 
 
 exports.distinctAttr = function (data, key) {

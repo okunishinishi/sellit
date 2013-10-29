@@ -18,6 +18,7 @@ msg.save_done = 'save done!';
 
 var err = exports.err = {};
 err.page_not_found = 'sorry! page not found';
+err.login_fail = 'username or password is wrong';
 
 
 var btn = exports.btn = {};
@@ -53,10 +54,12 @@ lbl.freeword = 'free word';
 lbl.code = 'code';
 lbl.scale = 'scale';
 lbl.scale_unit = 'man-month';
-lbl.provider ='provider';
+lbl.provider = 'provider';
 lbl.login = 'login';
 lbl.username = 'username';
 lbl.passowrd = 'password';
+lbl.name = 'name';
+lbl.provider = 'provider';
 
 var plh = exports.plh = {};
 plh.search = lbl.search;
