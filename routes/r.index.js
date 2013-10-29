@@ -1,9 +1,11 @@
-/**
- * User: okunishitaka
- * Date: 9/20/13
- * Time: 6:41 AM
- */
+var db = require('../db'),
+    Salesman = db.models['Salesman'];
+
 
 module.exports = function (req, res) {
-    res.render('index.jade');
+    Salesman.findAll(function (salesmen) {
+        res.render('index.jade', {
+            salesmen: salesmen
+        });
+    });
 };

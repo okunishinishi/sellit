@@ -13,7 +13,18 @@
 
     };
     $.fn.extend({
-
+        loginForm: function () {
+            var form = $(this);
+            var usernameSelectList = $('#username-select-list');
+            form.data('disabled', false);
+            form.findByName('username')
+                .selectableText(usernameSelectList);
+            $('#login-btn').click(function () {
+                console.log('submit');
+                form.submit();
+            });
+            return form;
+        },
         largeLogo: function () {
             if (!Array.prototype.map) return logo;
             var logo = $(this),
@@ -32,8 +43,8 @@
     $(function () {
         var body = $(document.body);
 
-
-        $('#large-logo').largeLogo();
+        $('#login-form', body).loginForm();
+        $('#large-logo', body).largeLogo();
 
     });
 })(jQuery, window['l'], Handlebars);

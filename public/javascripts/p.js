@@ -206,7 +206,9 @@
         selectableText: function (selectList) {
             var input = $(this),
                 selectListItem = selectList.find('li');
-
+            input.attr({
+                autocomplete:'off'
+            });
             input.filterSelect = function () {
                 selectListItem.each(function () {
                     var li = $(this),

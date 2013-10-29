@@ -317,35 +317,5 @@ textarea {
 }
 
 #system-name-select-list {
-  position: absolute;
-  @back: @white;
-  text-align: left;
-  background-color: @back;
-  .box-shadow(2px 2px 4px; 0.5);
-  z-index: 20000;
-  li {
-    padding: 0;
-    border: 1px solid darken(@back, 8);
-    margin: 0 0 -1px;
-    width: 100%;
-    display: block;
-    &.selected {
-      a {
-        background-color: @highlight;
-        color: @white;
-      }
-    }
-  }
-  @highlight: @blue;
-  a {
-    display: block;
-    padding: 4px 8px;
-    color: @gray;
-    &:hover {
-      background-color: @highlight;
-      color: @white;
-      text-decoration: none;
-    }
-  }
-
+  .select-list;
 }

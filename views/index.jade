@@ -10,7 +10,7 @@ block content
 
     aside.float-right
         section#login-sectiion
-            form#login-form(action='/login', method='post')
+            form#login-form(action='/login', method='post',autocomplete='off')
 
                 div
                     label.block-label(for='username-input')=l.lbl.username
@@ -18,8 +18,14 @@ block content
                 div
                     label.block-label(for='password-input')=l.lbl.passowrd
                     input(type='password', name='password')#password-input
-                div
-                    input(type='submit', value=l.lbl.login).btn.wide-btn
+            div
+                input(type='submit', value=l.lbl.login).btn.wide-btn#login-btn
+
+                ul#username-select-list.no-style-list.select-list(style='display:none')
+                    for salesman in salesmen
+                        li
+                            a(href='javascript:void(0)')=salesman.name
+
 
     article.inline-article
         h1#large-logo=l.app.name
