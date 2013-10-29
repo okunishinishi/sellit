@@ -17,8 +17,9 @@ var tek = require('tek'),
  */
 exports.index = function (req, res) {
     var clients = res.locals.clients;
-    console.log('clients', clients);
+    var system_names = Client.listSystemNames(clients);
     findAllModels([Rival], function (rivals) {
+        var headRow = [null].concat(system_names);
         var rows = clients.map(function (client) {
             return [
                 {
@@ -27,8 +28,8 @@ exports.index = function (req, res) {
                 }
             ]
         });
-
         res.render('chart/index.jade', {
+            headRow:headRow,
             rows: rows
         });
     });

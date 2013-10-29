@@ -8,6 +8,8 @@ var tek = require('tek'),
     tekWeb = require('tek-web'),
     DB = tekWeb['DB'],
     Schema = DB['Schema'],
+    obj = require('../../util').obj,
+    distinctAttr = obj['distinctAttr'],
     defineModel = DB['defineModel'];
 
 var Client = module.exports = defineModel({
@@ -31,4 +33,13 @@ Client.prototype.isGroup = function () {
 Client.prototype.validate = function () {
     var s = this;
     return Client.schema.validate(s);
+};
+Client.listSystemNames = function (clients) {
+    return [].concat((clients || [])
+        .map(function (client) {
+            return distinctAttr(client.systems || [], 'name')
+        })
+        .reduce(function (a, b) {
+            return a.concat(b);
+        }))
 };

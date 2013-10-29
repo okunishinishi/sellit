@@ -13,6 +13,13 @@ block javascripts
         })(jQuery);
 block content
     table#data-table
+        thead
+            tr
+                th
+                for head in headRow
+                    th=head
+
+
         tbody
             for row in rows
                 tr
