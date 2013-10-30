@@ -85,6 +85,18 @@
                 thead = table.find('thead'),
                 tbody = table.find('tbody');
             return table;
+        },
+        chartListTabs: function (callback) {
+            var tabs = $(this);
+            return tabs.find('.tab').click(function () {
+                var clicked = $(this),
+                    key = clicked.data('key');
+                clicked
+                    .addClass('tab-selected')
+                    .siblings('.tab-selected')
+                    .removeClass('tab-selected');
+                callback && callback();
+            });
         }
     });
 
@@ -92,5 +104,9 @@
         var body = $(document.body);
 
         $('#chart-list-table', body).chartListTable();
+
+        $('#chart-list-tabs', body).chartListTabs(function () {
+
+        });
     });
 })(jQuery);

@@ -12,8 +12,11 @@ block javascripts
             });
         })(jQuery);
 block content
-    div.float-right
-        a.tab(href='javascript:void(0)')=l.lbl.provider
+    div.float-right#chart-list-tabs
+        a.tab(href='javascript:void(0)',data-key='provider')=l.lbl.provider
+        a.tab(href='javascript:void(0)',data-key='freeword')=l.lbl.freeword
+        a.tab(href='javascript:void(0)',data-key='scale')=l.lbl.scale
+        a.tab(href='javascript:void(0)',data-key='')=l.lbl.all
 
     table#chart-list-table.full-width
         thead

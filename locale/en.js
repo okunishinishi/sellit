@@ -1,10 +1,3 @@
-/**
- * User: okunishitaka
- * Date: 9/21/13
- * Time: 4:14 PM
- */
-
-
 var app = exports.app = {};
 app.name = 'sellit';
 app.description = 'sales management system';
@@ -60,11 +53,12 @@ lbl.username = 'username';
 lbl.passowrd = 'password';
 lbl.name = 'name';
 lbl.provider = 'provider';
+lbl.all = 'all';
 
 var plh = exports.plh = {};
 plh.search = lbl.search;
 plh.client_name = lbl.client_name;
-plh.client_description = lbl.client_description;
+
 plh.system_name = lbl.system_name;
 plh.freeword = lbl.freeword;
 plh.provider = ['--', lbl.provider, '--'].join(' ');

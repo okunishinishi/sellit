@@ -347,11 +347,14 @@ header {
 
 
 .tab {
-  .tab();
+  @back:@white;
+  @highlight:lighten(@blue,5);
+  .tab(@white;@highlight;);
+  padding:5px 10px;
   &.tab-selected,
   &.tab-selected:hover,
   &.tab-selected:active {
-    @back: darken(desaturate(@accent, 30), 10);
+    @back: desaturate(darken(@highlight, 10), 20);
     cursor: default;
     background-color: @back;
     border-color: @back;
