@@ -51,7 +51,7 @@ app.all('*',
     function (req, res, next) {
         var login_username = req.session.login_username;
         var needsLogin = !login_username && (req.path != '/' && !req.path.match('login'));
-        if(needsLogin){
+        if (needsLogin) {
             res.redirect('/');
         }
         next();
@@ -64,9 +64,9 @@ app.all('*',
             });
             res.locals.time = new Date().getTime();
 
-            //    var lang = util['lang'];
-//    res.locals.lang = lang.fromRequest(req);
-            res.locals.lang = 'en';//FIXME
+            var lang = util['lang'];
+            res.locals.lang = lang.fromRequest(req);
+            res.locals.lang = 'ja';//TODO
             res.locals.url = app.locals.url;
             next();
         });

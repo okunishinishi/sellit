@@ -3,5 +3,6 @@ var should = require('should'),
     ja = require('../../../locale/ja');
 
 exports.exportsTest = function (test) {
+    should.exist(ja.app.name);
     test.done();
 };

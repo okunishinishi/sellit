@@ -22,7 +22,9 @@ mixin system(index, data)
                     th
                         label=l.lbl.scale
                     td
-                        input(type='number', name='systems[#{index}].scale', value=data.scale)
+                        input(type='number', name='systems[#{index}].scale',
+                            min=0,
+                        value=data.scale)
                         small
                             i=l.lbl.scale_unit
                 tr
