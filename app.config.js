@@ -27,6 +27,8 @@ exports.set = {
 };
 
 exports.use = [
+    express.cookieParser(),
+    express.cookieSession({secret:'1234qwer'}),
     express['favicon'](),
     express.logger('dev'),
     express['bodyParser'](),

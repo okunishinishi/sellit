@@ -47,22 +47,31 @@ app.locals({
     NODE_ENV: NODE_ENV
 });
 
-app.all('*', function (req, res, next) {
-    var Client = db.models.Client;
-    Client.findByCondition({}, function (clients) {
-        res.locals.clients = clients.filter(function (client) {
-            return !client.isGroup();
-        });
-        res.locals.time = new Date().getTime();
-
-        //    var lang = util['lang'];
-//    res.locals.lang = lang.fromRequest(req);
-        res.locals.lang = 'en';//FIXME
-        res.locals.url = app.locals.url;
+app.all('*',
+    function (req, res, next) {
+        var login_username = req.session.login_username;
+        var needsLogin = !login_username && (req.path != '/' && !req.path.match('login'));
+        console.log(req.path, needsLogin);
+        if(needsLogin){
+            res.redirect('/');
+        }
         next();
+    },
+    function (req, res, next) {
+        var Client = db.models.Client;
+        Client.findByCondition({}, function (clients) {
+            res.locals.clients = clients.filter(function (client) {
+                return !client.isGroup();
+            });
+            res.locals.time = new Date().getTime();
 
+            //    var lang = util['lang'];
+//    res.locals.lang = lang.fromRequest(req);
+            res.locals.lang = 'en';//FIXME
+            res.locals.url = app.locals.url;
+            next();
+        });
     });
-});
 
 
 (function (routes) {

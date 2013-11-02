@@ -3,11 +3,12 @@ var db = require('../db'),
     Salesman = db.models['Salesman'];
 
 
-module.exports = function (req, res) {
+exports = module.exports = function (req, res) {
     var data = req.body;
     Salesman.findAll(function (salesmen) {
         var salesman = toNameMap(salesmen)[data.username];
         if (salesman) {
+            req.session.login_username = salesman.name;
             res.redirect(res.locals.url('/chart'));
         } else {
             res.render('index.jade', {

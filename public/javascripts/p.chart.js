@@ -103,10 +103,12 @@
     $(function () {
         var body = $(document.body);
 
-        $('#chart-list-table', body).chartListTable();
+        var table = $('#chart-list-table', body).chartListTable();
 
-        $('#chart-list-tabs', body).chartListTabs(function () {
+        $('#chart-list-tabs', body).chartListTabs(function (key) {
+            table.find('td').each(function () {
 
+            });
         });
     });
 })(jQuery);

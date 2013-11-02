@@ -33,5 +33,9 @@ block content
                     - for (var i = 1; i < row.length; ++i) {
                         td(data-system=row[i],
                         class=row[i].name?'':'disabled'
-                        )=row[i].name
+                        )
+                            span(data-key='name')=row[i].name
+                            span(data-key='provider')=row[i].provider
+                            span(data-key='freeword')=row[i].freeword
+                            span(data-key='scale')=row[i].scale
                     - }

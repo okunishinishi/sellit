@@ -69,6 +69,7 @@ exports.index = function (req, res) {
     findAllModels([Salesman, Rival], function (salesmen, rivals) {
         client.salesman_ids = ids_string(client.salesman_ids);
         res.render('client/index.jade', {
+            login_username: req.session.login_username,
             salesmen: salesmen,
             rivals: rivals,
             selected_client: client,

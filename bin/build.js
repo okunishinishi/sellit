@@ -37,7 +37,8 @@ var config = require('../app.config'),
         'tek.js',
         'tek.view.js',
         'jquery.treeview.js',
-        'one-color.js'
+        'one-color.js',
+        'jquery.spreadsheet.js'
     ]);
 
 (function (less_filenames) {
@@ -54,9 +55,9 @@ var config = require('../app.config'),
 })([
         'tek-mixin.less',
         'tek-style-clean.less',
-        'jquery.treeview.less'
+        'jquery.treeview.less',
+        'jquery.spreadsheet.less'
     ]);
-
 
 
 (function minifyJs(config) {
@@ -66,7 +67,7 @@ var config = require('../app.config'),
         libAllJs = resolve(jsDir, 'lib.min.js');
     minify.minifyAllJS(libDir, libAllJs, function () {
         console.log('lib js minified to :', libAllJs);
-    },[/jquery\.js$/,/jquery/,/handlebars/,/tek\.js$/,/tek/]);
+    }, [/jquery\.js$/, /jquery/, /handlebars/, /tek\.js$/, /tek/]);
 })(config);
 
 
