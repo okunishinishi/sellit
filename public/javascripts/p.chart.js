@@ -24,12 +24,12 @@
             var tabs = $(this);
             return tabs.find('.tab').click(function () {
                 var clicked = $(this),
-                    key = clicked.data('key');
+                    id = clicked.attr('id');
                 clicked
                     .addClass('tab-selected')
                     .siblings('.tab-selected')
                     .removeClass('tab-selected');
-                callback && callback();
+                callback && callback(id);
             });
         }
     });
@@ -37,9 +37,11 @@
     $(function () {
         var body = $(document.body);
 
-        var table = $('#chart-list-section', body).chartListSection();
+        var chartListSection = $('#chart-list-section', body).chartListSection();
 
-        $('#chart-list-tabs', body).chartListTabs(function (key) {
-        });
+        $('#chart-list-tabs', body).chartListTabs(function (id) {
+            chartListSection.attr('data-filter', id);
+            chartListSection.trigger('ss-resize');
+        }).first().click();
     });
 })(jQuery, Handlebars, window['l']);

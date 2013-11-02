@@ -43,18 +43,29 @@ th {
   }
 }
 
-#chart-list-table {
-  width: 100%;
-  .white-back(0.4);
-  .box-shadow(1px 1px 2px, 0.2);
-  caption {
-    .center-lbl {
-      font-size: 1.2em;
-      color: @gray;
-      display: inline-block;
+#chart-list-section {
+
+  .filter(@filter;) {
+    &[data-filter="@{filter}"] {
+      .chart-cell-label[for="@{filter}"] {
+        display: block;
+      }
     }
-    padding: 0px 1px;
   }
+  .chart-cell-label {
+    display: none;
+  }
+
+  .filter("provider-filter");
+  .filter("code-filter");
+  .filter("scale-filter");
+  .filter("freeword-filter");
+  &[data-filter="all-filter"]{
+    .chart-cell-label {
+      display: block;
+    }
+  }
+
 }
 
 .count-label {
@@ -68,12 +79,13 @@ th {
   margin: 0 6px;
 }
 
-.ss-root{
+.ss-root {
 }
-caption{
+
+caption {
   display: none;
 }
 
-.ss-table{
-  width:100%;
+.ss-table {
+  width: 100%;
 }
