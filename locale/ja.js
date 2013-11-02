@@ -3,8 +3,6 @@ var tek = require('tek'),
     en = require('./en');
 
 copy.deep(en, exports);
-console.log('en', en);
-console.log('exports', exports);
 
 var app = exports.app = exports.app || {};
 

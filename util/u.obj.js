@@ -16,13 +16,12 @@ exports.toNameMap = function (data) {
     });
     return result;
 };
-exports.compact
-
 
 exports.distinctAttr = function (data, key) {
     if (!key) return null;
     var attrs = {};
     data && data.map(function (data) {
+        if(!data) return;
         attrs[data[key]] = true;
     });
     return Object.keys(attrs);

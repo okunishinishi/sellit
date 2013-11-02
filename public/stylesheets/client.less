@@ -1,7 +1,9 @@
 @import "lib/tek-mixin.less";
 
+@danger: lighten(@red, 20);
 body {
   padding: 28px 0;
+  .rich();
 }
 
 .paper-content {
@@ -157,6 +159,12 @@ input[disabled] {
     margin: 10px 20px 30px;
     width: 420px;
     float: left;
+    &.remove-target {
+      .paper-content {
+        border-color: @danger;
+        background-color: darken(@white,1);
+      }
+    }
     h3 {
       margin: 0;
 
@@ -197,16 +205,23 @@ input[disabled] {
   }
   .remove-btn {
     position: absolute;
-    right: 0;
-    top: 0;
-    padding: 4px 10px;
-    @h: 42px;
-    font-size: @h;
-    line-height: @h;
-    height: @h;
-    .border-radius(0);
+    @size: 20px;
+    right: @size * -1;
+    top: -1 * @size;
+    box-shadow: 1px 1px 2px rgba(138, 138, 138, 0.54);
+    padding: 0;
+    .circle(@size);
+    border: 2px solid rgb(184, 184, 184);
+    font-size: @size * 2;
+    line-height: @size * 2;
     .box-shadow(none);
     opacity: 0.2;
+    .border-radius(50%);
+    &:hover {
+      border-color: @danger;
+      .linear-gradient(@danger, darken(@danger, 9));
+      color: darken(@danger, 30);
+    }
   }
 
 }
@@ -252,7 +267,6 @@ aside {
       > .block-list-item-control {
         opacity: 0.4;
         a {
-          .box-shadow(50%);
           display: inline-block;
           &:hover {
             background-color: fadeout(@yellow, 20);
@@ -315,8 +329,8 @@ textarea {
   height: 60px;
 }
 
-#system-name-select-list{
-  li{
+#system-name-select-list {
+  li {
     margin: 0 0 -1px;
     width: 100%;
   }

@@ -104,12 +104,19 @@
             return $(this).each(function () {
                 var li = $(this),
                     removeBtn = li.findByRole('remove-btn');
-                removeBtn.click(function () {
-                    var name = li.find('caption').find(':text').val();
-                    $.confirmRemove(name, function () {
-                        li.remove();
+                removeBtn
+                    .hover(function () {
+                        li.addClass('remove-target');
+                        $('.remove-target').not(li).removeClass('remove-target');
+                    }, function () {
+                        li.removeClass('remove-target');
+                    })
+                    .click(function () {
+                        var name = li.find('caption').find(':text').val();
+                        $.confirmRemove(name, function () {
+                            li.remove();
+                        });
                     });
-                });
                 li.find('.system-name-input')
                     .systemNameInput();
             });
