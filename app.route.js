@@ -29,6 +29,7 @@ get('/upload', upload.index);
 post('/upload/save', upload.save);
 
 var client = r['client'];
+get('/client', client.index.first);
 get('/client/:client_id', client.index);
 post('/api/client/save', client.api.save);
 post('/api/client/destroy', client.api.destroy);

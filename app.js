@@ -82,13 +82,20 @@ app.all('*',
 })(require('./app.route'));
 
 
-(function (render) {
+(function (render, redirect) {
     //exports locale for view as 'l';
     app.response.__proto__.render = function (view, options, fn) {
         var s = this;
         s.locals['l'] = locale[s.locals.lang];
         return render.call(s, view, options, fn);
     };
+
+    app.response.__proto__.redirect = function (newpath) {
+        var s = this;
+        newpath = require('path').resolve('/', app.locals.context, newpath);
+        return redirect.call(s, newpath);
+    };
+
     app.response.__proto__.getClient = function (clientId) {
         var s = this,
             clients = s.locals.clients;
@@ -102,7 +109,7 @@ app.all('*',
         }
         return null;
     };
-})(app.response.__proto__.render);
+})(app.response.__proto__.render, app.response.__proto__.redirect);
 
 
 (function () {

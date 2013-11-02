@@ -1,4 +1,7 @@
 nav
+    a.nav-item(href=url('/client?t=#{time}'), key='detail')
+        i.icon.icon-file
+        | detail
     a.nav-item(href=url('/chart?t=#{time}'), key='list')
         i.icon.icon-th
         | list

@@ -20,6 +20,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
 
   buffer += "<div class=\"chart-cell-content\">\n    <label class='chart-cell-label' data-value=\"";
+  if (stack1 = helpers.provider) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.provider; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" for=\"provider-filter\">";
+  if (stack1 = helpers.provider_name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.provider_name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "</label>\n    <label class='chart-cell-label' data-value=\"";
   if (stack1 = helpers.code) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.code; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -34,14 +42,6 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
     + "\" for=\"scale-filter\">";
   if (stack1 = helpers.scale) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.scale; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "</label>\n    <label class='chart-cell-label' data-value=\"";
-  if (stack1 = helpers.provider) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.provider; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "\" for=\"provider-filter\">";
-  if (stack1 = helpers.provider_name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.provider_name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
     + "</label>\n    <label class='chart-cell-label' data-value=\"";
   if (stack1 = helpers.freeword) { stack1 = stack1.call(depth0, {hash:{},data:data}); }

@@ -78,7 +78,11 @@ exports.index = function (req, res) {
         });
     });
 };
-
+exports.index.first = function (req, res) {
+    Client.findOneByCondition({}, function (client) {
+        res.redirect('/client/' + (client && client._id || '0'));
+    });
+}
 
 exports.api = {
     /**
@@ -138,6 +142,11 @@ exports.api = {
         }
         findOne(client._id, function (duplicate) {
             var action = duplicate ? 'update' : 'save';
+            switch (action) {
+                case 'update':
+                    copy.fallback(duplicate, client);
+                    break;
+            }
             client[action](function (client) {
                 res.json({
                     valid: true,
