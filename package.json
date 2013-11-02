@@ -1,6 +1,6 @@
 {
     "name": "sellit",
-    "version": "0.1.11",
+    "version": "0.2.0",
     "private": true,
     "scripts": {
         "start": "node app"
@@ -14,15 +14,16 @@
     },
     "dependencies": {
         "express": "3.0.4",
-        "msexcel-builder": "*",
-        "jade": "*",
-        "less-middleware": "*",
-        "handlebars": "*",
-        "revalidator": "*",
+        "msexcel-builder": "0.0.2",
+        "jade": "0.35.0",
+        "less-middleware": "0.1.12",
+        "handlebars": "1.0.12",
+        "revalidator": "0.1.5",
         "tek": "*",
+        "dateformat":"1.0.6-1.2.3",
         "tek-web": "*",
-        "uglify-js":"*",
-        "sqlite3": "*",
-        "onecolor": "*"
+        "uglify-js":"2.4.1",
+        "sqlite3": "2.1.17",
+        "onecolor": "2.3.4"
     }
 }
