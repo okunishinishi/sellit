@@ -65,9 +65,10 @@ exports.index = function (req, res) {
         return ids;
     }
 
-    var system_names = Client.listSystemNames(res.locals.clients);
-    findAllModels([Salesman, Developer], function (salesmen, developers) {
-        client.salesman_ids = ids_string(client.salesman_ids);
+    var system_names = Client.listSystemNames(res.locals.clients) || [];
+    findAllModels([Salesman, Developer, Client], function (salesmen, developers, clients) {
+        client.salesman_ids = ids_string(client.salesman_ids) || '';
+        client.parent_names = client.listParentNames(toIdMap(clients)) || [];
         res.render('client/index.jade', {
             login_username: req.session.login_username,
             salesmen: salesmen,
@@ -82,7 +83,7 @@ exports.index.first = function (req, res) {
     var clients = res.locals.clients;
     var client = clients && clients[0];
     res.redirect('/client/' + (client && client._id || '0'));
-}
+};
 
 exports.api = {
     /**
@@ -140,13 +141,8 @@ exports.api = {
             res.json(result);
             return;
         }
-        findOne(client._id, function (duplicate) {
-            var action = duplicate ? 'update' : 'save';
-            switch (action) {
-                case 'update':
-                    copy.fallback(duplicate, client);
-                    break;
-            }
+
+        function doAction(client, action) {
             client[action](function (client) {
                 res.json({
                     valid: true,
@@ -154,6 +150,37 @@ exports.api = {
                     action: action
                 });
             });
+        }
+
+        findOne(client._id, function (duplicate) {
+            if (duplicate) {
+                var parentChange = duplicate.parent_id != client.parent_id;
+                copy.fallback(duplicate, client);
+                if (parentChange) {
+                    Client.findById(duplicate.parent_id, function (oldParent) {
+                        var children_ids = oldParent && oldParent.children_ids;
+                        if (children_ids) {
+                            try {
+                                children_ids = JSON.parse(children_ids).filter(function (_id) {
+                                    return _id != client._id;
+                                });
+                                oldParent.children_ids = JSON.stringify(children_ids);
+                                oldParent.update(function () {
+                                    doAction(client, 'update');
+                                });
+                            } catch (e) {
+                                console.error(e);
+                            }
+                        } else {
+                            doAction(client, 'update');
+                        }
+                    });
+                } else {
+                    doAction(client, 'update');
+                }
+            } else {
+                doAction(client, 'save');
+            }
         });
     },
 

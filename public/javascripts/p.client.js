@@ -201,7 +201,6 @@
                 .on('tv-drop', function (e) {
                     e.stopPropagation();
 
-
                     var li = $(this),
                         parent = li.parent('.tv-children').parent('li'),
                         parentForm = getForm(parent),
@@ -291,7 +290,8 @@
                 var group = $(this).data('group'),
                     html = tmpl.liContent({
                         group: group,
-                        children_ids: group ? '[]' : undefined
+                        children_ids: group ? '[]' : undefined,
+                        last_update_by:addBtn.data('login_username')
                     }),
                     item = new tv.Item(html)
                         .children(group ? [] : null);

@@ -23,7 +23,7 @@ mixin system(index, data)
                         label=l.lbl.scale
                     td
                         input(type='number', name='systems[#{index}].scale',
-                            min=0,
+                        min=0,
                         value=data.scale)
                         small
                             i=l.lbl.scale_unit
@@ -89,9 +89,10 @@ section#client-detail-section.positioned
                 legend=l.lbl.systems
 
                 ul#system-list.no-style-list
-                    for system in selected_client.systems
-                        if system
-                            +system(system.index, system)
+                    if selected_client.systems
+                        for system in selected_client.systems
+                            if system
+                                +system(system.index, system)
 
                 div#system-list-item-tmpl.hidden
                     +system('',"c")
@@ -100,8 +101,14 @@ section#client-detail-section.positioned
                 href='javascript:void(0)') + #{l.btn.new} #{l.lbl.system}
 
                 br.clear
+            input(type='hidden', name='last_update_by', value=login_username)
             br.clear
             input#save-btn.btn.primary-btn.wide-btn(type="submit", value=l.btn.save)
+            small.float-right
+                span
+                    | #{l.lbl.last_update_by}&nbsp;
+
+                span=selected_client.last_update_by
 
     ul#system-name-select-list.no-style-list.hidden.select-list
         for system_name in system_names

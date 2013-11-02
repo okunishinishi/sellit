@@ -7,6 +7,12 @@ block stylesheets
 block javascripts
     script(src=url.js('/lib/jquery.treeview.js'))
     script(src=url.js('p.client.js'))
+    script.
+        (function($){
+            $(function(){
+                $('header nav').nav('detail');
+            });
+        })(jQuery);
 
 block content
     aside.stick-left

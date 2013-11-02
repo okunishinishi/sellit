@@ -107,7 +107,11 @@ function program1(depth0,data) {
   if (stack1 = helpers.children_ids) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.children_ids; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" name=\"children_ids\"/>\n            <input type=\"text\" data-role=\"editable-text\" name=\"name\" value=\"";
+    + "\" name=\"children_ids\"/>\n            <input type=\"hidden\" value=\"";
+  if (stack1 = helpers.last_update_by) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.last_update_by; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" name=\"last_update_by\"/>\n            <input type=\"text\" data-role=\"editable-text\" name=\"name\" value=\"";
   if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -146,7 +150,11 @@ function program3(depth0,data) {
   if (stack1 = helpers.parent_id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.parent_id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" name=\"parent_id\"/>\n            <input type=\"text\" data-role=\"editable-text\" name=\"name\" value=\"";
+    + "\" name=\"parent_id\"/>\n            <input type=\"hidden\" value=\"";
+  if (stack1 = helpers.last_update_by) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.last_update_by; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" name=\"last_update_by\"/>\n            <input type=\"text\" data-role=\"editable-text\" name=\"name\" value=\"";
   if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)

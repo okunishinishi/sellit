@@ -54,6 +54,7 @@ lbl.passowrd = 'password';
 lbl.name = 'name';
 lbl.provider = 'provider';
 lbl.all = 'all';
+lbl.last_update_by = 'updated by';
 
 var plh = exports.plh = {};
 plh.search = lbl.search;

@@ -6,6 +6,7 @@
             <input type="hidden" value="{{_vr}}" name="_vr"/>
             <input type="hidden" value="{{parent_id}}" name="parent_id"/>
             <input type="hidden" value="{{children_ids}}" name="children_ids"/>
+            <input type="hidden" value="{{last_update_by}}" name="last_update_by"/>
             <input type="text" data-role="editable-text" name="name" value="{{name}}"/>
         </form>
     {{else}}
@@ -19,6 +20,7 @@
             <input type="hidden" value="{{_id}}" name="_id"/>
             <input type="hidden" value="{{_vr}}" name="_vr"/>
             <input type="hidden" value="{{parent_id}}" name="parent_id"/>
+            <input type="hidden" value="{{last_update_by}}" name="last_update_by"/>
             <input type="text" data-role="editable-text" name="name" value="{{name}}"/>
         </form>
     {{/if}}
