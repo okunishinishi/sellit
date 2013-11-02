@@ -19,6 +19,8 @@ exports.imgDir = resolve(exports.publicDir, 'images');
 exports.cssDir = resolve(exports.publicDir, 'stylesheets');
 exports.hbsDir = resolve(exports.publicDir, 'hbs');
 exports.hbsTemplateFile = resolve(exports.publicDir, "javascripts/templates.js");
+exports.excelDir = exports.publicDir;
+exports.excelFileName = 'sellit.xlsx';
 
 exports.set = {
     'port': env['PORT'] || eval('3066'),
@@ -28,7 +30,7 @@ exports.set = {
 
 exports.use = [
     express.cookieParser(),
-    express.cookieSession({secret:'1234qwer'}),
+    express.cookieSession({secret: '1234qwer'}),
     express['favicon'](),
     express.logger('dev'),
     express['bodyParser'](),

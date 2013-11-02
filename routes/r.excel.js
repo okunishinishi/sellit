@@ -11,60 +11,70 @@ var excelbuilder = require('msexcel-builder'),
     Client = models['Client'],
     findAllModels = util['mdl']['findAllModels'],
     l = require('../locale')['en'],
+    config = require('../app.config'),
     resolve = require('path')['resolve'];
 
-
-exports.csvData = function (callback) {
-    var result = {
-        clients: []
-    };
-    callback(result);
-};
 
 var publicDir = require('../app.config')['publicDir'];
 
 
-exports.generateWorkbook = function (dirpath, filename, callback) {
-    callback(null);
-//    exports.csvData(function (csvData) {
-//        var createWorkbook = excelbuilder.createWorkbook,
-//            workbook = createWorkbook(dirpath + "/", filename);
-//        Object.keys(csvData).forEach(function (sheetName) {
-//            var data = csvData[sheetName];
-//            if (!data.length) return;
-//            var rows = data.length + 1,
-//                cols = teK.math.max(data.map(function (data) {
-//                    return data.length || 0
-//                })) + 1;
-//            var sheet = workbook.createSheet(sheetName, cols, rows);
-//            data.forEach(function (data, i) {
-//                data.forEach(function (data, j) {
-//                    var col = j + 1,
-//                        row = i + 1;
-//                    sheet.set(col, row, data || '');
-//                    sheet.width(col, 24);
-//                });
-//            });
-//            for (var row = 1; row < rows; row++) {
-//                for (var col = 1; col < cols; col++) {
-//                    sheet.border(col, row, {left: 'thin', top: 'thin', right: 'thin', bottom: 'thin'});
-//                }
-//            }
-//        });
-//        workbook.save(function (err) {
-//            if (err) {
-//                workbook.cancel();
-//                callback(err);
-//            } else {
-//                callback(err, resolve(dirpath, filename));
-//            }
-//        });
-//    });
+exports.generateWorkbook = function (clients, callback) {
+    var createWorkbook = excelbuilder.createWorkbook;
+    require('./r.chart.js').getData(clients, function (data) {
+        var dirpath = config.excelDir,
+            filename = config.excelFileName;
+        var workbook = createWorkbook(dirpath + "/", filename);
+        var cols = data.headRow.length + 1,
+            rows = data.rows.length + 1;
+        'code,provider,scale,freeword,all'.split(',').forEach(function (key) {
+            var sheetName = (l.lbl[key] || key).replace(/\//g, '-'),
+                sheet = workbook.createSheet(sheetName, cols, rows);
+            [''].concat(data.headRow).forEach(function (data, i) {
+                var row = 1, col = i + 1;
+                sheet.set(col, row, data || '');
+                sheet.width(col, 10);
+                sheet.border(col, row, {left: 'thin', top: 'thin', right: 'thin', bottom: 'thick'});
+            });
+            function getText(data, key) {
+                if (data.text) return data.text;
+                switch (key) {
+                    case 'all':
+                        return Object.keys(data).map(function (key) {
+                            if (key === 'all') return;
+                            if (key === 'name') return;
+                            return data[key] || '';
+                        }).join("\n");
+                    case 'provider':
+                        return data['provider_name'];
+                    default:
+                        return data[key] || '';
+                }
+            };
+            data.rows.forEach(function (data, i) {
+                var row = i + 2;
+                data.forEach(function (data, j) {
+                    var col = j + 1;
+                    sheet.set(col, row, getText(data, key));
+                    var width = col === 1 ? 20 : 12;
+                    sheet.width(col, width);
+                    sheet.border(col, row, {left: 'thin', top: 'thin', right: 'thin', bottom: 'thin'});
+                });
+            });
+        });
+        workbook.save(function (err) {
+            if (err) {
+                workbook.cancel();
+                callback(err);
+            } else {
+                callback(err, resolve(dirpath, filename));
+            }
+        });
+    });
 };
 
 exports.download = function (req, res) {
-    var filename = 'sellit.xlsx';
-    exports.generateWorkbook(publicDir, filename, function (err) {
+    var clients = res.locals.clients;
+    exports.generateWorkbook(clients, function (err) {
         if (err) {
             res.redirect('/404');
         } else {

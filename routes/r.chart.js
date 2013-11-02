@@ -19,6 +19,14 @@ var tek = require('tek'),
  */
 exports.index = function (req, res) {
     var clients = res.locals.clients;
+    exports.getData(clients, function (data) {
+        res.render('chart/index.jade', {
+            headRow: data.headRow,
+            rows: data.rows
+        });
+    });
+};
+exports.getData = function (clients, callback) {
     var system_names = Client.listSystemNames(clients);
     findAllModels([Developer], function (developers) {
         var rows = clients.map(function (client) {
@@ -28,7 +36,7 @@ exports.index = function (req, res) {
             return [
                 {
                     text: client.name,
-                    href: ['/client/' + client._id, 't=' + res.locals.time].join('?')
+                    href: ['/client/' + client._id, 't=' + new Date().getTime()].join('?')
                 }
             ].concat(
                     system_names.map(function (name) {
@@ -38,11 +46,9 @@ exports.index = function (req, res) {
                         return  system;
                     }));
         });
-        res.render('chart/index.jade', {
+        callback({
             headRow: system_names,
-            rows: rows,
-            properties: Client.listProperties(clients)
+            rows: rows
         });
     });
 };
-
