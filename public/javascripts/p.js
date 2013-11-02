@@ -207,7 +207,7 @@
             var input = $(this),
                 selectListItem = selectList.find('li');
             input.attr({
-                autocomplete:'off'
+                autocomplete: 'off'
             });
             input.filterSelect = function () {
                 selectListItem.each(function () {
@@ -222,6 +222,11 @@
                     }
                 });
             };
+            function hideList() {
+                selectList.find('selected').removeClass('selected');
+                selectList.hide();
+            }
+
             input
                 .focus(function () {
                     clearTimeout(input.hideTimer);
@@ -238,10 +243,10 @@
                         .show();
                     input.filterSelect();
                 })
-                .blur(function(){
-                    input.hideTimer = setTimeout(function(){
-                        selectList.hide();
-                    },500);
+                .blur(function () {
+                    input.hideTimer = setTimeout(function () {
+                        hideList();
+                    }, 500);
                 })
                 .keydown(function (e) {
                     clearTimeout(input.hideTimer);
@@ -252,16 +257,18 @@
                             selected.find('a').click();
                             break;
                         case KEY.UP:
-                            var prev = selected.prev(':visible');
+                            var prev = selected.prevAll(':visible').not('.selected').first()
                             if (prev.size()) {
                                 selectListItem
                                     .not(prev).removeClass('selected');
                                 prev.addClass('selected');
+                            } else {
+                                hideList();
                             }
                             break;
                         case KEY.DOWN:
                             if (selected.size()) {
-                                var next = selected.next(':visible');
+                                var next = selected.nextAll(':visible').not('.selected').first();
                                 if (next.size()) {
                                     selectListItem
                                         .not(next).removeClass('selected');

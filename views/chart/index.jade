@@ -16,9 +16,10 @@ block javascripts
         })(jQuery);
 block content
     div.float-right#chart-list-tabs
-        a.tab(href='javascript:void(0)',data-key='provider')=l.lbl.provider
-        a.tab(href='javascript:void(0)',data-key='freeword')=l.lbl.freeword
-        a.tab(href='javascript:void(0)',data-key='scale')=l.lbl.scale
+        a#code-filter.tab(href='javascript:void(0)')=l.lbl.provider
+        a#scale-filter.tab(href='javascript:void(0)')=l.lbl.freeword
+        a#provider-filter.tab(href='javascript:void(0)')=l.lbl.scale
+        a#freeword-filter.tab(href='javascript:void(0)')=l.lbl.code
         a.tab(href='javascript:void(0)',data-key='')=l.lbl.all
 
     section#chart-list-section(

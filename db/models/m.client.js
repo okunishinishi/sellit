@@ -41,7 +41,9 @@ Client.listSystemNames = function (clients) {
         })
         .reduce(function (a, b) {
             return a.concat(b);
-        }))
+        }).filter(function (e, i, arr) {
+            return arr.lastIndexOf(e) === i;
+        })).sort();
 };
 Client.listProperties = function (clients) {
     var hash = {};

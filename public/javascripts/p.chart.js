@@ -2,7 +2,8 @@
 
     var ss = $.spreadsheet;
     var tmpl = {
-        cartTbodyThContent: Hbs.templates['chart-tbody-th-content']
+        chartTbodyThContent: Hbs.templates['chart-tbody-th-content'],
+        chartCellContent: Hbs.templates['chart-cell-content']
     };
     $.fn.extend({
         chartListSection: function () {
@@ -11,12 +12,12 @@
 
             var headData = new ss.HeadData(data['headrow']),
                 bodyData = data['rows'].map(function (row) {
-                    var label = tmpl.cartTbodyThContent(row.shift());
+                    var label = tmpl.chartTbodyThContent(row.shift());
                     return new ss.RowData(label, row.map(function (data) {
-                        return data;
+                        return tmpl.chartCellContent(data);
                     }));
                 });
-            var sheetData = new ss.SheetData('',headData, bodyData);
+            var sheetData = new ss.SheetData('', headData, bodyData);
             return section.spreadsheet(sheetData);
         },
         chartListTabs: function (callback) {
