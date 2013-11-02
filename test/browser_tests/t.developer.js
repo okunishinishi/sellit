@@ -4,39 +4,39 @@ var tek = require('tek'),
     new_rider = require('./new_rider'),
     should = require('should');
 
-var rival = driveway['rival'],
+var developer = driveway['developer'],
     rider = new_rider();
 
 exports.tearDown = function (done) {
     done()
 };
 exports.goIndexTest = function (test) {
-    rival.goIndex(rider, function () {
+    developer.goIndex(rider, function () {
         test.done();
     });
 };
 exports.addModelTest = function (test) {
-    rival.addModel(rider, {
-        name: 'hello_rival'
+    developer.addModel(rider, {
+        name: 'hello_developer'
     }, function () {
         test.done();
     });
 };
 exports.updateModelTest = function (test) {
-    rival.updateModel(rider, {
-        name: 'next_rival'
+    developer.updateModel(rider, {
+        name: 'next_developer'
     }, function () {
         test.done();
     });
 };
 exports.searchModelTest = function (test) {
-    rival.searchModel(rider, "rival", function (result) {
+    developer.searchModel(rider, "developer", function (result) {
         should.exist(result);
         test.done();
     });
 };
 exports.removeModelTest = function (test) {
-    rival.removeModel(rider, function () {
+    developer.removeModel(rider, function () {
         test.done();
     });
 };

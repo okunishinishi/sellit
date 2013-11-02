@@ -54,12 +54,12 @@ post('/api/salesman/destroy', salesman.api.destroy);
 get('/api/salesman.json', salesman.api.list);
 get('/api/salesman/:_id', salesman.api.one);
 
-var rival = r['rival'];
-get('/rival', rival.index);
-post('/api/rival/save', rival.api.save);
-post('/api/rival/destroy', rival.api.destroy);
-get('/api/rival.json', rival.api.list);
-get('/api/rival/:_id', rival.api.one);
-
 var login = r['login'];
 post('/login', login);
+
+var developer = r['developer'];
+get('/developer', developer.index);
+post('/api/developer/save', developer.api.save);
+post('/api/developer/destroy', developer.api.destroy);
+get('/api/developer.json', developer.api.list);
+get('/api/developer/:_id', developer.api.one);

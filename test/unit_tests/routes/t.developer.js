@@ -1,10 +1,10 @@
 var should = require('should'),
-    rival = require('../../../routes/r.rival.js');
+    developer = require('../../../routes/r.developer.js');
 
 exports.indexTest = function (test) {
-    rival.index(null, {
+    developer.index(null, {
         render: function (view) {
-            view.should.equal('rival/index.jade');
+            view.should.equal('developer/index.jade');
             test.done();
         }
     });

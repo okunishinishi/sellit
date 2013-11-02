@@ -31,10 +31,10 @@ mixin system(index, data)
                     td
                         select(name='systems[#{index}].provider')
                             option(value='')
-                            for rival in rivals
-                                option(value=rival._id,
-                                selected=rival._id==data.provider
-                                )=rival.name
+                            for developer in developers
+                                option(value=developer._id,
+                                selected=developer._id==data.provider
+                                )=developer.name
 
                 tr
                     th

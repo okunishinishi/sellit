@@ -1,90 +1,23 @@
-(function ($) {
+(function ($, Hbs, l) {
+
+    var ss = $.spreadsheet;
     var tmpl = {
-        li: Handlebars.templates['chart-list-item']
+        cartTbodyThContent: Hbs.templates['chart-tbody-th-content']
     };
     $.fn.extend({
-        tableData: function () {
-            var table = $(this),
-                thead = table.find('thead'),
-                tbody = table.find('tbody'),
-                result = {
-                    head: [],
-                    body: []
-                };
-            thead.find('tr').find('th').each(function () {
-                var cell = $(this),
-                    text = cell.text() || '';
-                result.head.push(text);
-            });
-            tbody.find('tr').each(function () {
-                var tr = $(this);
-                var data = [];
-                tr.find('th,td').each(function () {
-                    var cell = $(this);
-                    data.push({
-                        sort_num: cell.data('sort_num') || undefined,
-                        color: cell.data('color') || undefined,
-                        text: cell.text() || '',
-                        href: cell.find('a').attr('href')
-                    });
+        chartListSection: function () {
+            var section = $(this),
+                data = section.data();
+
+            var headData = new ss.HeadData(data['headrow']),
+                bodyData = data['rows'].map(function (row) {
+                    var label = tmpl.cartTbodyThContent(row.shift());
+                    return new ss.RowData(label, row.map(function (data) {
+                        return data;
+                    }));
                 });
-                result.body.push(data);
-            });
-            return result;
-        },
-        sortableTable: function (callback) {
-            var table = $(this),
-                thead = table.find('thead'),
-                tbody = table.find('tbody');
-            $('th', thead).addClass('sortable-th').click(function () {
-                var th = $(this),
-                    i = th.prevAll('th').size() || 0,
-                    asc = th.data('asc');
-                var data = table.tableData()['body'],
-                    bodyHTML = '';
-                data
-                    .sort(function (a, b) {
-                        var order = (asc ? 1 : -1);
-                        if (typeof(a[i].sort_num) === "undefined") {
-                            var sort = a[i]['text'].localeCompare(b[i]['text']) * order;
-                            if (sort) {
-                                return  sort;
-                            }
-                        }
-                        return (a[i]['sort_num'] - b[i]['sort_num']) * order;
-                    })
-                    .forEach(function (data) {
-                        var rowHtml = "<tr>";
-                        data.forEach(function (data) {
-                            var html = data.text;
-                            if (data.href) html = '<a href="' + data.href + '">' + html + '</a>';
-                            rowHtml += [
-                                "<td data-sort_num='" + (data.sort_num || '') + "' data-color='" + data.color + "'>",
-                                html,
-                                "</td>"
-                            ].join('');
-                        });
-                        rowHtml += "</tr>";
-                        bodyHTML += rowHtml;
-                    });
-                if (asc) {
-                    th.addClass('asc')
-                        .removeClass('desc');
-                } else {
-                    th.addClass('desc').removeClass('asc');
-                }
-                th.siblings().removeClass('asc').removeClass('desc');
-                th.data('asc', !asc);
-                tbody.html(bodyHTML);
-                callback && callback();
-            }).prepend('<i class="icon icon-chevron-up"></i><i class="icon icon-chevron-down"></i>');
-            return table;
-        },
-        chartListTable: function () {
-            var table = $(this),
-                thead = table.find('thead'),
-                tbody = table.find('tbody');
-            return table;
+            var sheetData = new ss.SheetData('',headData, bodyData);
+            return section.spreadsheet(sheetData);
         },
         chartListTabs: function (callback) {
             var tabs = $(this);
@@ -103,12 +36,9 @@
     $(function () {
         var body = $(document.body);
 
-        var table = $('#chart-list-table', body).chartListTable();
+        var table = $('#chart-list-section', body).chartListSection();
 
         $('#chart-list-tabs', body).chartListTabs(function (key) {
-            table.find('td').each(function () {
-
-            });
         });
     });
-})(jQuery);
+})(jQuery, Handlebars, window['l']);

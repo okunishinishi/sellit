@@ -1,7 +1,5 @@
-@import "lib/tek.less";
-@import "lib/icons";
-@import "lib/tek.component.less";
-@import "lib/tek.themes.less";
+@import "lib/tek-mixin.less";
+@import "lib/tek-style-clean";
 
 @base: darken(@white, 1);
 @main: @gray;
@@ -12,7 +10,6 @@ body {
   height: 100%;
   font-siz: 18px;
   padding: 20px 20px;
-  .theme-clean(@base, @main, @accent);
   background-image: url('../images/brickwall/brickwall.png');
   .btn-danger {
     .btn(#FF99AC);
@@ -128,7 +125,7 @@ header {
 }
 
 .add-btn {
-  .hoverable-btn(@base);
+  .add-btn();
   padding: 5px 0;
   color: @gray;
   &:hover {
@@ -179,7 +176,6 @@ header {
 .grabbable {
   .grabbable();
 }
-
 /*******************
  *  positioning
  *******************/

@@ -1,8 +1,9 @@
-<li class="chart-list-item positioned">
-    <a class="cover" data-role="detail-link" href="/chart/?_id={{_id}}"></a>
-    <form class="inline-form" action="/api/chart/save"
+<li class="developer-list-item positioned">
+    <a class="cover detail-link" data-role="detail-link" href="{{ctx}}/developer/?_id={{_id}}&t={{t}}"></a>
+    <form class="inline-form" action="{{ctx}}/api/developer/save"
           method="post" name="edit-form">
         <input type="hidden" value="{{_id}}" name="_id"/>
+        <input type="hidden" value="{{_vr}}" name="_vr"/>
         <input type="text" data-role="editable-text" name="name" value="{{name}}"/>
     </form>
     <div class="stick-right stick-top block-list-item-control">
@@ -10,7 +11,7 @@
             <i class="icon icon-pencil"></i>
         </a>
 
-        <form class="inline-form" action="/api/chart/destroy"
+        <form class="inline-form" action="{{ctx}}/api/developer/destroy"
               method="post" name="destroy-form">
             <input type="hidden" value="{{_id}}" name="_id"/>
             <a href="javascript:void(0)" data-role='submit-btn'>

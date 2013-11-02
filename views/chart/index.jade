@@ -1,10 +1,13 @@
 extends ../layout
 
 block stylesheets
-    link(rel='stylesheet', href='/stylesheets/chart.css')
+    link(rel='stylesheet', href=url.css('chart.css'))
+    link(rel='stylesheet', href=url.css('lib/jquery.spreadsheet.css'))
+
 
 block javascripts
-    script(src='/javascripts/p.chart.js')
+    script(src=url.js('lib/jquery.spreadsheet.js'))
+    script(src=url.js('p.chart.js'))
     script.
         (function($){
             $(function(){
@@ -18,24 +21,6 @@ block content
         a.tab(href='javascript:void(0)',data-key='scale')=l.lbl.scale
         a.tab(href='javascript:void(0)',data-key='')=l.lbl.all
 
-    table#chart-list-table.full-width
-        thead
-            tr
-                for head in headRow
-                    th=head
-
-
-        tbody
-            for row in rows
-                tr
-                    th
-                        a(href=row[0].href)=row[0].text
-                    - for (var i = 1; i < row.length; ++i) {
-                        td(data-system=row[i],
-                        class=row[i].name?'':'disabled'
-                        )
-                            span(data-key='name')=row[i].name
-                            span(data-key='provider')=row[i].provider
-                            span(data-key='freeword')=row[i].freeword
-                            span(data-key='scale')=row[i].scale
-                    - }
+    section#chart-list-section(
+    data-headrow=headRow,
+    data-rows=rows)

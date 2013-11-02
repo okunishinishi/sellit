@@ -51,7 +51,6 @@ app.all('*',
     function (req, res, next) {
         var login_username = req.session.login_username;
         var needsLogin = !login_username && (req.path != '/' && !req.path.match('login'));
-        console.log(req.path, needsLogin);
         if(needsLogin){
             res.redirect('/');
         }

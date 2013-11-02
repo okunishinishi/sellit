@@ -10,18 +10,18 @@ var tek = require('tek'),
     Schema = DB['Schema'],
     defineModel = DB['defineModel'];
 
-var Rival = module.exports = defineModel({
+var Developer = module.exports = defineModel({
     //properties
     parent_id: null,
     children_ids: []
 });
 
-Rival.schema = new Schema({
+Developer.schema = new Schema({
     //schemas
 
 });
 
-Rival.prototype.validate = function () {
+Developer.prototype.validate = function () {
     var s = this;
-    return Rival.schema.validate(s);
+    return Developer.schema.validate(s);
 };

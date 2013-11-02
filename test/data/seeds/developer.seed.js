@@ -9,7 +9,7 @@ module.exports = {
     entries: [
         {
             _id: "${padZero(rownum, 24)}",
-            name: '${star}${choice("システム,開発,ディベロップ".split(","))}'
+            name: '${flower}${choice("商事,コーポレーション,株式会社,グループ".split(","))}'
         }.repeat(10)
     ]
 };

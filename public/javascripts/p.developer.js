@@ -1,5 +1,5 @@
 /**
- * public script for rival
+ * public script for developer
  *
  *  -- namespaces --
  *  $ : jQuery
@@ -9,36 +9,36 @@
  */
 (function ($, l, Hbs) {
     var tmpl = {
-        li: Hbs.templates['rival-list-item']
+        li: Hbs.templates['developer-list-item']
     };
     $.fn.extend({
-        rivalSearchForm: function (callback) {
+        developerSearchForm: function (callback) {
             var form = $(this);
             form.searchForm(callback);
             return form;
         },
-        rivalListItem: function () {
+        developerListItem: function () {
             return $(this)
                 .destroyableListItem()
                 .editableListItem('dblclick');
         },
-        rivalList: function (data) {
+        developerList: function (data) {
             var ul = $(this);
             ul.htmlHandlebars(tmpl.li, data)
                 .find('li')
-                .rivalListItem();
+                .developerListItem();
             return ul;
         },
-        rivalListSection: function () {
+        developerListSection: function () {
             var section = $(this),
                 addBtn = section.findByRole('add-btn'),
                 ul = section.find('ul'),
                 searchForm = section.findByRole('search-form');
             ul.appendableList(tmpl.li, addBtn, function (li) {
-                li.rivalListItem();
+                li.developerListItem();
             });
-            searchForm.rivalSearchForm(function (data) {
-                ul.rivalList(data);
+            searchForm.developerSearchForm(function (data) {
+                ul.developerList(data);
             }).submit();
             return section;
         }
@@ -47,6 +47,6 @@
     $(function () {
         var body = $(document.body);
 
-        $('#rival-list-section', body).rivalListSection();
+        $('#developer-list-section', body).developerListSection();
     });
 })(jQuery, window['l'], Handlebars);

@@ -6,7 +6,7 @@ var tek = require('tek'),
     db = require('../db'),
     models = db.models,
     Client = models['Client'],
-    Rival = models['Rival'];
+    Developer = models['Developer'];
 
 
 /**
@@ -20,8 +20,7 @@ exports.index = function (req, res) {
     var system_names = Client.listSystemNames(clients).filter(function (e, i, arr) {
         return arr.lastIndexOf(e) === i;
     });
-    findAllModels([Rival], function (rivals) {
-        var headRow = [null].concat(system_names);
+    findAllModels([Developer], function (developers) {
         var rows = clients.map(function (client) {
             var systems = client.systems || [],
                 systemsMap = toNameMap(systems);
@@ -35,7 +34,7 @@ exports.index = function (req, res) {
                 }));
         });
         res.render('chart/index.jade', {
-            headRow: headRow,
+            headRow: system_names,
             rows: rows,
             properties: Client.listProperties(clients)
         });

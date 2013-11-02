@@ -11,6 +11,16 @@ module.exports = {
             name: '${flower}${choice("商事,コーポレーション,株式会社,グループ".split(","))}',
             parent_id: '',
             children_ids: "${choice(null,null,'[]')}",
+            systems:[
+                {
+                    "index": "",
+                    "name": "すごいしすてむ",
+                    "code": "abac",
+                    "scale": "12",
+                    "provider": "000000000000000000000002",
+                    "freeword": "やま"
+                }
+            ]
         }.repeat(10)
     ]
 };
