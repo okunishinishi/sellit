@@ -12,6 +12,7 @@ exports.toIdMap = function (data) {
 exports.toNameMap = function (data) {
     var result = {};
     data && data.forEach(function (data) {
+        if(!data) return;
         result[data.name] = data;
     });
     return result;

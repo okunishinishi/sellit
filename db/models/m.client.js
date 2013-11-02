@@ -29,6 +29,20 @@ Client.prototype.isGroup = function () {
         return '';
     }
 };
+Client.prototype.listParentNames = function (clientMap) {
+    var s = this,
+        result = [];
+    var client = s;
+    while (!!client.parent_id) {
+        client = clientMap[client.parent_id];
+        if(client){
+            result.unshift(client.name);
+        }else{
+            break;
+        }
+    }
+    return result;
+};
 Client.prototype.validate = function () {
     var s = this;
     return Client.schema.validate(s);

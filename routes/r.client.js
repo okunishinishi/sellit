@@ -79,9 +79,9 @@ exports.index = function (req, res) {
     });
 };
 exports.index.first = function (req, res) {
-    Client.findOneByCondition({}, function (client) {
-        res.redirect('/client/' + (client && client._id || '0'));
-    });
+    var clients = res.locals.clients;
+    var client = clients && clients[0];
+    res.redirect('/client/' + (client && client._id || '0'));
 }
 
 exports.api = {
