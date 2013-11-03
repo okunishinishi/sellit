@@ -17,10 +17,26 @@ module.exports = {
                     "name": "${fruit}システム",
                     "code": "${randomAlpha(2).toUpperCase()}${padZero(rownum,4)}",
                     "scale": "12",
-                    "provider": "7${padZero(rownum, 23)}",
+                    "provider": "7${padZero(rownum % 5, 23)}",
+                    "freeword": "${choice('いまいち,あと一押し,絶望的,余裕'.split(','))}"
+                },
+                {
+                    "index": "",
+                    "name": "${fruit}システム",
+                    "code": "${randomAlpha(2).toUpperCase()}${padZero(rownum,4)}",
+                    "scale": "12",
+                    "provider": "7${padZero(rownum % 5, 23)}",
+                    "freeword": "${choice('いまいち,あと一押し,絶望的,余裕'.split(','))}"
+                },
+                {
+                    "index": "",
+                    "name": "${fruit}システム",
+                    "code": "${randomAlpha(2).toUpperCase()}${padZero(rownum,4)}",
+                    "scale": "12",
+                    "provider": "7${padZero(rownum % 5, 23)}",
                     "freeword": "${choice('いまいち,あと一押し,絶望的,余裕'.split(','))}"
                 }
             ]
-        }.repeat(10)
+        }.repeat(30)
     ]
 };

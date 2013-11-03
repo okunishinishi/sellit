@@ -17,6 +17,7 @@ th {
   a {
     display: block;
     width: 100%;
+    min-width: 150px;
   }
 }
 
@@ -60,10 +61,16 @@ th {
   .filter("code-filter");
   .filter("scale-filter");
   .filter("freeword-filter");
-  &[data-filter="all-filter"]{
+  &[data-filter="all-filter"] {
     .chart-cell-label {
       display: block;
     }
+  }
+
+  .hover-sync {
+    @back:lighten(@yellow, 15);
+    background-color: @back;
+    color:darken(@back, 50);
   }
 
 }

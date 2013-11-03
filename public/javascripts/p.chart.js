@@ -31,17 +31,44 @@
                     .removeClass('tab-selected');
                 callback && callback(id);
             });
+        },
+        chartCellMap: function (filter) {
+            var map = {};
+            this.each(function () {
+                var cell = $(this),
+                    label = cell.findByAttr('for', filter),
+                    value = label.data('value');
+                if (!map[value]) map[value] = $();
+                map[value] = map[value].add(cell);
+            });
+            return map;
         }
     });
 
     $(function () {
         var body = $(document.body);
 
-        var chartListSection = $('#chart-list-section', body).chartListSection();
+        var chartListSection = $('#chart-list-section', body).chartListSection(),
+            chartListCell = $('.ss-cell', chartListSection);
 
-        $('#chart-list-tabs', body).chartListTabs(function (id) {
-            chartListSection.attr('data-filter', id);
+        chartListCell
+            .hover(function () {
+                var cellMap = chartListSection.cellMap;
+                var cell = $(this),
+                    value = cell.find('label:visible').data('value');
+                if (!value) return;
+                var syncCell = cellMap && cellMap[value];
+                if (syncCell && syncCell.size()>1) {
+                    syncCell.addClass('hover-sync');
+                }
+            }, function () {
+                chartListCell.filter('.hover-sync').removeClass('hover-sync');
+            });
+
+        $('#chart-list-tabs', body).chartListTabs(function (filter) {
+            chartListSection.attr('data-filter', filter);
             chartListSection.trigger('ss-resize');
+            chartListSection.cellMap = chartListCell.chartCellMap(filter);
         }).first().click();
     });
 })(jQuery, Handlebars, window['l']);
