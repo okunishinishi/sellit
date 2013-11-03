@@ -18,7 +18,7 @@ exports.cleanBackup = function (maxcount, bk_dirpath, callback) {
                 fs.unlinkSync(filepath);
             }
         });
-        callback();
+        callback && callback();
     });
 };
 
@@ -37,7 +37,7 @@ exports.fileBackup = function (filepath, bk_dirpath, callback) {
         callback = null;
     });
     w.on('close', function () {
-        callback && callback();
+        callback && callback(null, bk_filepath);
     });
     r.pipe(w);
 };

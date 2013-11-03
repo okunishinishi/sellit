@@ -113,47 +113,41 @@ app.all('*',
 
 
 (function () {
-    var backup = config['backup'],
-        db = config['db'];
-    var tek = require('tek'),
-        fs = require('fs'),
-        padZero = tek['string']['padZero'],
-        resolve = require('path')['resolve'],
+    var resolve = require('path')['resolve'],
         excel = require('./routes/r.excel');
     var takeBackup = function () {
-        var now = (function (date) {
-            return [
-                date.getFullYear(),
-                padZero(date.getMonth() + 1, 2),
-                padZero(date.getDate())
-            ].join('') + '-' + [
-                padZero(date.getHours(), 2),
-                padZero(date.getMinutes(), 2),
-                padZero(date.getSeconds(), 2)
-            ].join('');
-        })(new Date);
-        var dirpath = backup.dirpath,
-            filename = [now, 'xlsx'].join('.');
-        fs.readdirSync(dirpath).reverse().forEach(function (filename, i) {
-            if (filename.match(/^\./)) return;
-            var filepath = resolve(dirpath, filename);
-            if ((backup.max_count - 1) * 2 <= i) {
-                fs.unlinkSync(filepath);
-            }
-        });
-        var db_filepath = resolve(db.host, db.name);
-        fs.readFile(db_filepath, function (err, buffer) {
-            if (err) console.error(err);
-            var bk_filepath = resolve(dirpath, now + '.db');
-            fs.writeFile(bk_filepath, buffer, function (err) {
-                if (err) console.error(err);
-                excel.generateWorkbook(dirpath, filename, function () {
-                    console.log('back up saved to :', resolve(dirpath, filename));
-                });
+        var db_filepath = resolve(config.db.host, config.db.name),
+            excel_filepath = resolve(config.excelDir, config.excelFileName),
+            bk_dirpath = config.backup.dirpath;
+
+        function execute(filepath, callback) {
+            util.backup.fileBackup(filepath, bk_dirpath, function (err, bk_filepath) {
+                if (err) {
+                    console.error('failed to take backup');
+                } else {
+                    console.log('backup saved to :', bk_filepath);
+                }
+                callback();
+            });
+        }
+
+        function clean() {
+            util.backup.cleanBackup(config.backup.maxcount * 2, bk_dirpath, function (err) {
+                if (err) {
+                    console.error('failed to clean backup');
+                } else {
+                    console.log('backup clean done');
+                }
+            });
+        }
+
+        execute(db_filepath, function () {
+            execute(excel_filepath, function () {
+                clean();
             });
         });
     };
-    setInterval(takeBackup, backup.interval);
+    setInterval(takeBackup, config.backup.interval);
     takeBackup();
 })();
 

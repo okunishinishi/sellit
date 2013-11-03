@@ -46,8 +46,8 @@ exports.db = {
 };
 
 exports.backup = {
-    interval: 24 * 60 * 60 * 1000,
-    max_count: 3,
+    interval: 24 * 60 * 60 * 1000 * 3,
+    maxcount: 3,
     dirpath: resolve(__dirname, 'backup')
 };
 
