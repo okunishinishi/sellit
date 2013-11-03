@@ -29,7 +29,10 @@ block content
 
 
         .float-right#chart-list-tabs
-            a#code-filter.tab(href='javascript:void(0)')=l.lbl.code
+            a#code-filter.tab(href='javascript:void(0)',
+            data-colorbase='#FA9832',
+            data-colortype='rainbow'
+            )=l.lbl.code
             a#provider-filter.tab(href='javascript:void(0)')=l.lbl.provider
             a#scale-filter.tab(href='javascript:void(0)')=l.lbl.scale
             a#freeword-filter.tab(href='javascript:void(0)')=l.lbl.freeword

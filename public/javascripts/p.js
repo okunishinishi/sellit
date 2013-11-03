@@ -27,12 +27,27 @@
 
 
     $.extend({
-        randomColor: function (saturation, value) {
-            return $.color('#ff0000')
-                .hue(Math.random(), true)
-                .saturation(saturation || .5, true)
-                .value(value || .8, true)
-                .hex();
+        rainbowColor: function (base, count) {
+            var result = [];
+            if (!base) base = '#FF0000';
+            if (!count) count = 7;
+            var color = $.color(base);
+            for (var i = 0; i < count; i++) {
+                var hue = i / count;
+                result.push(color.hue(hue, true).hex());
+            }
+            return result;
+        },
+        backColor: function (base) {
+            var color = $.color(base);
+            var v = color.value();
+            v += .5;
+            return color.value(v % 1).hex();
+        },
+        darkenColor: function (base) {
+            var color = $.color(base);
+            var l = color.lightness();
+            return color.lightness(l * .9).hex();
         }
     });
     $.fn.extend({

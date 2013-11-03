@@ -142,3 +142,25 @@ fieldset{
     content:':';
   }
 }
+.colorized{
+  .ss-cell{
+    opacity: .8;
+    &:hover,
+    &.hover-sync{
+      opacity: 1;
+    }
+    &.empty-cell{
+      opacity: 1;
+      .empty-cell(@back){
+        background-color: @back !important;
+        border-color: darken(@back,2) !important;
+      }
+    //  @back:rgb(228, 228, 228);
+      @back:#FDFDFD;
+      .empty-cell(@back);
+      &:hover{
+        .empty-cell(lighten(@back,2));
+      }
+    }
+  }
+}

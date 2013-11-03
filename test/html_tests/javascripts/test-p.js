@@ -4,25 +4,30 @@
 
 var $ = jQuery;
 $(function () {
+    QUnit.config.reorder = false;
+
     var doc = $(document),
         body = $(document.body),
         eq = equal;
 
-    test('$.parseJSONSafely', function () {
-        strictEqual($.parseJSONSafely('1'), 1);
-        strictEqual($.parseJSONSafely(''), '');
-        strictEqual($.parseJSONSafely('null'), null);
-        strictEqual($.parseJSONSafely('['), null);
-        strictEqual($.parseJSONSafely('["a"]').length, 1);
-    });
-
-    test('$.randomColor', function () {
+    test('$.rainbowColor', function () {
         var ul = $('#color-list');
-        for (var i = 0; i < 20; i++) {
-            var color = $.randomColor(.3, .4);
-            var html = '<li style="color:' + color + '">' + color + '</li>';
-            ul.append(html);
-        }
-        ok(true);
+        var html = '';
+        $.rainbowColor('#E33', 20).forEach(function (color) {
+            html += '<li style="color:' + color + '">' + color + '</li>';
+        });
+        ul.append(html);
+        strictEqual(ul.find('li').size(), 20);
+
+        ul.find('li').each(function () {
+            var li = $(this),
+                color = li.text();
+            var back = $.backColor(color);
+            li.css({
+                backgroundColor: back,
+                borderColor: $.darkenColor(back)
+            });
+        });
+        strictEqual(ul.find('li').size(), 20);
     });
 });

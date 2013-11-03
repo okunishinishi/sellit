@@ -25,11 +25,21 @@
             return tabs.find('.tab').click(function () {
                 var clicked = $(this),
                     id = clicked.attr('id');
+
+                if (history.pushState) {
+                    var query = new tek.Query(location.search.replace('?', ''));
+                    query.filter = id;
+                    var new_url = [location.path, $.param(query)].join('?');
+                    history.pushState(null, null, new_url);
+                } else {
+                    location.hash = '__' + id;
+                }
+
                 clicked
                     .addClass('tab-selected')
                     .siblings('.tab-selected')
                     .removeClass('tab-selected');
-                callback && callback(id);
+                callback && callback(id, clicked.data());
             });
         },
         chartCellMap: function (filter) {
@@ -43,12 +53,18 @@
             });
             return map;
         },
-        rainbowText: function () {
-            var text = $(this);
-            text.html(text.text().split('').map(function (c) {
-                return '<span style="color:' + $.randomColor()+ ';">' + c + '</span>'
-            }));
-            return text;
+        chartControlForm: function (callback) {
+            var form = $(this);
+            form.find(':radio,:checkbox').change(function () {
+                form.submit();
+            });
+            form
+                .submit(function (e) {
+                    e.preventDefault();
+                    var values = form.getFormValue();
+                    callback(values.toObj());
+                });
+            return form;
         }
     });
 
@@ -57,6 +73,39 @@
 
         var chartListSection = $('#chart-list-section', body).chartListSection(),
             chartListCell = $('.ss-cell', chartListSection);
+
+        chartListSection.colorize = function (base, type) {
+            var cellMap = chartListSection.cellMap;
+            if (!cellMap) return;
+
+
+            var
+                values = Object.keys(cellMap).sort(function (a, b) {
+                    return Number(a) - Number(b);
+                });
+            var colors = null;
+            switch (type || 'rainbow') {
+                case 'rainbow':
+                    colors = $.rainbowColor(base, values.length);
+                    break;
+            }
+            values && values.forEach(function (value, i) {
+                if (value === '__empty__') return;
+                var color = colors[i],
+                    back = $.backColor(color);
+                cellMap[value].css({
+                    color: color,
+                    backgroundColor: back,
+                    borderColor: $.darkenColor(back)
+                });
+            });
+            chartListSection.addClass('colorized');
+        };
+        chartListSection.decolorize = function () {
+            chartListSection.removeClass('colorized');
+            chartListCell.removeAttr('style');
+        };
+
 
         chartListCell
             .hover(function () {
@@ -72,7 +121,10 @@
                 chartListCell.filter('.hover-sync').removeClass('hover-sync');
             });
 
-        $('#chart-list-tabs', body).chartListTabs(function (filter) {
+        var tabs = $('#chart-list-tabs', body).chartListTabs(function (filter, data) {
+            chartListSection.decolorize();
+            chartListSection.colorize(data.colorbase, data.colortype);
+
             chartListSection.attr('data-filter', filter);
             chartListSection.trigger('ss-resize');
             chartListSection.cellMap = chartListCell.chartCellMap(filter);
@@ -82,17 +134,21 @@
             if (emptyCells) {
                 emptyCells.addClass('empty-cell');
             }
-        }).first().click();
+        });
+        tabs.first().click();
 
-        var colorizeBtn = $('#colorize-btn').rainbowText(),
-            decolorizeBtn = $('#decolorize-btn').hide();
-        colorizeBtn.click(function () {
-            colorizeBtn.hide();
-            decolorizeBtn.show();
+        $('#chart-control-form').chartControlForm(function (settings) {
+            chartListSection.decolorize();
+            if (eval(settings.colorize)) {
+                var tab = tabs.filter('.tab-selected');
+                if (tab.size()) {
+                    var data = tab.data();
+                    chartListSection.colorize(data.colorbase, data.colortype);
+                }
+            }
         });
-        decolorizeBtn.click(function () {
-            colorizeBtn.show();
-            decolorizeBtn.hide();
-        });
+
+
+//        $('#colorize-input-on').click();//FIXME remove
     });
 })(jQuery, Handlebars, window['l']);
