@@ -35,7 +35,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (stack1 = helpers.code) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.code; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</label>\n    <label class='chart-cell-label' data-value=\"";
+    + "</label>\n    <label class='chart-cell-label text-right' data-value=\"";
   if (stack1 = helpers.scale) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.scale; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
