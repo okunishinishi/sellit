@@ -109,21 +109,6 @@ caption {
 }
 
 
-.colorize-btn {
-  display: inline-block;
-  padding: 5px 10px;
-  .text-shadow(1px 1px 2px;.4);
-  font-weight: bold;
-  @color:#CC00FF;
-  font-size: 1.2em;
-  color:@color;
-  &:hover{
-    color:@color;
-  }
-  &:active{
-    text-shadow: none;
-  }
-}
 #chart-list-control-fieldset{
   background-color: fadeout(@white,20);
   .border-radius(4px);
@@ -142,8 +127,22 @@ fieldset{
     content:':';
   }
 }
+.chart-cell-color-mark{
+  display: none;
+}
 .colorized{
+  .chart-cell-color-mark{
+    display: block;
+    position: absolute;
+    left: 0;
+    top:0;
+    .square(0);
+    border-style:solid;
+    border-width:10px;
+    border-color:transparent;
+  }
   .ss-cell{
+    position: relative;
     opacity: .8;
     &:hover,
     &.hover-sync{

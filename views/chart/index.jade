@@ -30,10 +30,14 @@ block content
 
         .float-right#chart-list-tabs
             a#code-filter.tab(href='javascript:void(0)',
-            data-colorbase='#FA9832',
-            data-colortype='rainbow'
+            data-colorbase='#FE2',
+            data-colortype='rainbow',
+            data-colororder='random'
             )=l.lbl.code
-            a#provider-filter.tab(href='javascript:void(0)')=l.lbl.provider
+            a#provider-filter.tab(href='javascript:void(0)',
+            data-colorbase='#DA7811',
+            data-colortype='rainbow'
+            )=l.lbl.provider
             a#scale-filter.tab(href='javascript:void(0)')=l.lbl.scale
             a#freeword-filter.tab(href='javascript:void(0)')=l.lbl.freeword
             a#all-filter.tab(href='javascript:void(0)',data-key='')=l.lbl.all

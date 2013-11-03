@@ -69,18 +69,25 @@
     });
 
     $(function () {
-        var body = $(document.body);
+        var body = $(document.body),
+            q = new tek.Query(location.search.replace('?', '') || '');
 
         var chartListSection = $('#chart-list-section', body).chartListSection(),
             chartListCell = $('.ss-cell', chartListSection);
 
-        chartListSection.colorize = function (base, type) {
+        chartListSection.colorize = function (base, type, order) {
             var cellMap = chartListSection.cellMap;
             if (!cellMap) return;
 
 
             var
                 values = Object.keys(cellMap).sort(function (a, b) {
+                    switch (order) {
+                        case 'random':
+                            return Math.random() - Math.random();
+                        case 'string':
+                            return a && a.localeCompare(b);
+                    }
                     return Number(a) - Number(b);
                 });
             var colors = null;
@@ -91,13 +98,15 @@
             }
             values && values.forEach(function (value, i) {
                 if (value === '__empty__') return;
-                var color = colors[i],
-                    back = $.backColor(color);
-                cellMap[value].css({
-                    color: color,
-                    backgroundColor: back,
-                    borderColor: $.darkenColor(back)
-                });
+                var color = colors[i];
+                var cell = cellMap[value];
+                cell.css({
+                    color: color
+                }).children('.chart-cell-content')
+                    .children('.chart-cell-color-mark').css({
+                        borderTopColor: color,
+                        borderLeftColor: color
+                    });
             });
             chartListSection.addClass('colorized');
         };
@@ -120,10 +129,15 @@
             }, function () {
                 chartListCell.filter('.hover-sync').removeClass('hover-sync');
             });
+        var controlForm = $('#chart-control-form');
 
         var tabs = $('#chart-list-tabs', body).chartListTabs(function (filter, data) {
+
+            var settings = controlForm.getFormValue();
             chartListSection.decolorize();
-            chartListSection.colorize(data.colorbase, data.colortype);
+            if (eval(settings.colorize)) {
+                chartListSection.colorize(data.colorbase, data.colortype, data.colororder);
+            }
 
             chartListSection.attr('data-filter', filter);
             chartListSection.trigger('ss-resize');
@@ -135,20 +149,30 @@
                 emptyCells.addClass('empty-cell');
             }
         });
-        tabs.first().click();
 
-        $('#chart-control-form').chartControlForm(function (settings) {
+        if (q.filter) {
+            var tab = $('#' + q.filter);
+            if (tab.size()) {
+                tab.click();
+            } else {
+                tabs.first().click();
+            }
+        } else {
+            tabs.first().click();
+        }
+
+        controlForm.chartControlForm(function (settings) {
             chartListSection.decolorize();
             if (eval(settings.colorize)) {
                 var tab = tabs.filter('.tab-selected');
                 if (tab.size()) {
                     var data = tab.data();
-                    chartListSection.colorize(data.colorbase, data.colortype);
+                    chartListSection.colorize(data.colorbase, data.colortype, data.colororder);
                 }
             }
         });
 
 
-//        $('#colorize-input-on').click();//FIXME remove
+        $('#colorize-input-on').click();//FIXME remove
     });
 })(jQuery, Handlebars, window['l']);

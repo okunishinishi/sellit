@@ -51,7 +51,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (stack1 = helpers.freeword) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.freeword; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</label>\n</div>";
+    + "</label>\n    <div class=\"chart-cell-color-mark\"></div>\n</div>";
   return buffer;
   }
 	);
@@ -178,31 +178,6 @@ function program3(depth0,data) {
   else { stack1 = depth0._id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
     + "\" name=\"_id\"/>\n            <a href=\"javascript:void(0)\" data-role='submit-btn'>\n                <i class=\"icon icon-trash\"></i>\n            </a>\n        </form>\n    </div>\n</div>\n";
-  return buffer;
-  }
-	);
-})();(function() {
-	var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
-	templates['confirm-dialog'] = template(
-	function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
-
-
-  buffer += "<section class=\"confirm-dialog\">\n    <div class=\"confirm-dialog-inner\">\n        <h2 class=\"dialog-title\">";
-  options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers['l'] || depth0['l']),stack1 ? stack1.call(depth0, "msg.sure", options) : helperMissing.call(depth0, "l", "msg.sure", options)))
-    + "</h2>\n        ";
-  options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers['l'] || depth0['l']),stack1 ? stack1.call(depth0, "msg.never_go_back", options) : helperMissing.call(depth0, "l", "msg.never_go_back", options)))
-    + "\n        <form>\n            <a href=\"javascript:void(0)\" data-role=\"cancel-btn\"\n               class=\"stick-right stick-top remove-btn\"\n                    >&times;</a>\n\n            <p>\n\n                <input type=\"checkbox\" id=\"confirm-dialog-check\"/>\n                <label for=\"confirm-dialog-check\"><b>";
-  options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers['l'] || depth0['l']),stack1 ? stack1.call(depth0, "lbl.understand", options) : helperMissing.call(depth0, "l", "lbl.understand", options)))
-    + "</b></label>\n            </p>\n            <input type=\"submit\" class=\"btn btn-danger wide-btn disabled\"\n                   disabled=\"disabled\" value=\"";
-  options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers['l'] || depth0['l']),stack1 ? stack1.call(depth0, "btn.remove_it", options) : helperMissing.call(depth0, "l", "btn.remove_it", options)))
-    + "\"/>\n        </form>\n    </div>\n</section>\n";
   return buffer;
   }
 	);
