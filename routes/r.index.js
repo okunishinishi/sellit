@@ -5,7 +5,7 @@ var db = require('../db'),
 module.exports = function (req, res) {
     Salesman.findAll(function (salesmen) {
         res.render('index.jade', {
-            salesmen: salesmen
+            username_list:Salesman.listNames(salesmen)
         });
     });
 };

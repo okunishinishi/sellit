@@ -55,6 +55,7 @@ var config = require('../app.config'),
 })([
         'tek-mixin.less',
         'tek-style-clean.less',
+        'tek.view.less',
         'jquery.treeview.less',
         'jquery.spreadsheet.less'
     ]);

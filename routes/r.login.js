@@ -13,7 +13,7 @@ exports = module.exports = function (req, res) {
         } else {
             res.render('index.jade', {
                 login_err: true,
-                salesmen: salesmen
+                username_list:Salesman.listNames(salesmen)
             });
         }
     });

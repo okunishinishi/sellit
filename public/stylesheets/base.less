@@ -1,5 +1,6 @@
 @import "lib/tek-mixin.less";
 @import "lib/tek-style-clean";
+@import "lib/tek.view.less";
 @import "lib/icons.less";
 
 @base: darken(@white, 1);
@@ -239,11 +240,6 @@ header {
   color: lighten(@red, 4);
 }
 
-.confirm-dialog {
-  .confirm-dialog();
-  z-index: 999;
-}
-
 .label {
   .border-radius(3px);
   font-size: 0.75em;
@@ -370,4 +366,8 @@ header {
 
 [type="number"]{
   text-align: right;
+}
+
+.tk-selectable-text-list{
+  text-align: left;
 }

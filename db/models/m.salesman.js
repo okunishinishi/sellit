@@ -25,3 +25,13 @@ Salesman.prototype.validate = function () {
     var s = this;
     return Salesman.schema.validate(s);
 };
+
+Salesman.listNames = function (salesmen) {
+    return salesmen
+        .map(function (salesman) {
+            return salesman && salesman.name;
+        })
+        .filter(function (username) {
+            return !!username;
+        });
+};

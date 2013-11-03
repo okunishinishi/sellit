@@ -1,7 +1,7 @@
 /**
  * tek.view.js
  * - javascript library for tek -
- * @version v0.1.30
+ * @version v0.2.2
  * @author Taka Okunishi
  * @date 2013-11-03
  *
@@ -15,16 +15,110 @@
             console.error('[tek.view.js] dependency missing: ', name + 'not found.');
             valid = false;
         }
-    };
+    }
     if (!valid) return;
-
 
     tek.crossBrowser(window);
 
+	/** tek.view for hbs.templates **/
+	(function (global, undefined) {
+	
+		var Handlebars = global['hbs'];
+		(function() {
+		  var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
+		templates['tk-confirm-dialog'] = template(function (Handlebars,depth0,helpers,partials,data) {
+		  this.compilerInfo = [4,'>= 1.0.0'];
+		helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+		  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+		
+		
+		  buffer += "<div class=\"tk-confirm-dialog\" id=\"tk-confirm-dialog\">\n    <div class=\"tk-confirm-dialog-inner\">\n        <h2 class=\"tk-confirm-dialog-title\">";
+		  if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+		  else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+		  buffer += escapeExpression(stack1)
+		    + "</h2>\n        ";
+		  if (stack1 = helpers.sub_title) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+		  else { stack1 = depth0.sub_title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+		  buffer += escapeExpression(stack1)
+		    + "\n        <form>\n            <a href=\"javascript:void(0)\" class=\"tk-confirm-dialog-close-btn\"\n                    >&times;</a>\n\n            <p>\n\n                <input type=\"checkbox\" id=\"tk-confirm-dialog-check\"/>\n                <label for=\"tk-confirm-dialog-check\"><b>";
+		  if (stack1 = helpers.check_label) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+		  else { stack1 = depth0.check_label; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+		  buffer += escapeExpression(stack1)
+		    + "</b></label>\n            </p>\n            <input type=\"submit\" class=\"tk-danger-btn tk-wide-btn\"\n                   disabled=\"disabled\" value=\"";
+		  if (stack1 = helpers.btn_label) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+		  else { stack1 = depth0.btn_label; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+		  buffer += escapeExpression(stack1)
+		    + "\"/>\n        </form>\n    </div>\n</div>\n";
+		  return buffer;
+		  });
+		templates['tk-editable-label'] = template(function (Handlebars,depth0,helpers,partials,data) {
+		  this.compilerInfo = [4,'>= 1.0.0'];
+		helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+		  
+		
+		
+		  return "<label class=\"tk-editable-label\">\n\n</label>";
+		  });
+		templates['tk-selectable-label'] = template(function (Handlebars,depth0,helpers,partials,data) {
+		  this.compilerInfo = [4,'>= 1.0.0'];
+		helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+		  
+		
+		
+		  return "<label class=\"tk-selectable-label\">\n</label>";
+		  });
+		templates['tk-selectable-text-list'] = template(function (Handlebars,depth0,helpers,partials,data) {
+		  this.compilerInfo = [4,'>= 1.0.0'];
+		helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+		  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+		
+		function program1(depth0,data) {
+		  
+		  var buffer = "";
+		  buffer += "\n        <li class=\"tk-selectable-list-item\">\n            <a href=\"javascript:void(0)\">"
+		    + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
+		    + "</a>\n        </li>\n    ";
+		  return buffer;
+		  }
+		
+		  buffer += "<ul class=\"tk-selectable-text-list\">\n    ";
+		  stack1 = helpers.each.call(depth0, depth0.candidates, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+		  if(stack1 || stack1 === 0) { buffer += stack1; }
+		  buffer += "\n</ul>\n";
+		  return buffer;
+		  });
+		templates['tk-spin'] = template(function (Handlebars,depth0,helpers,partials,data) {
+		  this.compilerInfo = [4,'>= 1.0.0'];
+		helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+		  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+		
+		
+		  buffer += "<div style=\"width:";
+		  if (stack1 = helpers.width) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+		  else { stack1 = depth0.width; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+		  buffer += escapeExpression(stack1)
+		    + ";height:";
+		  if (stack1 = helpers.height) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+		  else { stack1 = depth0.height; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+		  buffer += escapeExpression(stack1)
+		    + ";\n        position: absolute;left:";
+		  if (stack1 = helpers.left) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+		  else { stack1 = depth0.left; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+		  buffer += escapeExpression(stack1)
+		    + ";top:";
+		  if (stack1 = helpers.top) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+		  else { stack1 = depth0.top; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+		  buffer += escapeExpression(stack1)
+		    + "\"></div>";
+		  return buffer;
+		  });
+		})();
+	})(dependencies, undefined);
 	/** tek.view for $ **/
 	(function (global, undefined) {
 	
 		var tek = global['tek'],
+		    hbs = global['hbs'],
 		    $ = global['$'];
 		
 		$.FormValue = tek.define({
@@ -90,7 +184,7 @@
 		 */
 		$.renderHandlebars = function (tmpl, data) {
 		    if (typeof(tmpl) === 'string') {
-		        tmpl = Handlebars['templates'][tmpl];
+		        tmpl = hbs['templates'][tmpl];
 		    }
 		    if (!$.isArray(data)) {
 		        data = [data];
@@ -101,11 +195,79 @@
 		    });
 		    return html;
 		};
+		
+		/**
+		 * parse JSON safely.
+		 * when failed to parse, put warning and close quietly.
+		 */
+		$.parseJSONSafely = function (string) {
+		    if (!string) return string;
+		    try {
+		        return JSON.parse(string);
+		    } catch (e) {
+		        console.warn && console.warn('[tek.view.js] failed to parse string: "' + string + '"');
+		        return null;
+		    }
+		};
+		
+		/**
+		 * show confirm dialog to remove something
+		 * @param data
+		 * @param callback
+		 */
+		$.confirmRemove = function (data, callback) {
+		    $('#tk-confirm-dialog').remove();
+		
+		    var tmpl = hbs.templates['tk-confirm-dialog'];
+		    data = $.extend({
+		        title: 'Are you ABSOLUTELY sure?',
+		        sub_title: 'One this done, there will be no way to go back.',
+		        check_label: 'I understand consequences.',
+		        btn_label: 'do it!'
+		    }, data);
+		    var html = tmpl(data);
+		
+		    var dialog = $(html).appendTo(document.body),
+		        inner = $('.tk-confirm-dialog-inner', dialog),
+		        form = dialog.find('form'),
+		        cancelBtn = form.find('.tk-confirm-dialog-close-btn'),
+		        submit = form.find(':submit');
+		
+		    cancelBtn.click(function () {
+		        dialog.fadeOut(100, function () {
+		            dialog.remove();
+		        });
+		    });
+		    dialog.click(function () {
+		        cancelBtn.click();
+		    });
+		    inner.click(function (e) {
+		        e.stopPropagation();
+		    });
+		    var check = $('#tk-confirm-dialog-check', form).change(function () {
+		        if (check[0].checked) {
+		            submit.removeAttr('disabled');
+		        } else {
+		            submit.attr('disabled', 'disabled');
+		        }
+		    });
+		    form.submit(function (e) {
+		        e.preventDefault();
+		        e.stopPropagation();
+		        if (submit.attr('disabled')) return;
+		        dialog.remove();
+		        callback && callback();
+		    });
+		};
+		
+		
+		
 	})(dependencies, undefined);
 	/** tek.view for $.fn **/
 	(function (global, undefined) {
 	
-		var $ = global['$'];
+		var $ = global['$'],
+		    hbs = global['hbs'];
 		
 		/**
 		 * find element by attribute
@@ -283,13 +445,13 @@
 		    var elm = $(this),
 		        spin = $('.tk-spin', elm);
 		    if (!spin.size()) {
-		        spin = $('<div/>').css({
+		        var tmpl = hbs.templates['tk-spin'];
+		        spin = $(tmpl({
 		            width: size,
 		            height: size,
-		            position: 'absolute',
 		            left: (elm.width() - size) / 2,
 		            top: (elm.height() - size) / 2
-		        }).appendTo(elm).spin();
+		        })).appendTo(elm).spin();
 		    }
 		    spin.show();
 		    return elm;
@@ -357,13 +519,13 @@
 		$.fn.editableText = function (trigger) {
 		    if (!trigger) trigger = 'click';
 		    var KEY_CODE = $.ui.keyCode;
+		    var tmpl = hbs.templates['tk-editable-label'];
 		    return $(this).each(function () {
 		        var input = $(this);
 		        if (input.data('tk-editable-text')) return;
 		        input.data('tk-editable-text', true);
 		        input.addClass('tk-editable-text');
-		        var label = $('<label class="tk-editable-label"/>')
-		            .insertAfter(input)
+		        var label = $(tmpl({})).insertAfter(input)
 		            .on(trigger, function () {
 		                input.trigger('tk-editable-text-edit');
 		            });
@@ -412,9 +574,13 @@
 		 */
 		$.fn.selectableLabel = function (trigger) {
 		    if (!trigger) trigger = 'click';
+		    var tmpl = hbs.templates['tk-selectable-label'];
 		    return $(this).each(function () {
-		        var select = $(this),
-		            label = $('<label class="tk-selectable-label"/>')
+		        var select = $(this);
+		        if (select.data('tk-selectable-label')) return;
+		        select.data('tk-selectable-label', true);
+		        var
+		            label = $(tmpl({}))
 		                .insertAfter(select);
 		        label
 		            .on(trigger, function () {
@@ -426,7 +592,8 @@
 		                text = selected.text();
 		            if (!text) return;
 		            label.text(text)
-		                .attr('data-color', selected.prevAll('option').length);
+		                .attr('data-tk-color-index', selected.prevAll('option').length)
+		                .show();
 		            select.hide();
 		        }).change();
 		    });
@@ -492,10 +659,118 @@
 		        $(this).append(html);
 		    });
 		};
+		
+		/**
+		 * text box with selection
+		 * @param data
+		 */
+		$.fn.selectableText = function (candidates) {
+		    var ambiguousMatch = tek.string.ambiguousMatch;
+		    var tml = {
+		        ul: hbs.templates['tk-selectable-text-list']
+		    };
+		    var input = $(this);
+		    var ul = input.first().after(tml.ul({candidates: candidates})).next('.tk-selectable-text-list').hide();
+		    ul.childItems = function () {
+		        return ul.children('.tk-selectable-list-item');
+		    };
+		    ul.filterItem = function (searchWord) {
+		        ul.childItems().each(function () {
+		            var li = $(this),
+		                text = li.children('a').text();
+		            var hit = (text !== searchWord) && ((!searchWord) || ambiguousMatch(searchWord, text));
+		            hit ? li.show() : li.hide();
+		        });
+		        return ul;
+		    };
+		    ul.hideList = function () {
+		        ul.find('.tk-selected').removeClass('tk-selected');
+		        return ul.hide();
+		    };
+		    ul.showList = function (style) {
+		        return ul.show()
+		            .css(style)
+		            .children('li')
+		            .show();
+		    };
+		    ul.find('a').click(function () {
+		        var input = ul.data('tk-selectable-text-active');
+		        clearTimeout(input.hideTimer);
+		        var a = $(this);
+		        input.val(a.text());
+		        ul.hide();
+		    });
+		
+		    return input
+		        .attr({
+		            autocomplete: 'off'
+		        })
+		        .each(function () {
+		            var input = $(this);
+		            input
+		                .focus(function () {
+		                    clearTimeout(input.hideTimer);
+		                    ul.data('tk-selectable-text-active', input);
+		                    input.after(ul);
+		                    var position = input.position();
+		                    ul
+		                        .showList({
+		                            left: position.left,
+		                            top: position.top + input.outerHeight(true),
+		                            width: input.outerWidth()
+		                        });
+		                    ul.filterItem(input.val());
+		                })
+		                .blur(function () {
+		                    input.hideTimer = setTimeout(function () {
+		                        ul.hideList();
+		                    }, 500);
+		                })
+		                .keydown(function (e) {
+		                    clearTimeout(input.hideTimer);
+		                    var KEY = $.ui.keyCode;
+		                    var li = ul.children('li'),
+		                        selected = li.filter('.tk-selected:visible');
+		                    switch (e.which) {
+		                        case KEY.ENTER:
+		                            selected.find('a').click();
+		                            e.preventDefault();
+		                            break;
+		                        case KEY.UP:
+		                            var prev = selected.prevAll(':visible').not('.tk-selected').first();
+		                            if (prev.size()) {
+		                                li.not(prev).removeClass('tk-selected');
+		                                prev.addClass('tk-selected');
+		                            } else {
+		                                ul.hideList();
+		                            }
+		                            break;
+		                        case KEY.DOWN:
+		                            if (selected.size()) {
+		                                var next = selected.nextAll(':visible').not('.tk-selected').first();
+		                                if (next.size()) {
+		                                    li.not(next).removeClass('tk-selected');
+		                                    next.addClass('tk-selected');
+		                                }
+		                            } else {
+		                                ul.show();
+		                                li.filter('tk-selected').removeClass('tk-selected');
+		                                li.filter(':visible').first().addClass('tk-selected');
+		                            }
+		                            break;
+		                    }
+		                })
+		                .textchange(function () {
+		                    clearTimeout(input.hideTimer);
+		                    ul.show();
+		                    ul.filterItem(input.val());
+		                });
+		        })
+		};
 	})(dependencies, undefined);
 
 })({
     $: this['$'],
-    Handlebars: this['Handlebars'],
+    hbs: this['Handlebars'],
     tek: this['tek']
 }, window, undefined);

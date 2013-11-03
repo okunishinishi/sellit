@@ -1,5 +1,5 @@
 mixin system(index, data)
-    li.paper
+    li.paper.system-list-item
         .paper-content
             h3=index
             input(type='hidden', name='systems[#{index}].index', value=data.index)
@@ -48,7 +48,9 @@ mixin system(index, data)
             br.clear
 
 
-section#client-detail-section.positioned
+section#client-detail-section.positioned(
+    data-system_names=system_names
+)
     a.float-right#edit-btn(href='javascript:void(0)')
         i.icon.icon-pencil
         sapn=l.btn.edit
@@ -109,10 +111,5 @@ section#client-detail-section.positioned
                     | #{l.lbl.last_update_by}&nbsp;
 
                 span=selected_client.last_update_by
-
-    ul#system-name-select-list.no-style-list.hidden.select-list
-        for system_name in system_names
-            li
-                a(href='javascript:void(0)')=system_name
 
 

@@ -15,10 +15,11 @@
     $.fn.extend({
         loginForm: function () {
             var form = $(this);
-            var usernameSelectList = $('#username-select-list');
             form.data('disabled', false);
-            form.findByName('username')
-                .selectableText(usernameSelectList);
+            var usernameInput = form.findByName('username');
+            console.log("usernameInput.data('list')",usernameInput.data('list'));
+            usernameInput
+                .selectableText(usernameInput.data('list'));
             $('#login-btn').click(function () {
                 form.submit();
             });

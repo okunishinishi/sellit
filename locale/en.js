@@ -57,10 +57,11 @@ lbl.all = 'all';
 lbl.last_update_by = 'updated by';
 lbl.colorize = 'colorize';
 lbl.decolorize = 'decolorize';
-lbl.chart_title=[lbl.client, '×', lbl.system].join(' ');
-lbl.on='on';
-lbl.off='off';
-lbl.control='control';
+lbl.chart_title = [lbl.client, '×', lbl.system].join(' ');
+lbl.on = 'on';
+lbl.off = 'off';
+lbl.control = 'control';
+lbl.filter = 'filter';
 
 var plh = exports.plh = {};
 plh.search = lbl.search;

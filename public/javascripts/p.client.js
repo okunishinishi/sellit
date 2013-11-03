@@ -89,19 +89,12 @@
                 form = $('#client-detail-form', section);
             form.clientDetailForm();
 
-            $('#system-list', section).systemList();
+            var system_names = section.data('system_names');
+            $('#system-list', section).systemList(system_names);
             return section;
         },
-        systemNameInput: function () {
-            var input = $(this),
-                selectList = $('#system-name-select-list');
-            return input.selectableText(selectList)
-                .click(function (e) {
-                    e.stopPropagation();
-                });
-        },
-        systemListItem: function () {
-            return $(this).each(function () {
+        systemListItem: function (system_names) {
+            var li = $(this).each(function () {
                 var li = $(this),
                     removeBtn = li.findByRole('remove-btn');
                 removeBtn
@@ -113,15 +106,19 @@
                     })
                     .click(function () {
                         var name = li.find('caption').find(':text').val();
-                        $.confirmRemove(name, function () {
+                        li.animate({
+                            width: 0,
+                            paddingLeft: 0,
+                            paddingRight: 0
+                        }, 500, function () {
                             li.remove();
                         });
                     });
-                li.find('.system-name-input')
-                    .systemNameInput();
             });
+            li.find('.system-name-input').selectableText(system_names);
+            return li;
         },
-        systemList: function () {
+        systemList: function (system_names) {
             var ul = $(this),
                 addBtn = $('#new-system-btn'),
                 tmpl = $('#system-list-item-tmpl').html();
@@ -145,14 +142,14 @@
                 var li = ul.append(tmpl)
                     .find('li')
                     .last();
-                li.systemListItem();
+                li.systemListItem(system_names);
                 reindex();
                 li.find('caption').find(':text').focus();
             });
 
             reindex();
 
-            ul.find('li').systemListItem();
+            ul.find('li').systemListItem(system_names);
             return ul;
         },
         clientSearchForm: function (callback) {
@@ -291,7 +288,7 @@
                     html = tmpl.liContent({
                         group: group,
                         children_ids: group ? '[]' : undefined,
-                        last_update_by:addBtn.data('login_username')
+                        last_update_by: addBtn.data('login_username')
                     }),
                     item = new tv.Item(html)
                         .children(group ? [] : null);
