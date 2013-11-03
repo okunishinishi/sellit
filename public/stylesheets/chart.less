@@ -126,13 +126,6 @@ fieldset{
   margin: 0;
 }
 
-.field-label{
-  display: inline-block;
-  margin: 0 5px;
-  &:after{
-    content:':';
-  }
-}
 .chart-cell-color-mark{
   display: none;
 }
@@ -195,5 +188,28 @@ fieldset{
     th{
       padding-bottom: 3px;
     }
+  }
+}
+
+.field{
+  margin: 5px 20px;
+  .field-label{
+    width:74px;
+    display: inline-block;
+    margin: 0 5px;
+    &:before{
+      float: right;
+      content:'|';
+      opacity: .5;
+      .text-shadow(0 1px 0 rgba(255,255,255,.5));
+    }
+  }
+  label[for]{
+    margin-right:2px;
+  }
+  input[type="checkbox"],
+  input[type="radio"]{
+    position: relative;
+    top:1px;
   }
 }

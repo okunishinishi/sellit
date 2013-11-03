@@ -20,11 +20,21 @@ block content
         fieldset#chart-control-fieldset
             legend=l.lbl.control
             form#chart-control-form
-                label.field-label=l.lbl.colorize
-                input#colorize-input-on(type='radio', name='colorize', value='true')
-                label(for='colorize-input-on')=l.lbl.on
-                input#colorize-input-off(type='radio', name='colorize', value='false', checked)
-                label(for='colorize-input-off')=l.lbl.off
+                .field
+                    label.field-label=l.lbl.colorize
+                    input#colorize-input-on(type='radio', name='colorize', value='true')
+                    label(for='colorize-input-on')=l.lbl.on
+                    input#colorize-input-off(type='radio', name='colorize', value='false', checked)
+                    label(for='colorize-input-off')=l.lbl.off
+
+                .field
+                    label.field-label=l.lbl.filter
+                    input#filter-input-on(type='radio', name='filter', value='true')
+                    label(for='filter-input-on')=l.lbl.on
+                    input#filter-input-off(type='radio', name='filter', value='false', checked)
+                    label(for='filter-input-off')=l.lbl.off
+
+
 
         .float-right#chart-list-tabs
             a#provider-filter.tab(href='javascript:void(0)',
