@@ -34,6 +34,27 @@ block content
                     input#filter-input-off(type='radio', name='filter', value='false', checked)
                     label(for='filter-input-off')=l.lbl.off
 
+                table#filter-detail-table
+                    tbody
+                        tr
+                            th=l.lbl.system_name
+                            td
+                                p#system-name-filter
+                                    for row in headRow
+                                        label
+                                            input(type='checkbox', name='system_name')
+                                            | #{row}
+
+                        tr
+                            th=l.lbl.client_name
+                            td
+                                p#client-filter
+                                    - for(var rownum=0;rownum<rows.length;rownum++) {
+                                        label
+                                            input(type='checkbox', name='client_name')
+                                            | #{rows[rownum][0].text}
+                                    - }
+
 
 
         .float-right#chart-list-tabs
