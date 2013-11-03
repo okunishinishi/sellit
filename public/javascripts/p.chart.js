@@ -98,15 +98,22 @@
             }
             values && values.forEach(function (value, i) {
                 if (value === '__empty__') return;
-                var color = colors[i];
+                var color = colors[i],
+                    darkenColor = $.darkenColor(color);
                 var cell = cellMap[value];
-                cell.css({
-                    color: color
-                }).children('.chart-cell-content')
+                var content = cell.css({
+                    color: color,
+                    borderColor: color,
+                    backgroundColor: '#FFF'
+                }).children('.chart-cell-content');
+                content
                     .children('.chart-cell-color-mark').css({
-                        borderTopColor: color,
-                        borderLeftColor: color
+                        borderColor: color
                     });
+                content
+                    .children('.chart-cell-color-mark-hover').css({
+                        backgroundColor: color
+                    })
             });
             chartListSection.addClass('colorized');
         };

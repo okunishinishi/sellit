@@ -131,31 +131,44 @@ fieldset{
   display: none;
 }
 .colorized{
-  .chart-cell-color-mark{
+  .chart-cell-color-mark,
+  .chart-cell-color-mark-hover{
     display: block;
     position: absolute;
     left: 0;
     top:0;
-    .square(0);
+    .square(100%);
     border-style:solid;
-    border-width:10px;
+    border-width:8px;
     border-color:transparent;
+    .box-sizing(border-box);
+  }
+  .chart-cell-color-mark-hover{
+    display: none;
   }
   .ss-cell{
     position: relative;
-    opacity: .8;
+    .empty-cell(@back){
+      background-color: @back !important;
+      border-color: darken(@back,2) !important;
+    }
     &:hover,
     &.hover-sync{
-      opacity: 1;
+      background-color: transparent;
+      .chart-cell-label{
+        position: relative;
+        color:@white;
+        z-index: 500;
+        font-weight: bold;
+      }
+      .chart-cell-color-mark-hover{
+        z-index: 3;
+        opacity: 1;
+        display: block;
+      }
     }
     &.empty-cell{
-      opacity: 1;
-      .empty-cell(@back){
-        background-color: @back !important;
-        border-color: darken(@back,2) !important;
-      }
-    //  @back:rgb(228, 228, 228);
-      @back:#FDFDFD;
+      @back:#FFF;
       .empty-cell(@back);
       &:hover{
         .empty-cell(lighten(@back,2));
