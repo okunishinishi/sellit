@@ -12,7 +12,8 @@ var excelbuilder = require('msexcel-builder'),
     findAllModels = util['mdl']['findAllModels'],
     l = require('../locale')['en'],
     config = require('../app.config'),
-    resolve = require('path')['resolve'];
+    path = require('path'),
+    resolve = path['resolve'];
 
 
 var publicDir = require('../app.config')['publicDir'];
@@ -74,11 +75,11 @@ exports.generateWorkbook = function (clients, callback) {
 
 exports.download = function (req, res) {
     var clients = res.locals.clients;
-    exports.generateWorkbook(clients, function (err) {
+    exports.generateWorkbook(clients, function (err, filepath) {
         if (err) {
             res.redirect('/404');
         } else {
-            res.redirect('/' + filename);
+            res.redirect(resolve('/',path.relative(publicDir, filepath)));
         }
     });
 };
