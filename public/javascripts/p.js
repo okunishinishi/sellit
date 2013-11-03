@@ -204,6 +204,7 @@
             return ul;
         },
         selectableText: function (selectList) {
+            var ambiguousMatch = tek.string.ambiguousMatch;
             var input = $(this),
                 selectListItem = selectList.find('li');
             input.attr({
@@ -214,7 +215,7 @@
                     var li = $(this),
                         text = li.find('a').text();
                     var hit = text === input.val();
-                    var match = !!text.match($.trim(input.val()));
+                    var match = ambiguousMatch($.trim(input.val()), text);
                     if (!hit && match) {
                         li.show();
                     } else {
