@@ -105,7 +105,7 @@
                 var content = cell.css({
                     color: color,
                     borderColor: color,
-                    backgroundColor: color,
+                    backgroundColor: color
                 }).children('.chart-cell-content').css({
 
                         backgroundColor: '#FFF'
@@ -143,17 +143,16 @@
         var controlForm = $('#chart-control-form');
 
         var tabs = $('#chart-list-tabs', body).chartListTabs(function (filter, data) {
+            chartListCell.children('.chart-cell-content').removeAttr('style');
 
             chartListSection.attr('data-filter', filter);
             chartListSection.trigger('ss-resize');
 
             chartListCell.each(function () {
-                var cell = $(this),
-                    w = cell.width(),
-                    h = cell.height();
+                var cell = $(this);
                 cell.children('.chart-cell-content').css({
-                    width: w,
-                    height: h
+                    width: cell.width(),
+                    height: cell.height()
                 });
             });
 
