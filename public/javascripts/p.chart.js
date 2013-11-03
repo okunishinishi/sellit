@@ -76,6 +76,7 @@
             chartListCell = $('.ss-cell', chartListSection);
 
         chartListSection.colorize = function (base, type, order) {
+            if (!base) return;
             var cellMap = chartListSection.cellMap;
             if (!cellMap) return;
 
@@ -140,15 +141,19 @@
 
         var tabs = $('#chart-list-tabs', body).chartListTabs(function (filter, data) {
 
-            var settings = controlForm.getFormValue();
-            chartListSection.decolorize();
-            if (eval(settings.colorize)) {
-                chartListSection.colorize(data.colorbase, data.colortype, data.colororder);
-            }
-
             chartListSection.attr('data-filter', filter);
             chartListSection.trigger('ss-resize');
             chartListSection.cellMap = chartListCell.chartCellMap(filter);
+
+
+            var settings = controlForm.getFormValue();
+            chartListSection.decolorize();
+            if (eval(settings.colorize)) {
+                console.log('data',data);
+                chartListSection.colorize(data.colorbase, data.colortype, data.colororder);
+            }
+
+
 
             $('.empty-cell', chartListSection).removeClass('empty-cell');
             var emptyCells = chartListSection.cellMap.__empty__;
