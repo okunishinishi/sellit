@@ -37,11 +37,18 @@
             this.each(function () {
                 var cell = $(this),
                     label = cell.findByAttr('for', filter),
-                    value = label.data('value');
+                    value = label.data('value') || '__empty__';
                 if (!map[value]) map[value] = $();
                 map[value] = map[value].add(cell);
             });
             return map;
+        },
+        rainbowText: function () {
+            var text = $(this);
+            text.html(text.text().split('').map(function (c) {
+                return '<span style="color:' + $.randomColor()+ ';">' + c + '</span>'
+            }));
+            return text;
         }
     });
 
@@ -58,7 +65,7 @@
                     value = cell.find('label:visible').data('value');
                 if (!value) return;
                 var syncCell = cellMap && cellMap[value];
-                if (syncCell && syncCell.size()>1) {
+                if (syncCell && syncCell.size() > 1) {
                     syncCell.addClass('hover-sync');
                 }
             }, function () {
@@ -69,6 +76,23 @@
             chartListSection.attr('data-filter', filter);
             chartListSection.trigger('ss-resize');
             chartListSection.cellMap = chartListCell.chartCellMap(filter);
+
+            $('.empty-cell', chartListSection).removeClass('empty-cell');
+            var emptyCells = chartListSection.cellMap.__empty__;
+            if (emptyCells) {
+                emptyCells.addClass('empty-cell');
+            }
         }).first().click();
+
+        var colorizeBtn = $('#colorize-btn').rainbowText(),
+            decolorizeBtn = $('#decolorize-btn').hide();
+        colorizeBtn.click(function () {
+            colorizeBtn.hide();
+            decolorizeBtn.show();
+        });
+        decolorizeBtn.click(function () {
+            colorizeBtn.show();
+            decolorizeBtn.hide();
+        });
     });
 })(jQuery, Handlebars, window['l']);

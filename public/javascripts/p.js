@@ -71,8 +71,8 @@
         randomColor: function (saturation, value) {
             return $.color('#ff0000')
                 .hue(Math.random(), true)
-                .saturation(saturation, true)
-                .value(value, true)
+                .saturation(saturation || .5, true)
+                .value(value || .8, true)
                 .hex();
         }
     });

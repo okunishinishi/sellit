@@ -55,6 +55,12 @@ lbl.name = 'name';
 lbl.provider = 'provider';
 lbl.all = 'all';
 lbl.last_update_by = 'updated by';
+lbl.colorize = 'colorize';
+lbl.decolorize = 'decolorize';
+lbl.chart_title=[lbl.client, '×', lbl.system].join(' ');
+lbl.on='on';
+lbl.off='off';
+lbl.control='control';
 
 var plh = exports.plh = {};
 plh.search = lbl.search;

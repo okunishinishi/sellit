@@ -15,13 +15,24 @@ block javascripts
             });
         })(jQuery);
 block content
-    div.float-right#chart-list-tabs
-        a#code-filter.tab(href='javascript:void(0)')=l.lbl.code
-        a#provider-filter.tab(href='javascript:void(0)')=l.lbl.provider
-        a#scale-filter.tab(href='javascript:void(0)')=l.lbl.scale
-        a#freeword-filter.tab(href='javascript:void(0)')=l.lbl.freeword
-        a#all-filter.tab(href='javascript:void(0)',data-key='')=l.lbl.all
+    div.margin-box
+        h1=l.lbl.chart_title
+        fieldset#chart-control-fieldset
+            legend=l.lbl.control
+            form#chart-control-form
+                label.field-label=l.lbl.colorize
+                input#colorize-input-on(type='radio', name='colorize', value='true')
+                label(for='colorize-input-on')=l.lbl.on
+                input#colorize-input-off(type='radio', name='colorize', value='false', checked)
+                label(for='colorize-input-off')=l.lbl.off
 
+
+        .float-right#chart-list-tabs
+            a#code-filter.tab(href='javascript:void(0)')=l.lbl.code
+            a#provider-filter.tab(href='javascript:void(0)')=l.lbl.provider
+            a#scale-filter.tab(href='javascript:void(0)')=l.lbl.scale
+            a#freeword-filter.tab(href='javascript:void(0)')=l.lbl.freeword
+            a#all-filter.tab(href='javascript:void(0)',data-key='')=l.lbl.all
     section#chart-list-section(
     data-headrow=headRow,
     data-rows=rows)
