@@ -6,6 +6,8 @@ var tek = require('tek'),
     toNameMap = obj['toNameMap'],
     toIdMap = obj['toIdMap'],
     db = require('../db'),
+    resolve = require('path').resolve,
+    config = require('../app.config'),
     models = db.models,
     Client = models['Client'],
     Developer = models['Developer'];
@@ -28,15 +30,19 @@ exports.index = function (req, res) {
 };
 exports.getData = function (clients, callback) {
     var system_names = Client.listSystemNames(clients);
-    findAllModels([Developer], function (developers) {
+    findAllModels([Developer, Client], function (developers, all_clients) {
+        var clientMap = toIdMap(all_clients);
         var rows = clients.map(function (client) {
+            client.parent_names = client.listParentNames(clientMap) || [];
             var systems = client.systems || [],
                 systemsMap = toNameMap(systems),
                 developersMap = toIdMap(developers);
+            var href = resolve('/', config.context || '', 'client/' + client._id);
             return [
                 {
+                    prefix:client.parent_names.length && client.parent_names.join('&nbps;') || null,
                     text: client.name,
-                    href: ['/client/' + client._id, 't=' + new Date().getTime()].join('?')
+                    href: [ href, 't=' + new Date().getTime()].join('?')
                 }
             ].concat(
                     system_names.map(function (name) {
