@@ -35,9 +35,9 @@ Client.prototype.listParentNames = function (clientMap) {
     var client = s;
     while (!!client.parent_id) {
         client = clientMap[client.parent_id];
-        if(client){
+        if (client) {
             result.unshift(client.name);
-        }else{
+        } else {
             break;
         }
     }
@@ -48,9 +48,19 @@ Client.prototype.validate = function () {
     return Client.schema.validate(s);
 };
 Client.listSystemNames = function (clients) {
+    return Client.listSystemAttr(clients, 'name');
+};
+Client.listSystemScales = function (clients) {
+    return Client.listSystemAttr(clients, 'scale');
+};
+Client.listSystemCode = function (clients) {
+    return Client.listSystemAttr(clients, 'code');
+};
+
+Client.listSystemAttr = function (clients, key) {
     return [].concat((clients || [])
         .map(function (client) {
-            return distinctAttr(client.systems || [], 'name')
+            return distinctAttr(client.systems || [], key)
         })
         .reduce(function (a, b) {
             return a.concat(b);
@@ -58,6 +68,8 @@ Client.listSystemNames = function (clients) {
             return arr.lastIndexOf(e) === i;
         })).sort();
 };
+
+
 Client.listProperties = function (clients) {
     var hash = {};
     clients && clients.forEach(function (client) {

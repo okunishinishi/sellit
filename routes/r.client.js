@@ -65,17 +65,22 @@ exports.index = function (req, res) {
         return ids;
     }
 
-    var system_names = Client.listSystemNames(res.locals.clients) || [];
-    findAllModels([Salesman, Developer, Client], function (salesmen, developers, clients) {
+    var clients = res.locals.clients;
+    var system_names = Client.listSystemNames(clients) || [],
+        system_codes = Client.listSystemCode(clients) || [],
+        system_scales = Client.listSystemScales(clients) || [];
+    findAllModels([Salesman, Developer, Client], function (salesmen, developers, all_clients) {
         client.salesman_ids = ids_string(client.salesman_ids) || '';
-        client.parent_names = client.listParentNames(toIdMap(clients)) || [];
+        client.parent_names = client.listParentNames(toIdMap(all_clients)) || [];
         res.render('client/index.jade', {
             login_username: req.session.login_username,
             salesmen: salesmen,
             developers: developers,
             selected_client: client,
             rainbow: util.color.rainbow(.2, .9, 40),
-            system_names: system_names
+            system_names: system_names,
+            system_scales:system_scales,
+            system_codes:system_codes
         });
     });
 };

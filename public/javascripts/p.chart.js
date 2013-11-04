@@ -5,6 +5,37 @@
         chartTbodyThContent: Hbs.templates['chart-tbody-th-content'],
         chartCellContent: Hbs.templates['chart-cell-content']
     };
+
+    if (!history.pushState) {
+        history.pushState = function () {
+            //TODO push state
+        }
+    }
+
+    var sorter = {
+        numeric: function (a, b) {
+            return Number(a) - Number(b);
+        },
+        string: function (a, b) {
+            return a && a.localeCompare(b);
+        },
+        random: function () {
+            return Math.random() - Math.random();
+        }
+    };
+
+    $.extend({
+        pushQueryToState: function (values) {
+            var query = new tek.Query(location.search.replace('?', ''));
+            for (var key in values) {
+                if (!values.hasOwnProperty(key)) continue;
+                query[key] = values[key];
+            }
+            var new_url = [location.path, $.param(query)].join('?');
+            history.pushState(null, null, new_url);
+        }
+    });
+
     $.fn.extend({
         openUp: function () {
             var elm = $(this),
@@ -51,15 +82,9 @@
                 var clicked = $(this),
                     id = clicked.attr('id');
 
-                if (history.pushState) {
-                    var query = new tek.Query(location.search.replace('?', ''));
-                    query.filter = id;
-                    var new_url = [location.path, $.param(query)].join('?');
-                    history.pushState(null, null, new_url);
-                } else {
-                    location.hash = '__' + id;
-                }
-
+                $.pushQueryToState({
+                    filter: id
+                });
                 clicked
                     .addClass('tab-selected')
                     .siblings('.tab-selected')
@@ -108,23 +133,34 @@
             form.find(':radio,:checkbox').change(function () {
                 form.submit();
             });
+
+            var query = new tek.Query(location.search.replace('?', ''));
+            form.setFormValue(query);
+
             form
                 .submit(function (e) {
                     e.preventDefault();
-                    var settings = form.getFormValue();
+                    var formValue = form.getFormValue();
 
 
-                    settings.use_system_filter = eval(settings.use_system_filter);
-                    systemFilterDiv.visualize(settings.use_system_filter);
+                    formValue.use_system_filter = eval(formValue.use_system_filter);
+                    systemFilterDiv.visualize(formValue.use_system_filter);
 
 
-                    settings.use_client_filter = eval(settings.use_client_filter);
-                    clientFilterDiv.visualize(settings.use_client_filter);
+                    formValue.use_client_filter = eval(formValue.use_client_filter);
+                    clientFilterDiv.visualize(formValue.use_client_filter);
 
-                    settings.use_colorize = eval(settings.use_colorize);
+                    formValue.use_colorize = eval(formValue.use_colorize);
+                    formValue.use_scalize = eval(formValue.use_scalize);
 
+                    $.pushQueryToState({
+                        use_system_filter: formValue.use_system_filter,
+                        use_client_filter: formValue.use_client_filter,
+                        use_colorize: formValue.use_colorize,
+                        use_scalize: formValue.use_scalize
+                    });
 
-                    callback(settings.toObj());
+                    callback(formValue.toObj());
                 });
             return form;
         }
@@ -143,16 +179,7 @@
             if (!cellMap) return;
 
 
-            var
-                values = Object.keys(cellMap).sort(function (a, b) {
-                    switch (order) {
-                        case 'random':
-                            return Math.random() - Math.random();
-                        case 'string':
-                            return a && a.localeCompare(b);
-                    }
-                    return Number(a) - Number(b);
-                });
+            var values = Object.keys(cellMap).sort(sorter.random);
             var colors = null;
             switch (type || 'rainbow') {
                 case 'rainbow':
@@ -162,8 +189,7 @@
             values && values.forEach(function (value, i) {
                 if (value === '__empty__') return;
                 var color = colors[i],
-                    darkenColor = $.darkenColor(color);
-                var cell = cellMap[value];
+                    cell = cellMap[value];
                 var content = cell.css({
                     color: color,
                     borderColor: color,
@@ -186,6 +212,29 @@
         chartListSection.decolorize = function () {
             chartListSection.removeClass('colorized');
             chartListCell.removeAttr('style');
+        };
+
+        chartListSection.scalize = function (min, max) {
+            var cellMap = chartListSection.cellMap;
+            if (!cellMap) return ;
+            if (!min) return false;
+            var values = Object.keys(cellMap).sort(sorter.numeric),
+                step = (max - min) / (values.length - 1);
+
+            values && values.forEach(function (value, i) {
+                if (value === '__empty__') return;
+                var scale = min + step * i;
+                cellMap[value].find('label').css({
+                    fontSize: scale + 'em',
+                    padding: 0,
+                    textAlign: 'center'
+                });
+            });
+            return true;
+        };
+
+        chartListSection.descalize = function () {
+
         };
 
         chartListSection.findAllBodyRows = function () {
@@ -265,7 +314,11 @@
         var controlForm = $('#chart-control-form');
 
         controlForm.chartControlForm(function (settings) {
+            var needsResize = false;
+
             chartListSection.decolorize();
+            chartListSection.descalize();
+
             var tab = tabs.filter('.tab-selected');
             if (!tab.size()) return;
             var data = tab.data();
@@ -276,7 +329,11 @@
                 chartListSection.colorize(data.colorbase, data.colortype, data.colororder);
             }
 
-            var needsResize = false;
+            var use_scalize = settings.use_scalize;
+            if (use_scalize) {
+                needsResize = chartListSection.scalize(data.scalemin, data.scalemax) || needsResize;
+            }
+
             if (settings.use_client_filter) {
                 needsResize = chartListSection.filterByClient(settings.client_name) || needsResize;
             } else {
@@ -288,19 +345,19 @@
             } else {
                 needsResize = chartListSection.filterBySystem.off() || needsResize;
             }
-
-            if (needsResize) {
-
-            }
-
         });
 
 
         var tabs = $('#chart-list-tabs', body).chartListTabs(function (filter, data) {
+            var colorizeField = $('#use-colorize-field', body),
+                scalizeField = $('#use-scalize-field', body);
 
-            var colorizeField = $('#use-colorize-field', body);
             var colorbase = data.colorbase;
             colorbase ? colorizeField.show() : colorizeField.hide();
+
+            var scalemin = data.scalemin;
+            scalemin ? scalizeField.show() : scalizeField.hide();
+
 
             chartListSection.busy(function () {
                 chartListSection.attr('data-filter', filter);

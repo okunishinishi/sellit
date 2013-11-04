@@ -22,17 +22,30 @@ block content
             form#chart-control-form
                 .field#use-colorize-field
                     label.field-label=l.lbl.color_effect
-                    input#use-colorize-input-on(type='radio', name='use_colorize', value='true')
-                    label(for='use-colorize-input-on')=l.lbl.on
-                    input#use-colorize-input-off(type='radio', name='use_colorize', value='false', checked)
-                    label(for='use-colorize-input-off')=l.lbl.off
+                    label(for='use-colorize-input-on')
+                        input#use-colorize-input-on(type='radio', name='use_colorize', value='true')
+                        | #{l.lbl.on}
+                    label(for='use-colorize-input-off')
+                        input#use-colorize-input-off(type='radio', name='use_colorize', value='false', checked)
+                        | #{l.lbl.off}
+
+                .field#use-scalize-field
+                    label.field-label=l.lbl.scale_effect
+                    label(for='use-scalize-input-on')
+                        input#use-scalize-input-on(type='radio', name='use_scalize', value='true')
+                        | #{l.lbl.on}
+                    label(for='use-scalize-input-off')
+                        input#use-scalize-input-off(type='radio', name='use_scalize', value='false', checked)
+                        | #{l.lbl.off}
 
                 .field#use-system-filter-field
                     label.field-label=l.lbl.system_filter
-                    input#use-system-filter-input-on(type='radio', name='use_system_filter', value='true')
-                    label(for='use-system-filter-input-on')=l.lbl.on
-                    input#use-system-filter-input-off(type='radio', name='use_system_filter', value='false', checked)
-                    label(for='use-system-filter-input-off')=l.lbl.off
+                    label(for='use-system-filter-input-on')
+                        input#use-system-filter-input-on(type='radio', name='use_system_filter', value='true')
+                        | #{l.lbl.on}
+                    label(for='use-system-filter-input-off')
+                        input#use-system-filter-input-off(type='radio', name='use_system_filter', value='false', checked)
+                        | #{l.lbl.off}
 
                 #system-filter-div.filter-div
                     p#system-filter-p.filter-p(style='display:none')
@@ -62,7 +75,10 @@ block content
             a#provider-filter.tab(href='javascript:void(0)',
             data-colorbase='#DA7811',
             data-colortype='rainbow')=l.lbl.provider
-            a#scale-filter.tab(href='javascript:void(0)')=l.lbl.scale
+            a#scale-filter.tab(href='javascript:void(0)'
+            data-scalemin='1',
+            data-scalemax='4'
+            )=l.lbl.scale
             a#freeword-filter.tab(href='javascript:void(0)')=l.lbl.freeword
             a#all-filter.tab(href='javascript:void(0)',data-key='')=l.lbl.all
     section#chart-list-section(

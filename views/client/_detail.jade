@@ -6,7 +6,8 @@ mixin system(index, data)
             table.full-width
                 caption
                     a.btn.remove-btn(href='javascript:void(0)',data-role='remove-btn') &times;
-                    input(type='text', data-role='editable-text',
+                    input(type='text',
+                    data-role='editable-text',
                     placeholder=l.plh.system_name,
                     value=data.name,
                     name='systems[#{index}].name').system-name-input
@@ -17,14 +18,14 @@ mixin system(index, data)
                     th
                         label=l.lbl.code
                     td
-                        input(type='text', name='systems[#{index}].code', value=data.code)
+                        input(type='text', data-role='editable-text',name='systems[#{index}].code', value=data.code).system-code-input
                 tr
                     th
                         label=l.lbl.scale
                     td
-                        input(type='number', name='systems[#{index}].scale',
+                        input(type='text', data-role='editable-text',name='systems[#{index}].scale',
                         min=0,
-                        value=data.scale)
+                        value=data.scale).system-scale-input
                         small
                             i=l.lbl.scale_unit
                 tr
@@ -43,13 +44,16 @@ mixin system(index, data)
                         label=l.lbl.freeword
                     td
                         textarea.full-width(name='systems[#{index}].freeword',
+                        data-role='editable-text',
                         placeholder=l.plh.freeword,
                         value=data.freeword)
             br.clear
 
 
 section#client-detail-section.positioned(
-    data-system_names=system_names
+    data-system_names=system_names,
+    data-system_scales=system_scales,
+    data-system_codes=system_codes
 )
     a.float-right#edit-btn(href='javascript:void(0)')
         i.icon.icon-pencil

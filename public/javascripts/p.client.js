@@ -89,11 +89,10 @@
                 form = $('#client-detail-form', section);
             form.clientDetailForm();
 
-            var system_names = section.data('system_names');
-            $('#system-list', section).systemList(system_names);
+            $('#system-list', section).systemList(section.data());
             return section;
         },
-        systemListItem: function (system_names) {
+        systemListItem: function (data) {
             var li = $(this).each(function () {
                 var li = $(this),
                     removeBtn = li.findByRole('remove-btn');
@@ -115,10 +114,12 @@
                         });
                     });
             });
-            li.find('.system-name-input').selectableText(system_names);
+            li.find('.system-name-input').selectableText(data.system_names);
+            li.find('.system-scale-input').selectableText(data.system_scales);
+            li.find('.system-code-input').selectableText(data.system_codes);
             return li;
         },
-        systemList: function (system_names) {
+        systemList: function (data) {
             var ul = $(this),
                 addBtn = $('#new-system-btn'),
                 tmpl = $('#system-list-item-tmpl').html();
@@ -142,14 +143,14 @@
                 var li = ul.append(tmpl)
                     .find('li')
                     .last();
-                li.systemListItem(system_names);
+                li.systemListItem(data);
                 reindex();
                 li.find('caption').find(':text').focus();
             });
 
             reindex();
 
-            ul.find('li').systemListItem(system_names);
+            ul.find('li').systemListItem(data);
             return ul;
         },
         clientSearchForm: function (callback) {
