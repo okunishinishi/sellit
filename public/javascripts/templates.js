@@ -51,6 +51,14 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (stack1 = helpers.freeword) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.freeword; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
+    + "</label>\n    <label class='chart-cell-label' data-value=\"";
+  if (stack1 = helpers.start_at) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.start_at; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" for=\"start_at-filter\">";
+  if (stack1 = helpers.start_at) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.start_at; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
     + "</label>\n    <div class=\"chart-cell-color-mark\"></div>\n    <div class=\"chart-cell-color-mark-hover\"></div>\n</div>";
   return buffer;
   }

@@ -113,6 +113,14 @@
                             li.remove();
                         });
                     });
+                li.find('.tk-editable-text').focus(function () {
+                    var focused = li.hasClass('system-list-item-focused');
+                    console.log('focused', focused);
+                    if (focused) return;
+                    li.addClass('system-list-item-focused')
+                        .siblings('.system-list-item-focused')
+                        .removeClass('system-list-item-focused');
+                });
             });
             li.find('.system-name-input').selectableText(data.system_names);
             li.find('.system-scale-input').selectableText(data.system_scales);
