@@ -17,7 +17,6 @@
             var form = $(this);
             form.data('disabled', false);
             var usernameInput = form.findByName('username');
-            console.log("usernameInput.data('list')",usernameInput.data('list'));
             usernameInput
                 .selectableText(usernameInput.data('list'));
             $('#login-btn').click(function () {
