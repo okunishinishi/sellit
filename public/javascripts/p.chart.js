@@ -226,11 +226,14 @@
                         textAlign: 'center'
                     });
             });
+            chartListSection.resize.leftFixed();
+            if (window.chrome)chartListSection.resize.chrome()
         };
 
         chartListSection.descalize = function () {
             chartListSection.removeClass('scalized');
             chartListCell.find('label').removeAttr('style');
+            chartListSection.resize.leftFixed();
         };
 
         chartListSection.findAllBodyRows = function () {
@@ -238,8 +241,14 @@
                 .children('tbody').children('tr')
         };
         chartListSection.findAllTables = function () {
-            return chartListSection.children('.ss-scrollable').children('.ss-table')
-                .add(chartListSection.children('.ss-left-fixed-table'));
+            return chartListSection.findSSTable()
+                .add(chartListSection.findLeftFixed());
+        };
+        chartListSection.findSSTable = function () {
+            return chartListSection.children('.ss-scrollable').children('.ss-table');
+        };
+        chartListSection.findLeftFixed = function () {
+            return chartListSection.children('.ss-left-fixed-table');
         };
 
         chartListSection.filterByClient = function (client_index) {
@@ -248,7 +257,7 @@
             var changed = chartListSection.filterByClient.filter_condition !== filter_condition;
             if (!changed) return;
             chartListSection.filterByClient.filter_condition = filter_condition;
-            chartListSection.findAllTables().each(function(){
+            chartListSection.findAllTables().each(function () {
                 var table = $(this),
                     tr = table.children('tbody').children('tr');
                 tr.hide();
@@ -311,12 +320,22 @@
 
 
         chartListSection.resize.chrome = function () {
-            var leftFixed = $('.ss-left-fixed-table');
+            var leftFixed = chartListSection.findLeftFixed();
             $('.ss-body-th', leftFixed).each(function (i) {
                 var th = $(this);
                 var padding = Number(th.css('paddingTop').replace('px', ''))
                     + Number(th.css('paddingBottom').replace('px', ''));
-                th.height(th.height() + padding / 2 -.4);
+                th.height(th.height() + padding / 2 - .4);
+            });
+        };
+
+        chartListSection.resize.leftFixed = function () {
+            var leftFixed = chartListSection.findLeftFixed(),
+                ssTable = chartListSection.findSSTable(),
+                ssTr = ssTable.children('tbody').children('tr');
+            $('.ss-body-th', leftFixed).each(function (i) {
+                var th = $(this);
+                th.height(ssTr.eq(i).find('th').last().height());
             });
         };
 
