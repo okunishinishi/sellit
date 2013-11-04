@@ -20,40 +20,41 @@ block content
         fieldset#chart-control-fieldset
             legend=l.lbl.control
             form#chart-control-form
-                .field
-                    label.field-label=l.lbl.colorize
-                    input#colorize-input-on(type='radio', name='colorize', value='true')
-                    label(for='colorize-input-on')=l.lbl.on
-                    input#colorize-input-off(type='radio', name='colorize', value='false', checked)
-                    label(for='colorize-input-off')=l.lbl.off
+                .field#use-cololize-field
+                    label.field-label=l.lbl.color_effect
+                    input#use-colorize-input-on(type='radio', name='use_colorize', value='true')
+                    label(for='use-colorize-input-on')=l.lbl.on
+                    input#use-colorize-input-off(type='radio', name='use_colorize', value='false', checked)
+                    label(for='use-colorize-input-off')=l.lbl.off
 
-                .field
-                    label.field-label=l.lbl.filter
-                    input#filter-input-on(type='radio', name='filter', value='true')
-                    label(for='filter-input-on')=l.lbl.on
-                    input#filter-input-off(type='radio', name='filter', value='false', checked)
-                    label(for='filter-input-off')=l.lbl.off
+                .field#use-system-filter-field
+                    label.field-label=l.lbl.system_filter
+                    input#use-system-filter-input-on(type='radio', name='use_system_filter', value='true')
+                    label(for='use-system-filter-input-on')=l.lbl.on
+                    input#use-system-filter-input-off(type='radio', name='use_system_filter', value='false', checked)
+                    label(for='use-system-filter-input-off')=l.lbl.off
 
-                table#filter-detail-table
-                    tbody
-                        tr
-                            th=l.lbl.system_name
-                            td
-                                p#system-name-filter
-                                    for row in headRow
-                                        label
-                                            input(type='checkbox', name='system_name')
-                                            | #{row}
+                #system-filter-div.filter-div
+                    p#system-filter-p.filter-p(style='display:none')
+                        for row in headRow
+                            label
+                                input(type='checkbox', name='system_name', value=row, checked)
+                                | #{row}
 
-                        tr
-                            th=l.lbl.client_name
-                            td
-                                p#client-filter
-                                    - for(var rownum=0;rownum<rows.length;rownum++) {
-                                        label
-                                            input(type='checkbox', name='client_name')
-                                            | #{rows[rownum][0].text}
-                                    - }
+                .field#use-client-filter-field
+                    label.field-label=l.lbl.client_filter
+                    input#use-client-filter-input-on(type='radio', name='use_client_filter', value='true')
+                    label(for='use-client-filter-input-on')=l.lbl.on
+                    input#use-client-filter-input-off(type='radio', name='use_client_filter', value='false', checked)
+                    label(for='use-client-filter-input-off')=l.lbl.off
+
+                #client-filter-div.filter-div
+                    p#client-filter-p.filter-p(style='display:none')
+                        - for(var rownum=0;rownum<rows.length;rownum++) {
+                            label
+                                input(type='checkbox', name='client_name', value=rows[rownum][0].text, checked)
+                                | #{rows[rownum][0].text}
+                        - }
 
 
 

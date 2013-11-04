@@ -187,13 +187,12 @@
 		    table.append(topFixed);
 		
 		
-		    var theadOffset = thead.offset();
-		
-		
+
+
 		    win.scroll(function () {
 		        var scrollTop = win.scrollTop(),
 		            fixed = thead.data(p('fixed'));
-		        if (theadOffset.top < scrollTop) {
+                if (thead.offset().top < scrollTop) {
 		            !fixed && topFixed.fix();
 		        } else {
 		            fixed && topFixed.free();

@@ -6,6 +6,31 @@
         chartCellContent: Hbs.templates['chart-cell-content']
     };
     $.fn.extend({
+        openUp: function () {
+            var elm = $(this),
+                height = elm.height();
+            elm
+                .show()
+                .height(0)
+                .animate({
+                    height: height
+                }, 300, function () {
+                    elm.removeAttr('style');
+                });
+        },
+        closeDown: function () {
+            var elm = $(this);
+            elm.animate({
+                height: 0,
+                paddingTop: 0,
+                paddingBottom: 0,
+                marginTop: 0,
+                marginBottom: 0
+            }, 310, function () {
+                elm.removeAttr('style');
+                elm.hide();
+            });
+        },
         chartListSection: function () {
             var section = $(this),
                 data = section.data();
@@ -53,16 +78,53 @@
             });
             return map;
         },
+        chartRowMap: function () {
+            var map = {};
+            $(this).find('tbody').children('tr').each(function () {
+                var tr = $(this),
+                    th = tr.children('th').first(),
+                    text = $.trim(th.text());
+                if (!map[text]) map[text] = $();
+                map[text] = map[text].add(tr);
+            });
+            return map;
+        },
+        visualize: function (visualize) {
+            var elm = $(this);
+            if (visualize) {
+//                elm.filter(':hidden').openUp();
+                elm.show();
+            } else {
+//                elm.filter(':visible').closeDown();
+                elm.hide();
+            }
+            return elm;
+        },
         chartControlForm: function (callback) {
-            var form = $(this);
+            var form = $(this),
+                systemFilterDiv = $('#system-filter-p', form),
+                clientFilterDiv = $('#client-filter-p', form);
+
             form.find(':radio,:checkbox').change(function () {
                 form.submit();
             });
             form
                 .submit(function (e) {
                     e.preventDefault();
-                    var values = form.getFormValue();
-                    callback(values.toObj());
+                    var settings = form.getFormValue();
+
+
+                    settings.use_system_filter = eval(settings.use_system_filter);
+                    systemFilterDiv.visualize(settings.use_system_filter);
+
+
+                    settings.use_client_filter = eval(settings.use_client_filter);
+                    clientFilterDiv.visualize(settings.use_client_filter);
+
+                    settings.use_colorize = eval(settings.use_colorize);
+
+
+                    callback(settings.toObj());
                 });
             return form;
         }
@@ -126,6 +188,52 @@
             chartListCell.removeAttr('style');
         };
 
+        chartListSection.findAllRows = function () {
+            return chartListSection.children('.ss-scrollable').children('.ss-table')
+                .add(chartListSection.children('.ss-left-fixed-table'))
+                .children('tbody').children('tr')
+        };
+
+        chartListSection.filterByClient = function (client_names) {
+            var rowMap = chartListSection.rowMap;
+            if (!rowMap) return false;
+            chartListSection.findAllRows().hide();
+            client_names && client_names.forEach(function (client_name) {
+                var row = rowMap[client_name];
+                if (row) row.show();
+            });
+            chartListSection.filterByClient.filtered = true;
+            return true;
+        };
+        chartListSection.filterByClient.off = function () {
+            var filtered = chartListSection.filterByClient.filtered;
+            if (!filtered) return false;
+            chartListSection.findAllRows().show();
+            chartListSection.filterByClient.filtered = false;
+            return true;
+        };
+
+
+        chartListSection.resize = function () {
+            chartListSection.trigger('ss-resize');
+            chartListCell.each(function () {
+                var cell = $(this);
+                cell.children('.chart-cell-content').css({
+                    width: cell.width(),
+                    height: cell.height()
+                });
+            });
+
+        };
+
+        chartListSection.busy = function (callback, duration) {
+            chartListSection.addClass('loading').showSpin();
+            setTimeout(function () {
+                chartListSection.removeClass('loading').removeSpin();
+                callback && callback();
+            }, duration || 100);
+        };
+
 
         chartListCell
             .hover(function () {
@@ -142,44 +250,64 @@
             });
         var controlForm = $('#chart-control-form');
 
-        var tabs = $('#chart-list-tabs', body).chartListTabs(function (filter, data) {
-            chartListCell.children('.chart-cell-content').removeAttr('style');
-
-            chartListSection.attr('data-filter', filter);
-            chartListSection.trigger('ss-resize');
-
-            chartListCell.each(function () {
-                var cell = $(this);
-                cell.children('.chart-cell-content').css({
-                    width: cell.width(),
-                    height: cell.height()
-                });
-            });
-
-            chartListSection.cellMap = chartListCell.chartCellMap(filter);
-
-
-            var settings = controlForm.getFormValue();
+        controlForm.chartControlForm(function (settings) {
             chartListSection.decolorize();
-            if (eval(settings.colorize)) {
+            var tab = tabs.filter('.tab-selected');
+            if (!tab.size()) return;
+            var use_colorize = settings.use_colorize;
+            if (use_colorize) {
+                var data = tab.data();
                 chartListSection.colorize(data.colorbase, data.colortype, data.colororder);
             }
 
-
-            $('.empty-cell', chartListSection).removeClass('empty-cell');
-            var emptyCells = chartListSection.cellMap.__empty__;
-            if (emptyCells) {
-                emptyCells.addClass('empty-cell');
+            var needsResize = false;
+            if (settings.use_client_filter) {
+                needsResize = chartListSection.filterByClient(settings.client_name) || needsResize;
+            } else {
+                needsResize = chartListSection.filterByClient.off() || needsResize;
             }
 
-            if (window.chrome) {
-                var leftFixed = $('.ss-left-fixed-table');
-                $('.ss-body-th', leftFixed).each(function (i) {
-                    var th = $(this);
-                    var padding = Number(th.css('paddingBottom').replace('px', ''));
-                    th.height(th.height() + padding + .5);
-                });
+            if (settings.use_system_filter){
+
+            } else{
+
             }
+
+            if(needsResize){
+
+            }
+
+        });
+
+
+        var tabs = $('#chart-list-tabs', body).chartListTabs(function (filter, data) {
+            chartListSection.busy(function () {
+                chartListCell.children('.chart-cell-content').removeAttr('style');
+
+                chartListSection.attr('data-filter', filter);
+                chartListSection.resize();
+
+                chartListSection.cellMap = chartListCell.chartCellMap(filter);
+                chartListSection.rowMap = chartListSection.chartRowMap();
+
+
+                $('.empty-cell', chartListSection).removeClass('empty-cell');
+                var emptyCells = chartListSection.cellMap.__empty__;
+                if (emptyCells) {
+                    emptyCells.addClass('empty-cell');
+                }
+
+                if (window.chrome) {
+                    var leftFixed = $('.ss-left-fixed-table');
+                    $('.ss-body-th', leftFixed).each(function (i) {
+                        var th = $(this);
+                        var padding = Number(th.css('paddingBottom').replace('px', ''));
+                        th.height(th.height() + padding + .5);
+                    });
+                }
+
+                controlForm.submit();
+            });
         });
 
         if (q.filter) {
@@ -192,17 +320,6 @@
         } else {
             tabs.first().click();
         }
-
-        controlForm.chartControlForm(function (settings) {
-            chartListSection.decolorize();
-            if (eval(settings.colorize)) {
-                var tab = tabs.filter('.tab-selected');
-                if (tab.size()) {
-                    var data = tab.data();
-                    chartListSection.colorize(data.colorbase, data.colortype, data.colororder);
-                }
-            }
-        });
 
 
         $('#colorize-input-on').click();//FIXME remove

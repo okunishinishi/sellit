@@ -62,6 +62,9 @@ lbl.on = 'on';
 lbl.off = 'off';
 lbl.control = 'control';
 lbl.filter = 'filter';
+lbl.system_filter = [lbl.system, lbl.filter].join(' ');
+lbl.client_filter = [lbl.client, lbl.filter].join(' ');
+lbl.color_effect = 'color effect';
 
 var plh = exports.plh = {};
 plh.search = lbl.search;
