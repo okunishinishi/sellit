@@ -167,6 +167,7 @@
 
     $(function () {
         var body = $(document.body),
+            win = $(window),
             q = new tek.Query(location.search.replace('?', '') || '');
 
         var chartListSection = $('#chart-list-section', body).chartListSection(),
@@ -242,9 +243,12 @@
         };
 
         chartListSection.findAllBodyRows = function () {
-            return chartListSection.children('.ss-scrollable').children('.ss-table')
-                .add(chartListSection.children('.ss-left-fixed-table'))
+            return chartListSection.findAllTables()
                 .children('tbody').children('tr')
+        };
+        chartListSection.findAllTables = function () {
+            return chartListSection.children('.ss-scrollable').children('.ss-table')
+                .add(chartListSection.children('.ss-left-fixed-table'));
         };
 
         chartListSection.filterByClient = function (client_index) {
@@ -252,14 +256,17 @@
             var filter_condition = client_index.join(',');
             var changed = chartListSection.filterByClient.filter_condition !== filter_condition;
             if (!changed) return;
-            var rows = chartListSection.findAllBodyRows();
-            if (!rows.size()) return;
             chartListSection.filterByClient.filter_condition = filter_condition;
-            chartListSection.findAllBodyRows().hide();
-            client_index && [].concat(client_index).forEach(function (index) {
-                var row = rows.eq(index);
-                if (row.size()) row.show();
+            chartListSection.findAllTables().each(function(){
+                var table = $(this),
+                    tr = table.children('tbody').children('tr');
+                tr.hide();
+                client_index && [].concat(client_index).forEach(function (index) {
+                    tr.eq(index).show();
+                });
             });
+            if (window.chrome) chartListSection.resize.chrome();
+
         };
         chartListSection.filterByClient.off = function () {
             var filtered = chartListSection.filterByClient.filtered;
@@ -311,12 +318,14 @@
             });
         };
 
+
         chartListSection.resize.chrome = function () {
             var leftFixed = $('.ss-left-fixed-table');
             $('.ss-body-th', leftFixed).each(function (i) {
                 var th = $(this);
-                var padding = Number(th.css('paddingBottom').replace('px', ''));
-                th.height(th.height() + padding + .5);
+                var padding = Number(th.css('paddingTop').replace('px', ''))
+                    + Number(th.css('paddingBottom').replace('px', ''));
+                th.height(th.height() + padding / 2 -.5);
             });
         };
 
@@ -418,7 +427,13 @@
             tabs.first().click();
         }
 
+        win.resize(function () {
+            chartListSection.trigger('ss-resize');
+            var leftFixed = $('.ss-left-fixed-table');
+            leftFixed.find('th').first().height(
+                chartListSection.find('.ss-head-th').last().height()
+            );
+        });
 
-        $('#colorize-input-on').click();//FIXME remove
     });
 })(jQuery, Handlebars, window['l']);
