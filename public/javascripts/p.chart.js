@@ -325,7 +325,7 @@
                 var th = $(this);
                 var padding = Number(th.css('paddingTop').replace('px', ''))
                     + Number(th.css('paddingBottom').replace('px', ''));
-                th.height(th.height() + padding / 2 -.5);
+                th.height(th.height() + padding / 2 -.4);
             });
         };
 
