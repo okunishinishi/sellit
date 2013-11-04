@@ -19,6 +19,13 @@ mixin system(index, data)
                         label=l.lbl.code
                     td
                         input(type='text', data-role='editable-text',name='systems[#{index}].code', value=data.code).system-code-input
+
+                tr
+                    th
+                        label=l.lbl.start_at
+                    td
+                        input(type='text', data-role='editable-text',name='systems[#{index}].start_at', value=data.start_at).system-start_at-input
+
                 tr
                     th
                         label=l.lbl.scale
@@ -53,7 +60,8 @@ mixin system(index, data)
 section#client-detail-section.positioned(
     data-system_names=system_names,
     data-system_scales=system_scales,
-    data-system_codes=system_codes
+    data-system_codes=system_codes,
+    data-system_start_ats=system_start_ats
 )
     a.float-right#edit-btn(href='javascript:void(0)')
         i.icon.icon-pencil

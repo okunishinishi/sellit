@@ -19,6 +19,8 @@ lbl.scale = '開発規模';
 lbl.freeword = '営業情報';
 lbl.scale_unit = '人月';
 lbl.all = '全表示';
+lbl.code = 'PJコード';
+lbl.start_at = '導入時期';
 
 var plh = exports.plh = exports.plh || {};
 

@@ -117,6 +117,7 @@
             li.find('.system-name-input').selectableText(data.system_names);
             li.find('.system-scale-input').selectableText(data.system_scales);
             li.find('.system-code-input').selectableText(data.system_codes);
+            li.find('.system-start_at-input').selectableText(data.system_start_ats);
             return li;
         },
         systemList: function (data) {

@@ -549,7 +549,10 @@
 		            .on('tk-editable-text-edit', function () {
 		                input.show();
 		                setTimeout(function () {
-		                    input.focus().select();
+                            var focused = $('.tk-editable-text:focus').size();
+                            if(!focused){
+		                        input.last().focus().select();
+                            }
 		                }, 20);
 		                label.hide();
 		            })

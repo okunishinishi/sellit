@@ -68,7 +68,8 @@ exports.index = function (req, res) {
     var clients = res.locals.clients;
     var system_names = Client.listSystemNames(clients) || [],
         system_codes = Client.listSystemCode(clients) || [],
-        system_scales = Client.listSystemScales(clients) || [];
+        system_scales = Client.listSystemScales(clients) || [],
+        system_start_ats = Client.listSystemStartAts(clients) || [];
     findAllModels([Salesman, Developer, Client], function (salesmen, developers, all_clients) {
         client.salesman_ids = ids_string(client.salesman_ids) || '';
         client.parent_names = client.listParentNames(toIdMap(all_clients)) || [];
@@ -80,7 +81,8 @@ exports.index = function (req, res) {
             rainbow: util.color.rainbow(.2, .9, 40),
             system_names: system_names,
             system_scales:system_scales,
-            system_codes:system_codes
+            system_codes:system_codes,
+            system_start_ats:system_start_ats
         });
     });
 };

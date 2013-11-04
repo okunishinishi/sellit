@@ -53,6 +53,9 @@ Client.listSystemNames = function (clients) {
 Client.listSystemScales = function (clients) {
     return Client.listSystemAttr(clients, 'scale');
 };
+Client.listSystemStartAts = function (clients) {
+    return Client.listSystemAttr(clients, 'start_at');
+};
 Client.listSystemCode = function (clients) {
     return Client.listSystemAttr(clients, 'code');
 };
