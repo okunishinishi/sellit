@@ -117,11 +117,9 @@
         visualize: function (visualize) {
             var elm = $(this);
             if (visualize) {
-//                elm.filter(':hidden').openUp();
-                elm.show();
+                elm.filter(':hidden').openUp();
             } else {
-//                elm.filter(':visible').closeDown();
-                elm.hide();
+                elm.filter(':visible').closeDown();
             }
             return elm;
         },
@@ -130,12 +128,10 @@
                 systemFilterDiv = $('#system-filter-p', form),
                 clientFilterDiv = $('#client-filter-p', form);
 
-            form.find(':radio,:checkbox').change(function () {
+
+            form.find(':checkbox,:radio').change(function () {
                 form.submit();
             });
-
-            var query = new tek.Query(location.search.replace('?', ''));
-            form.setFormValue(query);
 
             form
                 .submit(function (e) {
@@ -179,7 +175,7 @@
             if (!cellMap) return;
 
 
-            var values = Object.keys(cellMap).sort(sorter.random);
+            var values = Object.keys(cellMap).sort(sorter.string);
             var colors = null;
             switch (type || 'rainbow') {
                 case 'rainbow':
@@ -215,26 +211,31 @@
         };
 
         chartListSection.scalize = function (min, max) {
+            chartListSection.addClass('scalized');
             var cellMap = chartListSection.cellMap;
-            if (!cellMap) return ;
-            if (!min) return false;
+            if (!cellMap) return;
+            if (!min) return;
             var values = Object.keys(cellMap).sort(sorter.numeric),
                 step = (max - min) / (values.length - 1);
 
             values && values.forEach(function (value, i) {
                 if (value === '__empty__') return;
                 var scale = min + step * i;
-                cellMap[value].find('label').css({
-                    fontSize: scale + 'em',
-                    padding: 0,
-                    textAlign: 'center'
-                });
+
+                cellMap[value]
+                    .find('.chart-cell-content')
+                    .removeAttr('style')
+                    .find('label:visible').css({
+                        fontSize: scale + 'em',
+                        padding: 0,
+                        textAlign: 'center'
+                    });
             });
-            return true;
         };
 
         chartListSection.descalize = function () {
-
+            chartListSection.removeClass('scalized');
+            chartListCell.find('label').removeAttr('style');
         };
 
         chartListSection.findAllBodyRows = function () {
@@ -245,34 +246,31 @@
 
         chartListSection.filterByClient = function (client_names) {
             var rowMap = chartListSection.rowMap;
-            if (!rowMap) return false;
+            if (!rowMap) return;
             chartListSection.findAllBodyRows().hide();
-            client_names && client_names.forEach(function (client_name) {
+            client_names && [].concat(client_names).forEach(function (client_name) {
                 var row = rowMap[client_name];
                 if (row) row.show();
             });
             chartListSection.filterByClient.filtered = true;
-            return true;
         };
         chartListSection.filterByClient.off = function () {
             var filtered = chartListSection.filterByClient.filtered;
-            if (!filtered) return false;
+            if (!filtered) return;
             chartListSection.findAllBodyRows().show();
             chartListSection.filterByClient.filtered = false;
-            return true;
         };
 
         chartListSection.filterBySystem = function (system_names) {
             chartListSection.filterBySystem.filtered = true;
+            system_names && [].concat(system_names).forEach(function () {
 
-            return true;
+            });
         };
         chartListSection.filterBySystem.off = function () {
             var filtered = chartListSection.filterBySystem.filtered;
-            if (!filtered) return false;
+            if (!filtered) return;
 
-
-            return true;
         };
 
         chartListSection.resize = function () {
@@ -286,7 +284,15 @@
                     height: cell.height()
                 });
             });
+        };
 
+        chartListSection.resize.chrome = function () {
+            var leftFixed = $('.ss-left-fixed-table');
+            $('.ss-body-th', leftFixed).each(function (i) {
+                var th = $(this);
+                var padding = Number(th.css('paddingBottom').replace('px', ''));
+                th.height(th.height() + padding + .5);
+            });
         };
 
         chartListSection.busy = function (callback, duration) {
@@ -312,10 +318,9 @@
                 chartListCell.filter('.hover-sync').removeClass('hover-sync');
             });
         var controlForm = $('#chart-control-form');
+        controlForm.setFormValue(q);
 
         controlForm.chartControlForm(function (settings) {
-            var needsResize = false;
-
             chartListSection.decolorize();
             chartListSection.descalize();
 
@@ -331,19 +336,19 @@
 
             var use_scalize = settings.use_scalize;
             if (use_scalize) {
-                needsResize = chartListSection.scalize(data.scalemin, data.scalemax) || needsResize;
+                chartListSection.scalize(data.scalemin, data.scalemax);
             }
 
             if (settings.use_client_filter) {
-                needsResize = chartListSection.filterByClient(settings.client_name) || needsResize;
+                chartListSection.filterByClient(settings.client_name);
             } else {
-                needsResize = chartListSection.filterByClient.off() || needsResize;
+                chartListSection.filterByClient.off();
             }
 
             if (settings.use_system_filter) {
-                needsResize = chartListSection.filterBySystem(settings.system_name) || needsResize;
+                chartListSection.filterBySystem(settings.system_name);
             } else {
-                needsResize = chartListSection.filterBySystem.off() || needsResize;
+                chartListSection.filterBySystem.off();
             }
         });
 
@@ -372,14 +377,7 @@
                 $('.empty-cell', chartListSection).not(emptyCells).removeClass('empty-cell');
                 emptyCells.addClass('empty-cell');
 
-                if (window.chrome) {
-                    var leftFixed = $('.ss-left-fixed-table');
-                    $('.ss-body-th', leftFixed).each(function (i) {
-                        var th = $(this);
-                        var padding = Number(th.css('paddingBottom').replace('px', ''));
-                        th.height(th.height() + padding + .5);
-                    });
-                }
+                if (window.chrome) chartListSection.resize.chrome();
 
                 controlForm.submit();
             });
