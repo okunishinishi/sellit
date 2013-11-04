@@ -74,7 +74,11 @@
                     }));
                 });
             var sheetData = new ss.SheetData('', headData, bodyData);
-            return section.spreadsheet(sheetData);
+            section.spreadsheet(sheetData);
+
+            section.find('.top-fixed-thead').find('tr').find('th').first()
+                .text(l.lbl.chart_title).addClass('chart-title');
+            return section;
         },
         chartListTabs: function (callback) {
             var tabs = $(this);
@@ -245,6 +249,11 @@
         };
 
         chartListSection.filterByClient = function (client_names) {
+            chartListSection.filterByClient.filtered = true;
+            var filter_condition = client_names.join(',');
+            var changed = chartListSection.filterByClient.filter_condition !== filter_condition;
+            if (!changed) return;
+            chartListSection.filterByClient.filter_condition = filter_condition;
             var rowMap = chartListSection.rowMap;
             if (!rowMap) return;
             chartListSection.findAllBodyRows().hide();
@@ -252,7 +261,6 @@
                 var row = rowMap[client_name];
                 if (row) row.show();
             });
-            chartListSection.filterByClient.filtered = true;
         };
         chartListSection.filterByClient.off = function () {
             var filtered = chartListSection.filterByClient.filtered;
@@ -263,13 +271,40 @@
 
         chartListSection.filterBySystem = function (system_names) {
             chartListSection.filterBySystem.filtered = true;
-            system_names && [].concat(system_names).forEach(function () {
-
+            var filter_condition = system_names.join(',');
+            var changed = chartListSection.filterBySystem.filter_condition !== filter_condition;
+            if (!changed) return;
+            chartListSection.filterBySystem.filter_condition = filter_condition;
+            var thead = chartListSection.find('.ss-table').children('thead');
+            var indexMap = chartListSection.filterBySystem.indexMap;
+            if (!indexMap) {
+                indexMap = chartListSection.filterBySystem.indexMap = {};
+                thead.first().find('th').each(function (i) {
+                    var th = $(this),
+                        text = th.text();
+                    indexMap[text] = (i - 1);
+                });
+            }
+            chartListSection.find('.ss-cell').hide();
+            thead.find('.ss-head-th').hide();
+            system_names && [].concat(system_names).forEach(function (systemname) {
+                if (!indexMap.hasOwnProperty(systemname)) return;
+                var index = indexMap[systemname];
+                thead.each(function () {
+                    $(this).find('.ss-head-th').eq(index).show();
+                });
+                chartListSection.findAllBodyRows().each(function () {
+                    var tr = $(this);
+                    tr.find('.ss-cell').eq(index).show();
+                });
             });
         };
         chartListSection.filterBySystem.off = function () {
             var filtered = chartListSection.filterBySystem.filtered;
             if (!filtered) return;
+            chartListSection.find('.ss-cell').show();
+            var thead = chartListSection.find('.ss-table').children('thead');
+            thead.find('.ss-head-th').show();
 
         };
 
