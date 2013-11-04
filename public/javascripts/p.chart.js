@@ -1,4 +1,4 @@
-(function ($, Hbs, l) {
+(function ($, Hbs, l, document) {
 
     var ss = $.spreadsheet;
     var tmpl = {
@@ -8,7 +8,7 @@
 
     if (!history.pushState) {
         history.pushState = function () {
-            //TODO push state
+            //TODO push state fallback
         }
     }
 
@@ -29,15 +29,6 @@
     };
 
     $.extend({
-        pushQueryToState: function (values) {
-            var query = new tek.Query(location.search.replace('?', ''));
-            for (var key in values) {
-                if (!values.hasOwnProperty(key)) continue;
-                query[key] = values[key];
-            }
-            var new_url = [location.path, $.param(query)].join('?');
-            history.pushState(null, null, new_url);
-        }
     });
 
     $.fn.extend({
@@ -168,7 +159,7 @@
     $(function () {
         var body = $(document.body),
             win = $(window),
-            q = new tek.Query(location.search.replace('?', '') || '');
+            q = $.getQuery();
 
         var chartListSection = $('#chart-list-section', body).chartListSection(),
             chartListCell = $('.ss-cell', chartListSection);
@@ -436,4 +427,4 @@
         });
 
     });
-})(jQuery, Handlebars, window['l']);
+})(jQuery, Handlebars, window['l'], document);

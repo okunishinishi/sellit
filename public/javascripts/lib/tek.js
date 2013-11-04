@@ -1,10 +1,10 @@
 /**
  * tek.js
  * - javascript library for tek -
- * @version v0.2.1
+ * @version v0.2.6
  * @author Taka Okunishi
  * @license MIT
- * @date 2013-11-03
+ * @date 2013-11-05
  */
 tek = (function (module) {
     
@@ -87,7 +87,12 @@ tek = (function (module) {
 	
 	tek.Query = function (string) {
 	    if (!string) return;
+	    string = string.replace(/^\?/, '');
 	    var s = this;
+	    var isQuery = s instanceof tek.Query;
+	    if (!isQuery) {
+	        return new tek.Query(string);
+	    }
 	    var queries = string.split('&');
 	    for (var i = 0, len = queries.length; i < len; i++) {
 	        var query = queries[i];
@@ -95,10 +100,12 @@ tek = (function (module) {
 	        var key = decodeURIComponent(key_val[0]);
 	        s[key] = decodeURIComponent(key_val[1].replace(/\+/g, ' '));
 	    }
+	    return s;
 	};
-	tek.Query.fromLocation = function () {
+	
+	tek.Query.fromLocation = function (location) {
 	    var search = location.search;
-	    return search && new tek.Query(search.replace('?', ''));
+	    return search && tek.Query(search.replace(/^\?/, ''));
 	};
 	
 	/**
@@ -704,6 +711,26 @@ tek = (function (module) {
 	        !!string.toHiragana(pattern).match(searchWord) ||
 	        !!string.toKatakana(pattern).match(searchWord)
 	        ;
+	};
+	/**
+	 * Created by okunishitaka on 11/5/13.
+	 */
+	
+	tek.date = {};
+	
+	/**
+	 * convert date to utc
+	 * @param date
+	 */
+	tek.date.toUTC = function (date) {
+	    return Date.UTC(
+	        date.getFullYear(),
+	        date.getMonth(),
+	        date.getDate(),
+	        date.getHours(),
+	        date.getMinutes(),
+	        date.getSeconds(),
+	        date.getMilliseconds());
 	};
     
     return tek;
