@@ -47,7 +47,7 @@
         },
         chartListTabs: function (callback) {
             var tabs = $(this);
-            return tabs.children('.tab').click(function () {
+            return tabs.find('.tab').click(function () {
                 var clicked = $(this),
                     id = clicked.attr('id');
 
@@ -82,7 +82,7 @@
             var map = {};
             $(this).each(function () {
                 var tr = $(this),
-                    th = tr.children('th').first(),
+                    th = tr.find('th').first(),
                     text = $.trim(th.text());
                 if (!map[text]) map[text] = $();
                 map[text] = map[text].add(tr);
@@ -168,16 +168,16 @@
                     color: color,
                     borderColor: color,
                     backgroundColor: color
-                }).children('.chart-cell-content').css({
+                }).find('.chart-cell-content').css({
 
                         backgroundColor: '#FFF'
                     });
                 content
-                    .children('.chart-cell-color-mark').css({
+                    .find('.chart-cell-color-mark').css({
                         borderColor: color
                     });
                 content
-                    .children('.chart-cell-color-mark-hover').css({
+                    .find('.chart-cell-color-mark-hover').css({
                         backgroundColor: color
                     })
             });
@@ -215,11 +215,12 @@
 
 
         chartListSection.resize = function () {
-            chartListCell.children('.chart-cell-content').removeAttr('style');
+            chartListCell.children('.chart-cell-content').attr('style', '');
+
             chartListSection.trigger('ss-resize');
             chartListCell.each(function () {
                 var cell = $(this);
-                cell.children('.chart-cell-content').css({
+                cell.find('.chart-cell-content').first().css({
                     width: cell.width(),
                     height: cell.height()
                 });
@@ -232,7 +233,7 @@
             setTimeout(function () {
                 chartListSection.removeClass('loading').removeSpin();
                 callback && callback();
-            }, duration || 100);
+            }, duration || 50);
         };
 
 
@@ -255,9 +256,11 @@
             chartListSection.decolorize();
             var tab = tabs.filter('.tab-selected');
             if (!tab.size()) return;
+            var data = tab.data();
+
+
             var use_colorize = settings.use_colorize;
             if (use_colorize) {
-                var data = tab.data();
                 chartListSection.colorize(data.colorbase, data.colortype, data.colororder);
             }
 
@@ -282,6 +285,11 @@
 
 
         var tabs = $('#chart-list-tabs', body).chartListTabs(function (filter, data) {
+
+            var colorizeField = $('#use-colorize-field', body);
+            var colorbase = data.colorbase;
+            colorbase ? colorizeField.show() : colorizeField.hide();
+
             chartListSection.busy(function () {
                 chartListSection.attr('data-filter', filter);
 

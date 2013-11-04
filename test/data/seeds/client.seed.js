@@ -28,6 +28,6 @@ module.exports = {
                     "freeword": "${choice('いまいち,あと一押し,絶望的,余裕'.split(','))}"
                 }
             ], 5)
-        }.repeat(30)
+        }.repeat(20)
     ]
 };

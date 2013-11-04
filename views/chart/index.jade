@@ -20,7 +20,7 @@ block content
         fieldset#chart-control-fieldset
             legend=l.lbl.control
             form#chart-control-form
-                .field#use-cololize-field
+                .field#use-colorize-field
                     label.field-label=l.lbl.color_effect
                     input#use-colorize-input-on(type='radio', name='use_colorize', value='true')
                     label(for='use-colorize-input-on')=l.lbl.on
@@ -61,8 +61,7 @@ block content
         .float-right#chart-list-tabs
             a#provider-filter.tab(href='javascript:void(0)',
             data-colorbase='#DA7811',
-            data-colortype='rainbow'
-            )=l.lbl.provider
+            data-colortype='rainbow')=l.lbl.provider
             a#scale-filter.tab(href='javascript:void(0)')=l.lbl.scale
             a#freeword-filter.tab(href='javascript:void(0)')=l.lbl.freeword
             a#all-filter.tab(href='javascript:void(0)',data-key='')=l.lbl.all

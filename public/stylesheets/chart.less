@@ -43,9 +43,15 @@ th {
     }
   }
 }
+.ss-root,
+.ss-scrollable{
+  overflow-y: hidden;
+  .box-sizing(border-box);
+}
 
 #chart-list-section {
-
+  overflow-y: hidden;
+  .box-sizing(border-box);
   .filter(@filter;) {
     &[data-filter="@{filter}"] {
       .chart-cell-label[for="@{filter}"] {
