@@ -213,6 +213,18 @@
             return true;
         };
 
+        chartListSection.filterBySystem = function (system_names) {
+            chartListSection.filterBySystem.filtered = true;
+
+            return true;
+        };
+        chartListSection.filterBySystem.off = function () {
+            var filtered = chartListSection.filterBySystem.filtered;
+            if (!filtered) return false;
+
+
+            return true;
+        };
 
         chartListSection.resize = function () {
             chartListCell.children('.chart-cell-content').attr('style', '');
@@ -272,9 +284,9 @@
             }
 
             if (settings.use_system_filter) {
-
+                needsResize = chartListSection.filterBySystem(settings.system_name) || needsResize;
             } else {
-
+                needsResize = chartListSection.filterBySystem.off() || needsResize;
             }
 
             if (needsResize) {

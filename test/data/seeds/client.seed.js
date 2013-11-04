@@ -5,10 +5,11 @@ Object.prototype.repeat = function (count) {
     return this;
 };
 function repeat(data, count) {
+    var result = [];
     for (var i = 0; i < count; i++) {
-        data = data.concat(data);
+        result = result.concat(data);
     }
-    return data;
+    return result;
 }
 module.exports = {
     /** データ定義 **/
@@ -27,7 +28,7 @@ module.exports = {
                     "provider": "7${padZero((rownum + choice(1,2,3,4)) % 5, 23)}",
                     "freeword": "${choice('いまいち,あと一押し,絶望的,余裕'.split(','))}"
                 }
-            ], 5)
+            ], 10)
         }.repeat(20)
     ]
 };
