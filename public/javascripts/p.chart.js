@@ -12,9 +12,13 @@
         }
     }
 
+    function safeNumber(a) {
+        return Number(a.replace(/[^\d]/g, ''));
+    }
+
     var sorter = {
         numeric: function (a, b) {
-            return Number(a) - Number(b);
+            return safeNumber(a) - safeNumber(b);
         },
         string: function (a, b) {
             return a && a.localeCompare(b);
@@ -102,6 +106,12 @@
                 var cell = $(this),
                     label = cell.findByAttr('for', filter),
                     value = label.data('value') || '__empty__';
+                if (filter === 'all-filter') {
+                    cell.find('label').each(function(){
+                        var label = $(this);
+                        if(label.data('value')) value = '__not_empty__';
+                    });
+                }
                 if (!map[value]) map[value] = $();
                 map[value] = map[value].add(cell);
             });

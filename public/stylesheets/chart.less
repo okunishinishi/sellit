@@ -72,6 +72,13 @@ th {
   &[data-filter="all-filter"] {
     .chart-cell-label {
       display: block;
+      @back:@white;
+      border-bottom:1px solid darken(@back,14);
+    }
+    .empty-cell{
+      .chart-cell-label{
+        display: none;
+      }
     }
   }
 
