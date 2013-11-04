@@ -47,7 +47,7 @@
         },
         chartListTabs: function (callback) {
             var tabs = $(this);
-            return tabs.find('.tab').click(function () {
+            return tabs.children('.tab').click(function () {
                 var clicked = $(this),
                     id = clicked.attr('id');
 
@@ -80,7 +80,7 @@
         },
         chartRowMap: function () {
             var map = {};
-            $(this).find('tbody').children('tr').each(function () {
+            $(this).each(function () {
                 var tr = $(this),
                     th = tr.children('th').first(),
                     text = $.trim(th.text());
@@ -188,7 +188,7 @@
             chartListCell.removeAttr('style');
         };
 
-        chartListSection.findAllRows = function () {
+        chartListSection.findAllBodyRows = function () {
             return chartListSection.children('.ss-scrollable').children('.ss-table')
                 .add(chartListSection.children('.ss-left-fixed-table'))
                 .children('tbody').children('tr')
@@ -197,7 +197,7 @@
         chartListSection.filterByClient = function (client_names) {
             var rowMap = chartListSection.rowMap;
             if (!rowMap) return false;
-            chartListSection.findAllRows().hide();
+            chartListSection.findAllBodyRows().hide();
             client_names && client_names.forEach(function (client_name) {
                 var row = rowMap[client_name];
                 if (row) row.show();
@@ -208,13 +208,14 @@
         chartListSection.filterByClient.off = function () {
             var filtered = chartListSection.filterByClient.filtered;
             if (!filtered) return false;
-            chartListSection.findAllRows().show();
+            chartListSection.findAllBodyRows().show();
             chartListSection.filterByClient.filtered = false;
             return true;
         };
 
 
         chartListSection.resize = function () {
+            chartListCell.children('.chart-cell-content').removeAttr('style');
             chartListSection.trigger('ss-resize');
             chartListCell.each(function () {
                 var cell = $(this);
@@ -267,13 +268,13 @@
                 needsResize = chartListSection.filterByClient.off() || needsResize;
             }
 
-            if (settings.use_system_filter){
+            if (settings.use_system_filter) {
 
-            } else{
+            } else {
 
             }
 
-            if(needsResize){
+            if (needsResize) {
 
             }
 
@@ -282,20 +283,17 @@
 
         var tabs = $('#chart-list-tabs', body).chartListTabs(function (filter, data) {
             chartListSection.busy(function () {
-                chartListCell.children('.chart-cell-content').removeAttr('style');
-
                 chartListSection.attr('data-filter', filter);
+
                 chartListSection.resize();
 
                 chartListSection.cellMap = chartListCell.chartCellMap(filter);
-                chartListSection.rowMap = chartListSection.chartRowMap();
+                chartListSection.rowMap = chartListSection.findAllBodyRows().chartRowMap();
 
 
-                $('.empty-cell', chartListSection).removeClass('empty-cell');
-                var emptyCells = chartListSection.cellMap.__empty__;
-                if (emptyCells) {
-                    emptyCells.addClass('empty-cell');
-                }
+                var emptyCells = chartListSection.cellMap.__empty__ || $();
+                $('.empty-cell', chartListSection).not(emptyCells).removeClass('empty-cell');
+                emptyCells.addClass('empty-cell');
 
                 if (window.chrome) {
                     var leftFixed = $('.ss-left-fixed-table');
