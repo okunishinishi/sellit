@@ -107,24 +107,13 @@
                     label = cell.findByAttr('for', filter),
                     value = label.data('value') || '__empty__';
                 if (filter === 'all-filter') {
-                    cell.find('label').each(function(){
+                    cell.find('label').each(function () {
                         var label = $(this);
-                        if(label.data('value')) value = '__not_empty__';
+                        if (label.data('value')) value = '__not_empty__';
                     });
                 }
                 if (!map[value]) map[value] = $();
                 map[value] = map[value].add(cell);
-            });
-            return map;
-        },
-        chartRowMap: function () {
-            var map = {};
-            $(this).each(function () {
-                var tr = $(this),
-                    th = tr.find('th').first(),
-                    text = $.trim(th.text());
-                if (!map[text]) map[text] = $();
-                map[text] = map[text].add(tr);
             });
             return map;
         },
@@ -258,48 +247,38 @@
                 .children('tbody').children('tr')
         };
 
-        chartListSection.filterByClient = function (client_names) {
+        chartListSection.filterByClient = function (client_index) {
             chartListSection.filterByClient.filtered = true;
-            var filter_condition = client_names.join(',');
+            var filter_condition = client_index.join(',');
             var changed = chartListSection.filterByClient.filter_condition !== filter_condition;
             if (!changed) return;
+            var rows = chartListSection.findAllBodyRows();
+            if (!rows.size()) return;
             chartListSection.filterByClient.filter_condition = filter_condition;
-            var rowMap = chartListSection.rowMap;
-            if (!rowMap) return;
             chartListSection.findAllBodyRows().hide();
-            client_names && [].concat(client_names).forEach(function (client_name) {
-                var row = rowMap[client_name];
-                if (row) row.show();
+            client_index && [].concat(client_index).forEach(function (index) {
+                var row = rows.eq(index);
+                if (row.size()) row.show();
             });
         };
         chartListSection.filterByClient.off = function () {
             var filtered = chartListSection.filterByClient.filtered;
             if (!filtered) return;
+            chartListSection.filterByClient.filter_condition = null;
             chartListSection.findAllBodyRows().show();
             chartListSection.filterByClient.filtered = false;
         };
 
-        chartListSection.filterBySystem = function (system_names) {
+        chartListSection.filterBySystem = function (system_index) {
             chartListSection.filterBySystem.filtered = true;
-            var filter_condition = system_names.join(',');
+            var filter_condition = system_index.join(',');
             var changed = chartListSection.filterBySystem.filter_condition !== filter_condition;
             if (!changed) return;
             chartListSection.filterBySystem.filter_condition = filter_condition;
             var thead = chartListSection.find('.ss-table').children('thead');
-            var indexMap = chartListSection.filterBySystem.indexMap;
-            if (!indexMap) {
-                indexMap = chartListSection.filterBySystem.indexMap = {};
-                thead.first().find('th').each(function (i) {
-                    var th = $(this),
-                        text = th.text();
-                    indexMap[text] = (i - 1);
-                });
-            }
             chartListSection.find('.ss-cell').hide();
             thead.find('.ss-head-th').hide();
-            system_names && [].concat(system_names).forEach(function (systemname) {
-                if (!indexMap.hasOwnProperty(systemname)) return;
-                var index = indexMap[systemname];
+            system_index && [].concat(system_index).forEach(function (index) {
                 thead.each(function () {
                     $(this).find('.ss-head-th').eq(index).show();
                 });
@@ -312,6 +291,7 @@
         chartListSection.filterBySystem.off = function () {
             var filtered = chartListSection.filterBySystem.filtered;
             if (!filtered) return;
+            chartListSection.filterBySystem.filter_condition = null;
             chartListSection.find('.ss-cell').show();
             var thead = chartListSection.find('.ss-table').children('thead');
             thead.find('.ss-head-th').show();
@@ -385,13 +365,13 @@
             }
 
             if (settings.use_client_filter) {
-                chartListSection.filterByClient(settings.client_name);
+                chartListSection.filterByClient(settings.client_index);
             } else {
                 chartListSection.filterByClient.off();
             }
 
             if (settings.use_system_filter) {
-                chartListSection.filterBySystem(settings.system_name);
+                chartListSection.filterBySystem(settings.system_index);
             } else {
                 chartListSection.filterBySystem.off();
             }
@@ -415,7 +395,6 @@
                 chartListSection.resize();
 
                 chartListSection.cellMap = chartListCell.chartCellMap(filter);
-                chartListSection.rowMap = chartListSection.findAllBodyRows().chartRowMap();
 
 
                 var emptyCells = chartListSection.cellMap.__empty__ || $();

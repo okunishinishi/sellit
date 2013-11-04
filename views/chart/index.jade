@@ -49,10 +49,11 @@ block content
 
                 #system-filter-div.filter-div
                     p#system-filter-p.filter-p(style='display:none')
-                        for row in headRow
+                        - for(var i=0;i<headRow.length;i++){
                             label
-                                input(type='checkbox', name='system_name', value=row, checked)
-                                | #{row}
+                                input(type='checkbox', name='system_index', value=i, checked)
+                                | #{headRow[i]}
+                        - }
 
                 .field#use-client-filter-field
                     label.field-label=l.lbl.client_filter
@@ -65,7 +66,7 @@ block content
                     p#client-filter-p.filter-p(style='display:none')
                         - for(var rownum=0;rownum<rows.length;rownum++) {
                             label
-                                input(type='checkbox', name='client_name', value=rows[rownum][0].text, checked)
+                                input(type='checkbox', name='client_index', value=rownum, checked)
                                 | #{rows[rownum][0].text}
                         - }
 
