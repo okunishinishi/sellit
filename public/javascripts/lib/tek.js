@@ -282,6 +282,7 @@ tek = (function (module) {
 	var crossBrowser = tek.crossBrowser = function (window) {
 	    crossBrowser.fallbackObject(window.Object);
 	    crossBrowser.fallbackArray(window.Array);
+	    crossBrowser.fallbackString(window.String);
 	    crossBrowser.fallbackWindow(window);
 	    crossBrowser.fallbackNavigator(window.navigator || {});
 	    return window;
@@ -514,6 +515,15 @@ tek = (function (module) {
 	    }
 	}
 	;
+	crossBrowser.fallbackString = function (String) {
+	    var fallbacks = crossBrowser.fallbackString.fallbacks;
+	    String.prototype.trim = String.prototype.trime || fallbacks.trim;
+	};
+	crossBrowser.fallbackString.fallbacks = {
+	    trim: function () {
+	        return this.replace(/^\s+|\s+$/g, '');
+	    }
+	};
 	
 	tek.Vector = tek.define({
 	    init: function (values) {
