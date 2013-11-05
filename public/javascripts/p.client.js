@@ -76,7 +76,6 @@
             form
                 .keypress(function (e) {
                     console.log('keypress on form');
-//                    e.stopPropagation();
                 })
                 .submit(function () {
                     submitBtn.attr('disabled', 'disabled');

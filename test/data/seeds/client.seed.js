@@ -19,6 +19,7 @@ module.exports = {
             name: '${flower}${choice("商事,コーポレーション,株式会社,グループ".split(","))}',
             parent_id: '',
             children_ids: "${choice(null,null,'[]')}",
+            last_update_by:"${name}",
             systems: repeat([
                 {
                     "index": "",
