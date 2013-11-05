@@ -517,7 +517,7 @@ tek = (function (module) {
 	;
 	crossBrowser.fallbackString = function (String) {
 	    var fallbacks = crossBrowser.fallbackString.fallbacks;
-	    String.prototype.trim = String.prototype.trime || fallbacks.trim;
+	    String.prototype.trim = String.prototype.trim || fallbacks.trim;
 	};
 	crossBrowser.fallbackString.fallbacks = {
 	    trim: function () {
