@@ -27,6 +27,7 @@
     })($.confirmRemove);
 
     var supported = (function (detected) {
+        if(!detected) return true;
         switch (detected.browser) {
             case 'IE':
                 return 9.0 <= detected.version;

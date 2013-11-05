@@ -17,13 +17,13 @@ block content
                 if login_err
                     div.err-msg
                         h5=l.err.login_fail
-                div
+                div.field
                     label.block-label(for='username-input')=l.lbl.username
                     input(type='text', name='username', data-list=username_list, required)#username-input
-                div
+                div.field
                     label.block-label(for='password-input')=l.lbl.passowrd
                     input(type='password', name='password', disabled, value='sellit')#password-input
-            div
+            div#login-btn-field
                 input(type='submit', value=l.lbl.login).btn.wide-btn#login-btn
 
     article.inline-article
