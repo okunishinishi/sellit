@@ -11,6 +11,9 @@ html
 
         block stylesheets
 
+        //if lt IE 9
+            script(src=url.js('/lib/modernizr.js'))
+
         if NODE_ENV == 'production'
             script(src=url.js('lib.min.js'))
         else

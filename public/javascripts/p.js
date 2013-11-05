@@ -8,6 +8,7 @@
  *1
  */
 (function ($, l, hbs) {
+
     hbs.registerHelper('l', function (name, options) {
         return name && eval(["window", "l"].concat(name).join('.'));
     });
@@ -25,6 +26,19 @@
         };
     })($.confirmRemove);
 
+    var supported = (function (detected) {
+        switch (detected.browser) {
+            case 'IE':
+                return 9.0 <= detected.version;
+        }
+        return true;
+    })(tek.detectBrowser(window));
+
+    if (!supported) {
+        $(function () {
+            $.sorryNoSupport();
+        });
+    }
 
     $.extend({
         rainbowColor: function (base, count) {
