@@ -40,7 +40,7 @@ exports.getData = function (clients, callback) {
             var href = resolve('/', config.context || '', 'client/' + client._id);
             return [
                 {
-                    prefix:client.parent_names.length && client.parent_names.join('&nbps;') || null,
+                    prefix: client.parent_names.length && client.parent_names.join('&nbps;') || null,
                     text: client.name,
                     href: [ href, 't=' + new Date().getTime()].join('?')
                 }
@@ -49,6 +49,7 @@ exports.getData = function (clients, callback) {
                         var system = systemsMap[name] || {};
                         var provider = developersMap[system.provider];
                         system.provider_name = provider && provider.name;
+                        system.client_id = client._id;
                         return  system;
                     }));
         });

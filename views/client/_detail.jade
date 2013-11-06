@@ -1,5 +1,5 @@
 mixin system(index, data)
-    li.paper.system-list-item
+    li.paper.system-list-item(id=data.name)
         .paper-content
             h3=index
             input(type='hidden', name='systems[#{index}].index', value=data.index)

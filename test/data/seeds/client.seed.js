@@ -23,7 +23,7 @@ module.exports = {
             systems: repeat([
                 {
                     "index": "",
-                    "name": "${fruit}",
+                    "name": "${choice('人事,給与,入稿,Web,PC,あ,い,う,え,お,か,メインデータセンタ,サブデータセンター'.split(','))}",
                     "code": "${randomAlpha(2).toUpperCase()}${padZero(rownum,4)}",
                     "start_at":"${2000 + rownum%(choice(1,2,3,5,7,11))}年",
                     "scale": "${choice(10,20,30,40,50,60,70,80,90)}",
