@@ -53,6 +53,9 @@ lbl.username = 'username';
 lbl.passowrd = 'password';
 lbl.name = 'name';
 lbl.provider = 'provider';
+lbl.initial_provider = 'initial developer';
+lbl.current_provider = 'current develop';
+
 lbl.all = 'all';
 lbl.last_update_by = 'updated by';
 lbl.colorize = 'colorize';

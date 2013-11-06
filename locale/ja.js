@@ -21,6 +21,9 @@ lbl.scale_unit = '人月';
 lbl.all = '全表示';
 lbl.code = 'PJコード';
 lbl.start_at = '導入時期';
+lbl.initial_provider = '初期開発会社';
+lbl.current_provider = '現担当会社　';
+
 
 var plh = exports.plh = exports.plh || {};
 

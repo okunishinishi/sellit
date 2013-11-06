@@ -47,8 +47,10 @@ exports.getData = function (clients, callback) {
             ].concat(
                     system_names.map(function (name) {
                         var system = systemsMap[name] || {};
-                        var provider = developersMap[system.provider];
-                        system.provider_name = provider && provider.name;
+                        var initial_provider = developersMap[system.initial_provider];
+                        system.initial_provider_name = initial_provider && initial_provider.name;
+                        var current_provider = developersMap[system.current_provider];
+                        system.current_provider_name = current_provider && current_provider.name;
                         system.client_id = client._id;
                         return  system;
                     }));
