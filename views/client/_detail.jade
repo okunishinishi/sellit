@@ -37,17 +37,6 @@ mixin system(index, data)
                             i=l.lbl.scale_unit
                 tr
                     th
-                        label=l.lbl.provider
-                    td
-                        select(name='systems[#{index}].provider')
-                            option(value='')
-                            for developer in developers
-                                option(value=developer._id,
-                                selected=developer._id==data.provider
-                                )=developer.name
-
-                tr
-                    th
                         label=l.lbl.initial_provider
                     td
                         select(name='systems[#{index}].initial_provider')
