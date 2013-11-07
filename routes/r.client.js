@@ -5,6 +5,7 @@ var tek = require('tek'),
     Developer = db.models['Developer'],
     util = require('../util'),
     obj = util.obj,
+    dateformat = require('dateformat'),
     toIdMap = obj['toIdMap'],
     findAllModels = util['mdl']['findAllModels'],
     Salesman = db.models['Salesman'];
@@ -73,6 +74,12 @@ exports.index = function (req, res) {
     findAllModels([Salesman, Developer, Client], function (salesmen, developers, all_clients) {
         client.salesman_ids = ids_string(client.salesman_ids) || '';
         client.parent_names = client.listParentNames(toIdMap(all_clients)) || [];
+        var last_update_at = client.last_update_at;
+        try {
+            client.last_update_at_label = last_update_at && dateformat(new Date(parseInt(last_update_at)), 'yyyy/mm/dd');
+        } catch (e) {
+            console.error(e, last_update_at);
+        }
         res.render('client/index.jade', {
             login_username: req.session.login_username,
             salesmen: salesmen,
@@ -80,9 +87,9 @@ exports.index = function (req, res) {
             selected_client: client,
             rainbow: util.color.rainbow(.2, .9, 40),
             system_names: system_names,
-            system_scales:system_scales,
-            system_codes:system_codes,
-            system_start_ats:system_start_ats
+            system_scales: system_scales,
+            system_codes: system_codes,
+            system_start_ats: system_start_ats
         });
     });
 };

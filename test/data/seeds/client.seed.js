@@ -20,6 +20,7 @@ module.exports = {
             parent_id: '',
             children_ids: "${choice(null,null,'[]')}",
             last_update_by: "${name}",
+            last_update_at:'${1383824091695}',
             systems: repeat([
                 {
                     "index": "",

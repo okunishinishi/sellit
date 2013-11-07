@@ -128,6 +128,7 @@ section#client-detail-section.positioned(
 
                 br.clear
             input(type='hidden', name='last_update_by', value=login_username)
+            input(type='hidden', name='last_update_at', value=time)
             br.clear
             input#save-btn.btn.primary-btn.wide-btn(type="submit", value=l.btn.save)
             small.float-right
@@ -135,5 +136,9 @@ section#client-detail-section.positioned(
                     | #{l.lbl.last_update_by}&nbsp;
 
                 span=selected_client.last_update_by
+                if selected_client.last_update_at_label
+                    span
+                        |&nbsp;@&nbsp;
+                    span=selected_client.last_update_at_label
 
 
