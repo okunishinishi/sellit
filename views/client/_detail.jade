@@ -66,8 +66,7 @@ mixin system(index, data)
                     td
                         textarea.full-width(name='systems[#{index}].freeword',
                         data-role='editable-text',
-                        placeholder=l.plh.freeword,
-                        value=data.freeword)
+                        placeholder=l.plh.freeword)=data.freeword
             br.clear
 
 
