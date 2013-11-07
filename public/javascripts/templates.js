@@ -102,18 +102,18 @@ function program1(depth0,data) {
   return buffer;
   }
 
-  buffer += "<a href=\"";
+  buffer += "<span>\n    ";
+  stack1 = helpers['if'].call(depth0, depth0.prefix, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n    <a href=\"";
   if (stack1 = helpers.href) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.href; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\">\n    ";
-  stack1 = helpers['if'].call(depth0, depth0.prefix, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n    ";
+    + "\">";
   if (stack1 = helpers.text) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.text; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\n</a>";
+    + "</a>\n</span>\n";
   return buffer;
   }
 	);

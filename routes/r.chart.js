@@ -40,7 +40,7 @@ exports.getData = function (clients, callback) {
             var href = resolve('/', config.context || '', 'client/' + client._id);
             return [
                 {
-                    prefix: client.parent_names.length && client.parent_names.join('&nbps;') || null,
+                    prefix: client.parent_names.length && client.parent_names.join('  ') || null,
                     text: client.name,
                     href: [ href, 't=' + new Date().getTime()].join('?')
                 }
