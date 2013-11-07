@@ -360,13 +360,20 @@
     ;
 
     $(function () {
-        var body = $(document.body),
+        var head = $(document.head),
+            body = $(document.body),
             aside = $('aside', body),
             q = $.getQuery();
 
         $('#client-detail-section', body).clientDetailSection(q && q.mode);
 
         $('#client-list-section', aside).clientListSection();
+
+
+        var clientName = $('#client-name-input', body).val() || '',
+            title = $('title', head);
+        title.text([clientName, (title.text() || '') ].join(' - '));
+
 
     });
 })(jQuery, window['l'], Handlebars);

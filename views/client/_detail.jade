@@ -97,7 +97,7 @@ section#client-detail-section.positioned(
                     if selected_client.parent_names
                         for parent_name in selected_client.parent_names
                             span.name-label=parent_name
-                input(type='text', data-role='editable-text', name='name', value=selected_client.name).full-width.large-input
+                input#client-name-input(type='text', data-role='editable-text', name='name', value=selected_client.name).full-width.large-input
 
 
             fieldset#salesman-fieldset
@@ -140,7 +140,7 @@ section#client-detail-section.positioned(
                 span=selected_client.last_update_by
                 if selected_client.last_update_at_label
                     span
-                        |&nbsp;@&nbsp;
+                        |&nbsp;
                     span=selected_client.last_update_at_label
 
 
