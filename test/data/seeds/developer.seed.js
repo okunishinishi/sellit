@@ -9,7 +9,7 @@ module.exports = {
     entries: [
         {
             _id: "7${padZero(rownum, 23)}",
-            name: '${animal}${choice("開発,ディベロップ,情報,グループ".split(","))}'
+            name: "${choice('日立ソリューションズ,NECソフト,東芝ソリューション,NTTデータ,野村総合研究所,新日鉄住金ソリューションズ'.split(','))}"
         }.repeat(10)
     ]
 };
