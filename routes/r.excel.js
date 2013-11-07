@@ -27,7 +27,7 @@ exports.generateWorkbook = function (clients, callback) {
         var workbook = createWorkbook(dirpath + "/", filename);
         var cols = data.headRow.length + 1,
             rows = data.rows.length + 1;
-        'code,provider,scale,freeword,all'.split(',').forEach(function (key) {
+        'code,initial_provider,current_provider,scale,freeword,all'.split(',').forEach(function (key) {
             var sheetName = (l.lbl[key] || key).replace(/\//g, '-'),
                 sheet = workbook.createSheet(sheetName, cols, rows);
             [''].concat(data.headRow).forEach(function (data, i) {
@@ -45,8 +45,10 @@ exports.generateWorkbook = function (clients, callback) {
                             if (key === 'name') return;
                             return data[key] || '';
                         }).join("\n");
-                    case 'provider':
-                        return data['provider_name'];
+                    case 'initial_provider':
+                        return data['initial_provider_name'];
+                    case 'current_provider':
+                        return data['current_provider_name'];
                     default:
                         return data[key] || '';
                 }
