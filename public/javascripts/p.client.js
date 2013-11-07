@@ -9,6 +9,9 @@
  */
 (function ($, l, Hbs) {
 
+    function doNothing() {
+    }
+
     var tv = $.treeview;
     var tmpl = {
         liContent: Hbs.templates['client-list-item']
@@ -40,14 +43,17 @@
                     editableText.trigger('tk-editable-text-edit');
                     break;
             }
+
             form.attr('data-mode', mode);
         },
-        clientDetailForm: function () {
+        clientDetailForm: function (mode) {
             var form = $(this),
                 editBtn = $('#edit-btn'),
                 submitBtn = $(':submit', form),
                 msgBalloon = $('#save-done-msg').hide(),
                 cover = $('#client-detail-form-cover', form);
+
+
             cover
                 .click(function () {
                     msgBalloon.hide();
@@ -65,28 +71,34 @@
                 msgBalloon.hide();
             });
             editBtn.click(function () {
+                var focus = $.fn.focus;
+                $.fn.focus = doNothing;
                 form.editableForm('edit');
                 msgBalloon.hide();
                 editBtn.hide();
+                $.fn.focus = focus;
             });
             msgBalloon.click(function (e) {
                 e.stopPropagation();
                 msgBalloon.hide();
             });
             form
-                .keypress(function (e) {
-                    console.log('keypress on form');
-                })
                 .submit(function () {
                     submitBtn.attr('disabled', 'disabled');
                 });
-            form.editableForm('view');
+            form.editableForm(mode || 'view');
+
+            var hash = location.hash;
+            if (hash) {
+                $(hash).find(':text').first().focus();
+            }
+
             return form;
         },
-        clientDetailSection: function () {
+        clientDetailSection: function (mode) {
             var section = $(this),
                 form = $('#client-detail-form', section);
-            form.clientDetailForm();
+            form.clientDetailForm(mode);
 
             $('#system-list', section).systemList(section.data());
             return section;
@@ -114,7 +126,6 @@
                     });
                 li.find('.tk-editable-text').focus(function () {
                     var focused = li.hasClass('system-list-item-focused');
-                    console.log('focused', focused);
                     if (focused) return;
                     li.addClass('system-list-item-focused')
                         .siblings('.system-list-item-focused')
@@ -350,8 +361,10 @@
 
     $(function () {
         var body = $(document.body),
-            aside = $('aside', body);
-        $('#client-detail-section', body).clientDetailSection();
+            aside = $('aside', body),
+            q = $.getQuery();
+
+        $('#client-detail-section', body).clientDetailSection(q && q.mode);
 
         $('#client-list-section', aside).clientListSection();
 
