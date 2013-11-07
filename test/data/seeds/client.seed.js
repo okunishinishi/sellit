@@ -23,7 +23,7 @@ module.exports = {
             systems: repeat([
                 {
                     "index": "",
-                    "name": "${choice('人事,給与,会計,入稿,生産,Web,メインデータセンタ,サブデータセンター'.split(','))}",
+                    "name": "${choice('人事,給与,会計,入稿,生産管理,工程管理,POS,会議室,Web,メインデータセンタ,サブデータセンター'.split(','))}",
                     "code": "${supernatural}",
                     "start_at": "${2000 + rownum%(choice(1,2,3,5,7,11))}年",
                     "scale": "${choice(10,20,30,40,50,60,70,80,90)}",
