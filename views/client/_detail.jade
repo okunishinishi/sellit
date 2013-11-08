@@ -69,7 +69,8 @@ mixin system(index, data)
                         placeholder=l.plh.freeword)=data.freeword
             br.clear
 
-
+h1#client-name-spy
+    a(href='#')
 section#client-detail-section.positioned(
     data-system_names=system_names,
     data-system_scales=system_scales,
@@ -97,6 +98,8 @@ section#client-detail-section.positioned(
                         for parent_name in selected_client.parent_names
                             span.name-label=parent_name
                 input#client-name-input(type='text', data-role='editable-text', name='name', value=selected_client.name).full-width.large-input
+
+
 
 
             fieldset#salesman-fieldset

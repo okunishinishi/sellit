@@ -9,7 +9,6 @@ body {
   }
 }
 
-
 header {
   z-index: 999;
 }
@@ -152,7 +151,7 @@ input[disabled] {
 }
 
 #system-list {
-  .system-list-item-focused{
+  .system-list-item-focused {
     z-index: 999;
   }
   .system-list-item {
@@ -164,7 +163,7 @@ input[disabled] {
     &.remove-target {
       .paper-content {
         border-color: @danger;
-        background-color: darken(@white,1);
+        background-color: darken(@white, 1);
       }
     }
     h3 {
@@ -337,12 +336,27 @@ textarea {
     width: 100%;
   }
 }
-.client-parent-name{
+
+.client-parent-name {
   font-size: 12px;
   font-weight: normal;
-  span{
+  span {
     display: inline-block;
     margin: 2px 8px;
   }
 }
 
+#client-name-spy {
+  border: 1px solid @gray;
+  .box-shadow(2px 2px 4px; .6);
+  padding: 10px 10px;
+  margin: 0;
+  color: @gray;
+  z-index: 9999;
+  .black-back(.9);
+  right: 0;
+  a {
+    color: darken(@white, 10);
+  }
+
+}

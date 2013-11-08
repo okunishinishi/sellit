@@ -355,6 +355,11 @@
                 editDoneBtn.click();
             });
             return section;
+        },
+        clientNameSpy: function (input) {
+            var spy = $(this);
+            spy.find('a').text(input.val());
+            return spy.spyFor(input.parent());
         }
     })
     ;
@@ -370,10 +375,15 @@
         $('#client-list-section', aside).clientListSection();
 
 
-        var clientName = $('#client-name-input', body).val() || '',
+        var clientNameInput = $('#client-name-input', body);
+        var clientName = clientNameInput.val() || '',
             title = $('title', head);
         title.text([clientName, (title.text() || '') ].join(' - '));
 
 
+        $('#client-name-spy', body).clientNameSpy(clientNameInput);
+
+
     });
-})(jQuery, window['l'], Handlebars);
+})
+    (jQuery, window['l'], Handlebars);
