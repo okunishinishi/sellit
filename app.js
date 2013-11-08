@@ -67,6 +67,8 @@ app.all('*',
             var lang = util['lang'];
             res.locals.lang = lang.fromRequest(req);
             res.locals.lang = 'ja';//TODO
+            var login_username = req.session && req.session.login_username;
+            res.locals.login_username = login_username;
             res.locals.url = app.locals.url;
             next();
         });

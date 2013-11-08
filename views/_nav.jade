@@ -1,4 +1,6 @@
 nav
+    if login_username
+        span.nav-item.login-user #{login_username}
     a.nav-item(href=url('/client?t=#{time}'), key='detail')
         i.icon.icon-file
         | detail

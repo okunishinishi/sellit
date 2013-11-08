@@ -89,6 +89,7 @@ header {
   nav {
     height: @h;
     float: right;
+
     .nav-item {
       .icon {
         display: inline-block;
@@ -111,6 +112,17 @@ header {
           text-decoration: none;
         }
       }
+    }
+
+    .login-user,
+    .login-user:hover,
+    .login-user:active{
+      display: inline-block;
+      margin: 0 10px;
+      color:lighten(@gray,30);
+      opacity: 0.5;
+      background-color: @black;
+      float: right;
     }
   }
 }

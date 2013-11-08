@@ -71,6 +71,7 @@ lbl.color_effect = 'color effect';
 lbl.scale_effect = 'scale effect';
 lbl.apply = 'apply';
 lbl.start_at = 'start_at';
+lbl.login_as = 'login as';
 
 var plh = exports.plh = {};
 plh.search = lbl.search;
