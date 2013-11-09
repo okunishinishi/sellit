@@ -85,7 +85,7 @@
             form
                 .submit(function () {
                     submitBtn.attr('disabled', 'disabled');
-                    $.confirmLeave(false);
+                    $.confirmLeave(l.msg.leave_with_unsaved);
                 });
             form.editableForm(mode || 'view');
 

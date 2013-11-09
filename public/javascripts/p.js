@@ -26,16 +26,6 @@
         };
     })($.confirmRemove);
 
-    $.confirmLeave = function (msg) {
-        if (!$.confirmLeave.initialized) {
-            $.confirmLeave.initialized = true;
-            $(window).on('beforeunload', function () {
-                return $.confirmLeave.msg || undefined;
-            });
-        }
-        $.confirmLeave.msg = msg;
-    };
-
     var supported = (function (detected) {
         if (!detected) return true;
         switch (detected.browser) {
