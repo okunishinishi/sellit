@@ -7,7 +7,7 @@ var msg = exports.msg = {};
 msg.sure = 'Are ABSOLUTELY your sure?';
 msg.never_go_back = 'Once this done, there will be no way to go back.';
 msg.save_done = 'save done!';
-
+msg.leave_with_unsaved = 'You have unsaved changes.';
 
 var err = exports.err = {};
 err.page_not_found = 'sorry! page not found';

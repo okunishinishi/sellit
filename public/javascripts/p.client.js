@@ -7,7 +7,7 @@
  *  Hbs : handlebars
  *
  */
-(function ($, l, Hbs) {
+(function ($, l, Hbs, docment, window) {
 
     function doNothing() {
     }
@@ -85,8 +85,22 @@
             form
                 .submit(function () {
                     submitBtn.attr('disabled', 'disabled');
+                    $.confirmLeave(false);
                 });
             form.editableForm(mode || 'view');
+
+            form
+                .keydown(function (e) {
+                    switch (e.which) {
+                        case $.ui.keyCode.ENTER:
+                            e.preventDefault();
+                            break;
+                    }
+                })
+                .change(function () {
+                    $.confirmLeave(l.msg.leave_with_unsaved);
+                });
+
 
             var hash = location.hash;
             if (hash) {
@@ -134,7 +148,6 @@
             });
             li.find('.system-name-input').selectableText(data.system_names);
             li.find('.system-scale-input').selectableText(data.system_scales);
-            li.find('.system-code-input').selectableText(data.system_codes);
             li.find('.system-start_at-input').selectableText(data.system_start_ats);
             return li;
         },
@@ -382,8 +395,5 @@
 
 
         $('#client-name-spy', body).clientNameSpy(clientNameInput);
-
-
     });
-})
-    (jQuery, window['l'], Handlebars);
+})(jQuery, window['l'], Handlebars, document, window);
