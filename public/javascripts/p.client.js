@@ -90,7 +90,7 @@
             form
                 .submit(function () {
                     submitBtn.attr('disabled', 'disabled');
-                    $.confirmLeave(l.msg.leave_with_unsaved);
+                    $.confirmLeave(false);
                 });
             form.editableForm(mode || 'view');
 
@@ -123,6 +123,9 @@
                     select = td.find('select');
                 select.change(function(){
                     text.val('');
+                });
+                text.change(function(){
+                    select.val('');
                 });
                 a.click(function () {
                     var mode = td.attr('data-mode');
