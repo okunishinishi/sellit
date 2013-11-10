@@ -112,6 +112,11 @@ form.tk-loading {
 
   }
   &[data-mode="view"] {
+    .developer-select-td{
+      .icon{
+        display: none;
+      }
+    }
     #new-system-btn {
       display: none;
     }
@@ -359,4 +364,17 @@ textarea {
     color: darken(@white, 10);
   }
 
+}
+.developer-select-td{
+  &[data-mode="select"]{
+    input{display: none !important;};
+  }
+  &[data-mode="text"]{
+    select{display: none !important;};
+  }
+  .icon{
+    margin-left:4px;
+    padding: 2px 4px;
+    display: inline-block;
+  }
 }

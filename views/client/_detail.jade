@@ -38,24 +38,34 @@ mixin system(index, data)
                 tr
                     th
                         label=l.lbl.current_provider
-                    td
+                    td.developer-select-td
                         select(name='systems[#{index}].current_provider')
                             option(value='')
                             for developer in developers
                                 option(value=developer._id,
                                 selected=developer._id==data.current_provider
                                 )=developer.name
+                        input(type='text', name='systems[#{index}].current_provider_name',
+                            data-role='editable-text',
+                            value=data.current_provider_name)
+                        a(href='javascript:void(0)').developer-input-switch
+                            i.icon.icon-edit
 
                 tr
                     th
                         label=l.lbl.initial_provider
-                    td
+                    td.developer-select-td
                         select(name='systems[#{index}].initial_provider')
                             option(value='')
                             for developer in developers
                                 option(value=developer._id,
                                 selected=developer._id==data.initial_provider
                                 )=developer.name
+                        input(type='text', name='systems[#{index}].initial_provider_name',
+                            data-role='editable-text',
+                            value=data.initial_provider_name)
+                        a(href='javascript:void(0)').developer-input-switch
+                            i.icon.icon-edit
 
 
 

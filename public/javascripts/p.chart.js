@@ -410,6 +410,10 @@
 
                 controlForm.submit();
             });
+
+            setTimeout(function () {
+                chartListSection.trigger('ss-resize');
+            }, 100);
         });
 
         if (q.filter) {
@@ -417,10 +421,10 @@
             if (tab.size()) {
                 tab.click();
             } else {
-                tabs.first().click();
+                tabs.eq(1).click();
             }
         } else {
-            tabs.first().click();
+            tabs.eq(1).click();
         }
 
         win.resize(function () {
@@ -430,6 +434,5 @@
                 chartListSection.find('.ss-head-th').last().height()
             );
         });
-
     });
 })(jQuery, Handlebars, window['l'], document);

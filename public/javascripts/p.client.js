@@ -66,6 +66,8 @@
                 editBtn.show();
                 form.editableForm('view');
                 submitBtn.removeAttr('disabled');
+                $.pushQueryToState({mode:'view'});
+                $(':text,textarea', form).filter(':visible').hide();
             });
             $('input,select,textarea', form).not(':submit').on("click change", function () {
                 msgBalloon.hide();
@@ -113,6 +115,31 @@
             $('#system-list', section).systemList(section.data());
             return section;
         },
+        developerSelectTd: function () {
+            return $(this).each(function () {
+                var td = $(this),
+                    a = td.find('.developer-input-switch'),
+                    text = td.find(':text'),
+                    select = td.find('select');
+                select.change(function(){
+                    text.val('');
+                });
+                a.click(function () {
+                    var mode = td.attr('data-mode');
+                    switch (mode) {
+                        case 'select':
+                            mode = 'text';
+                            break;
+                        case 'text':
+                            mode = 'select';
+                            break;
+                    }
+                    td.attr('data-mode', mode);
+                    text.add(select).filter(':visible').select().focus();
+                });
+                td.attr('data-mode', text.val() ? 'text' : 'select');
+            });
+        },
         systemListItem: function (data) {
             var li = $(this).each(function () {
                 var li = $(this),
@@ -145,6 +172,10 @@
             li.find('.system-name-input').selectableText(data.system_names);
             li.find('.system-scale-input').selectableText(data.system_scales);
             li.find('.system-start_at-input').selectableText(data.system_start_ats);
+
+            li.find('.developer-select-td').developerSelectTd();
+
+
             return li;
         },
         systemList: function (data) {
