@@ -227,7 +227,6 @@
                     });
             });
             chartListSection.resize.leftFixed();
-            if (window.chrome)chartListSection.resize.chrome()
         };
 
         chartListSection.descalize = function () {
@@ -265,7 +264,6 @@
                     tr.eq(index).show();
                 });
             });
-            if (window.chrome) chartListSection.resize.chrome();
 
         };
         chartListSection.filterByClient.off = function () {
@@ -315,17 +313,6 @@
                     width: cell.width(),
                     height: cell.height()
                 });
-            });
-        };
-
-
-        chartListSection.resize.chrome = function () {
-            var leftFixed = chartListSection.findLeftFixed();
-            $('.ss-body-th', leftFixed).each(function (i) {
-                var th = $(this);
-                var padding = Number(th.css('paddingTop').replace('px', ''))
-                    + Number(th.css('paddingBottom').replace('px', ''));
-                th.height(th.height() + padding / 2 - .4);
             });
         };
 
@@ -420,7 +407,6 @@
                 $('.empty-cell', chartListSection).not(emptyCells).removeClass('empty-cell');
                 emptyCells.addClass('empty-cell');
 
-                if (window.chrome) chartListSection.resize.chrome();
 
                 controlForm.submit();
             });
