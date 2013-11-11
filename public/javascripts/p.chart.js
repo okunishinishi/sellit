@@ -255,7 +255,7 @@
             var filter_condition = client_index;
             if($.isArray(filter_condition)){
                 filter_condition = filter_condition.join(',');
-            };
+            }
             var changed = chartListSection.filterByClient.filter_condition !== filter_condition;
             if (!changed) return;
             chartListSection.filterByClient.filter_condition = filter_condition;
@@ -267,7 +267,7 @@
                     tr.eq(index).show();
                 });
             });
-
+            chartListSection.trigger('ss-resize');
         };
         chartListSection.filterByClient.off = function () {
             var filtered = chartListSection.filterByClient.filtered;
