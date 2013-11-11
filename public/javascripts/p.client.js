@@ -66,7 +66,7 @@
                 editBtn.show();
                 form.editableForm('view');
                 submitBtn.removeAttr('disabled');
-                $.pushQueryToState({mode:'view'});
+                $.pushQueryToState({mode: 'view'});
                 $(':text,textarea', form).filter(':visible').hide();
             });
             $('input,select,textarea', form).not(':submit').on("click change", function () {
@@ -95,15 +95,16 @@
             form.editableForm(mode || 'view');
 
             form
+                .change(function () {
+                    $.confirmLeave(l.msg.leave_with_unsaved);
+                });
+            form.find(':text')
                 .keydown(function (e) {
                     switch (e.which) {
                         case $.ui.keyCode.ENTER:
                             e.preventDefault();
                             break;
                     }
-                })
-                .change(function () {
-                    $.confirmLeave(l.msg.leave_with_unsaved);
                 });
             return form;
         },
@@ -121,10 +122,10 @@
                     a = td.find('.developer-input-switch'),
                     text = td.find(':text'),
                     select = td.find('select');
-                select.change(function(){
+                select.change(function () {
                     text.val('');
                 });
-                text.change(function(){
+                text.change(function () {
                     select.val('');
                 });
                 a.click(function () {
