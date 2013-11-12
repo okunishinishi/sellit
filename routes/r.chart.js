@@ -29,7 +29,7 @@ exports.index = function (req, res) {
             headRow: data.headRow,
             rows: data.rows,
             topLvGroups: topLvGroups,
-            selected_top_level_client_id: top_level_client_id,
+            selected_top_level_client_id: top_level_client_id || selectedTopLv._id,
             selected_top_level_client_name: selectedTopLv && selectedTopLv.name
         });
     });
@@ -38,7 +38,9 @@ exports.getData = function (top_lv_id, clients, callback) {
     findAllModels([Developer, Client], function (developers, all_clients) {
         var topLvGroups = Client.listTopLvGroups(all_clients);
         var allClientMap = toIdMap(all_clients) || {};
-
+        if (!top_lv_id) {
+            top_lv_id = topLvGroups && topLvGroups.length && topLvGroups[0]._id;
+        }
         var topLv = top_lv_id && allClientMap && allClientMap[top_lv_id] || null;
         if (topLv) {
             clients = clients.filter(function (client) {

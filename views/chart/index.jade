@@ -19,7 +19,6 @@ block content
         h1=l.lbl.chart_title
         form#client-group-form
             select(name='top_level_client_id')#top_level_client-select
-                option
                 for topLvGroup in topLvGroups
                     option(value=topLvGroup._id,
                     selected=topLvGroup._id==selected_top_level_client_id
