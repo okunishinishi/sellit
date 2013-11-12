@@ -22,11 +22,12 @@ Client.schema = new Schema({
 });
 Client.prototype.isGroup = function () {
     var s = this;
+    if (!s.children_ids) return false;
     try {
         var children_ids = JSON.parse(s.children_ids);
         return !!children_ids;
     } catch (e) {
-        return '';
+        return false;
     }
 };
 Client.prototype.listParentNames = function (clientMap) {
@@ -81,4 +82,11 @@ Client.listProperties = function (clients) {
         });
     });
     return Object.keys(hash);
+};
+
+
+Client.listTopLevelGroups = function (clients) {
+    return clients.filter(function (client) {
+        return client.isGroup() && !client.parent_id;
+    });
 };
