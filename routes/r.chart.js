@@ -20,21 +20,44 @@ var tek = require('tek'),
  * @param res
  */
 exports.index = function (req, res) {
-    var clients = res.locals.clients;
-    exports.getData(clients, function (data) {
+    var q = req.query,
+        top_level_client_id = q['top_level_client_id'],
+        clients = res.locals.clients;
+
+    exports.getData(top_level_client_id, clients, function (data, topLvGroups, selectedTopLv) {
         res.render('chart/index.jade', {
             headRow: data.headRow,
-            rows: data.rows
+            rows: data.rows,
+            topLvGroups: topLvGroups,
+            selected_top_level_client_id: top_level_client_id,
+            selected_top_level_client_name: selectedTopLv && selectedTopLv.name
         });
     });
 };
-exports.getData = function (clients, callback) {
-    var system_names = Client.listSystemNames(clients);
+exports.getData = function (top_lv_id, clients, callback) {
     findAllModels([Developer, Client], function (developers, all_clients) {
-        var clientMap = toIdMap(all_clients);
+        var topLvGroups = Client.listTopLvGroups(all_clients);
+        var allClientMap = toIdMap(all_clients) || {};
+
+        var topLv = top_lv_id && allClientMap && allClientMap[top_lv_id] || null;
+        if (topLv) {
+            clients = clients.filter(function (client) {
+                return topLv.isAncestorsOf(client, allClientMap);
+            });
+        }
+
+        if (!clients.length) {
+            callback({
+                headRow: [],
+                rows: []
+            }, topLvGroups, topLv);
+            return;
+        }
+
+        var system_names = Client.listSystemNames(clients);
         var rows = clients
             .map(function (client) {
-                client.parent_names = client.listParentNames(clientMap) || [];
+                client.parent_names = client.listParentNames(allClientMap) || [];
                 client.full_name = [client.parent_names, client.name].join(' ');
                 return client;
             })
@@ -66,6 +89,6 @@ exports.getData = function (clients, callback) {
         callback({
             headRow: system_names,
             rows: rows
-        });
+        }, topLvGroups, topLv);
     });
 };

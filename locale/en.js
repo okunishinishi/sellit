@@ -1,85 +1,91 @@
+var l = exports;
+
 var app = exports.app = {};
 app.name = 'sellit';
 app.description = 'sales management system';
 
 
-var msg = exports.msg = {};
-msg.sure = 'Are ABSOLUTELY your sure?';
-msg.never_go_back = 'Once this done, there will be no way to go back.';
-msg.save_done = 'save done!';
-msg.leave_with_unsaved = 'You have unsaved changes.';
+l.msg = {};
+l.msg.sure = 'Are ABSOLUTELY your sure?';
+l.msg.never_go_back = 'Once this done, there will be no way to go back.';
+l.msg.save_done = 'save done!';
+l.msg.leave_with_unsaved = 'You have unsaved changes.';
+l.msg.no_clients = 'No clients found.';
 
-var err = exports.err = {};
-err.page_not_found = 'sorry! page not found';
-err.login_fail = 'username or password is wrong';
-
-
-var btn = exports.btn = {};
-btn.new = 'new';
-btn.edit = 'edit';
-btn.done = 'done';
-btn.save = 'save';
-btn.cancel = 'cancel';
-btn.remove = 'remove';
-btn.search = 'search';
-btn.execute = 'execute';
-
-btn.remove_it = 'remove {{it}}';
+l.err = {};
+l.err.page_not_found = 'sorry! page not found';
+l.err.login_fail = 'username or password is wrong';
 
 
-var lbl = exports.lbl = {};
-lbl.search = 'search';
-lbl.understand = 'I understand consequences.';
+l.btn = {};
+l.btn.new = 'new';
+l.btn.edit = 'edit';
+l.btn.done = 'done';
+l.btn.save = 'save';
+l.btn.cancel = 'cancel';
+l.btn.remove = 'remove';
+l.btn.search = 'search';
+l.btn.execute = 'execute';
 
-lbl.client = 'client';
-lbl.client_group = 'group';
-lbl.client_name = 'client name';
-lbl.client_description = 'description';
-lbl.system = 'system';
-lbl.system_name = 'system name';
-lbl.chart_table = 'list data';
-lbl.data_count = 'count: ';
-lbl.system = 'system';
-lbl.systems = 'systems';
-lbl.salesman = 'salesman';
-lbl.freeword = 'free word';
-lbl.code = 'code';
-lbl.scale = 'scale';
-lbl.scale_unit = 'man-month';
-lbl.provider = 'provider';
-lbl.developer = 'developer';
-lbl.login = 'login';
-lbl.username = 'username';
-lbl.passowrd = 'password';
-lbl.name = 'name';
-lbl.provider = 'provider';
-lbl.initial_provider = 'initial developer';
-lbl.current_provider = 'current develop';
+l.btn.remove_it = 'remove {{it}}';
 
-lbl.all = 'all';
-lbl.last_update_by = 'updated by';
-lbl.colorize = 'colorize';
-lbl.decolorize = 'decolorize';
-lbl.chart_title = [lbl.client, '×', lbl.system].join(' ');
-lbl.on = 'on';
-lbl.off = 'off';
-lbl.control = 'control';
-lbl.filter = 'filter';
-lbl.system_filter = [lbl.filter, lbl.system].join(' ');
-lbl.client_filter = [lbl.filter, lbl.client].join(' ');
-lbl.color_effect = 'color effect';
-lbl.scale_effect = 'scale effect';
-lbl.apply = 'apply';
-lbl.start_at = 'start_at';
-lbl.login_as = 'login as';
 
-var plh = exports.plh = {};
-plh.search = lbl.search;
-plh.client_name = lbl.client_name;
+l.lbl = {};
+l.lbl.search = 'search';
+l.lbl.understand = 'I understand consequences.';
 
-plh.system_name = lbl.system_name;
-plh.freeword = lbl.freeword;
-plh.provider = ['--', lbl.provider, '--'].join(' ');
+l.lbl.client = 'client';
+l.lbl.client_group = 'group';
+l.lbl.client_name = 'client name';
+l.lbl.client_description = 'description';
+l.lbl.system = 'system';
+l.lbl.system_name = 'system name';
+l.lbl.chart_table = 'list data';
+l.lbl.data_count = 'count: ';
+l.lbl.system = 'system';
+l.lbl.systems = 'systems';
+l.lbl.salesman = 'salesman';
+l.lbl.freeword = 'free word';
+l.lbl.code = 'code';
+l.lbl.scale = 'scale';
+l.lbl.scale_unit = 'man-month';
+l.lbl.provider = 'provider';
+l.lbl.developer = 'developer';
+l.lbl.login = 'login';
+l.lbl.username = 'username';
+l.lbl.passowrd = 'password';
+l.lbl.name = 'name';
+l.lbl.provider = 'provider';
+l.lbl.initial_provider = 'initial developer';
+l.lbl.current_provider = 'current develop';
 
-var alt = exports.alt = {};
-alt.sure = 'Are your sure?';
+l.lbl.all = 'all';
+l.lbl.all_clients = 'select clients';
+l.lbl.last_update_by = 'updated by';
+l.lbl.colorize = 'colorize';
+l.lbl.decolorize = 'decolorize';
+l.lbl.chart_title = [l.lbl.client, '×', l.lbl.system].join(' ');
+l.lbl.on = 'on';
+l.lbl.off = 'off';
+l.lbl.control = 'control';
+l.lbl.filter = 'filter';
+l.lbl.system_filter = [l.lbl.filter, l.lbl.system].join(' ');
+l.lbl.client_filter = [l.lbl.filter, l.lbl.client].join(' ');
+l.lbl.color_effect = 'color effect';
+l.lbl.scale_effect = 'scale effect';
+l.lbl.apply = 'apply';
+l.lbl.start_at = 'start_at';
+l.lbl.login_as = 'login as';
+
+l.plh = {};
+l.plh.search = l.lbl.search;
+l.plh.client_name = l.lbl.client_name;
+
+l.plh.system_name = l.lbl.system_name;
+l.plh.freeword = l.lbl.freeword;
+l.plh.provider = ['--', l.lbl.provider, '--'].join(' ');
+l.plh.select_all_clients = ['--', l.lbl.all_clients, '--'].join(' ');
+
+
+l.alt = {};
+l.alt.sure = 'Are your sure?';

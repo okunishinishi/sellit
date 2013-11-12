@@ -22,12 +22,28 @@ Client.schema = new Schema({
 });
 Client.prototype.isGroup = function () {
     var s = this;
-    if (!s.children_ids) return false;
+    return !!s.getChildrenIds();
+};
+
+Client.prototype.isAncestorsOf = function (client, clientMap) {
+    if (!client) return false;
+    var s = this,
+        _id = s._id.toString();
+    while (!!client.parent_id) {
+        client = clientMap[client.parent_id];
+        if (!client) return false;
+        if (_id == client._id) return true;
+    }
+    return false;
+};
+
+Client.prototype.getChildrenIds = function () {
+    var s = this;
+    if (!s.children_ids) return null;
     try {
-        var children_ids = JSON.parse(s.children_ids);
-        return !!children_ids;
+        return JSON.parse(s.children_ids);
     } catch (e) {
-        return false;
+        return null;
     }
 };
 Client.prototype.listParentNames = function (clientMap) {
@@ -85,8 +101,8 @@ Client.listProperties = function (clients) {
 };
 
 
-Client.listTopLevelGroups = function (clients) {
+Client.listTopLvGroups = function (clients) {
     return clients.filter(function (client) {
         return client.isGroup() && !client.parent_id;
-    });
+    }) || [];
 };

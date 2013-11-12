@@ -17,6 +17,13 @@ block javascripts
 block content
     div.margin-box
         h1=l.lbl.chart_title
+        form#client-group-form
+            select(name='top_level_client_id')#top_level_client-select
+                option
+                for topLvGroup in topLvGroups
+                    option(value=topLvGroup._id,
+                    selected=topLvGroup._id==selected_top_level_client_id
+                    )=topLvGroup.name
         fieldset#chart-control-fieldset
             legend=l.lbl.control
             form#chart-control-form
@@ -88,3 +95,7 @@ block content
     section#chart-list-section(
     data-headrow=headRow,
     data-rows=rows)
+
+    if !rows.length
+        h1.text-center.not-found-msg
+            i=l.msg.no_clients

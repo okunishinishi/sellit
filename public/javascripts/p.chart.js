@@ -153,6 +153,23 @@
                     callback(formValue.toObj());
                 });
             return form;
+        },
+        clientGroupForm: function () {
+            var form = $(this);
+            form
+                .submit(function (e) {
+                    e.preventDefault();
+                    var query = $.getQuery(),
+                        values = form.getFormValue().toObj();
+                    Object.keys(values).forEach(function(key){
+                        query[key] = values[key];
+                    });
+                    location.href = [location.pathname, $.param(query)].join('?');
+                })
+                .change(function () {
+                    form.submit();
+                });
+            return form;
         }
     });
 
@@ -253,7 +270,7 @@
         chartListSection.filterByClient = function (client_index) {
             chartListSection.filterByClient.filtered = true;
             var filter_condition = client_index;
-            if($.isArray(filter_condition)){
+            if ($.isArray(filter_condition)) {
                 filter_condition = filter_condition.join(',');
             }
             var changed = chartListSection.filterByClient.filter_condition !== filter_condition;
@@ -437,5 +454,7 @@
                 chartListSection.find('.ss-head-th').last().height()
             );
         });
+
+        $('#client-group-form', body).clientGroupForm();
     });
 })(jQuery, Handlebars, window['l'], document);

@@ -20,8 +20,16 @@ exports.listPropertiesTest = function (test) {
 };
 
 
-exports.listTopLevelGroupsTest = function (test) {
-    var groups = Client.listTopLevelGroups([
+exports.isAncestorsOfTest = function (test) {
+    var client = new Client({
+        _id: '1234'
+    });
+    client.isAncestorsOf(null, {}).should.be.false;
+    test.done();
+};
+
+exports.listTopLvGroupsTest = function (test) {
+    var groups = Client.listTopLvGroups([
         new Client({
             name: 'alone',
             children_ids: null
