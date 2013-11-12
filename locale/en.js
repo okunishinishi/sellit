@@ -17,17 +17,6 @@ l.err.page_not_found = 'sorry! page not found';
 l.err.login_fail = 'username or password is wrong';
 
 
-l.btn = {};
-l.btn.new = 'new';
-l.btn.edit = 'edit';
-l.btn.done = 'done';
-l.btn.save = 'save';
-l.btn.cancel = 'cancel';
-l.btn.remove = 'remove';
-l.btn.search = 'search';
-l.btn.execute = 'execute';
-
-l.btn.remove_it = 'remove {{it}}';
 
 
 l.lbl = {};
@@ -86,6 +75,20 @@ l.plh.freeword = l.lbl.freeword;
 l.plh.provider = ['--', l.lbl.provider, '--'].join(' ');
 l.plh.select_all_clients = ['--', l.lbl.all_clients, '--'].join(' ');
 
+
+
+l.btn = {};
+l.btn.new = 'new';
+l.btn.edit = 'edit';
+l.btn.done = 'done';
+l.btn.save = 'save';
+l.btn.cancel = 'cancel';
+l.btn.remove = 'remove';
+l.btn.search = 'search';
+l.btn.execute = 'execute';
+l.btn.to_page_top = 'to page top';
+
+l.btn.remove_it = 'remove {{it}}';
 
 l.alt = {};
 l.alt.sure = 'Are your sure?';

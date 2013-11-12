@@ -191,11 +191,22 @@
                 }
             });
             return ul;
+        },
+        toPageTopBtn: function (winHeight) {
+            var btn = $(this).show();
+            var needed = winHeight < btn.offset().top;
+            if (needed) {
+                btn.show();
+            } else {
+                btn.hide();
+            }
+            return btn;
         }
     });
     $(function () {
 
-        var body = $(document.body);
+        var body = $(document.body),
+            win = $(window);
 
         body.ajaxError(function (e, req, setting, err) {
             if (req.status) {
@@ -209,6 +220,12 @@
             var select = $(this);
             location.href = ['/client', select.val()].join('/');
         });
+
+        var toPageTopBtn = $('#to-page-top-btn', body).toPageTopBtn(win.height());
+        win.resize(function () {
+            toPageTopBtn.toPageTopBtn(win.height());
+        });
+
     });
 })(jQuery, window['l'], Handlebars);
 
