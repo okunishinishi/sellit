@@ -26,6 +26,12 @@
         };
     })($.confirmRemove);
 
+    $.scrollToTop = function (duration) {
+        $('html,body').animate({
+            scrollTop: 0
+        }, duration || 300);
+    };
+
     var supported = (function (detected) {
         if (!detected) return true;
         switch (detected.browser) {
@@ -195,11 +201,7 @@
         toPageTopBtn: function (winHeight) {
             var btn = $(this).show();
             var needed = winHeight < btn.offset().top;
-            if (needed) {
-                btn.show();
-            } else {
-                btn.hide();
-            }
+            if (!needed) btn.hide();
             return btn;
         }
     });
@@ -222,6 +224,10 @@
         });
 
         var toPageTopBtn = $('#to-page-top-btn', body).toPageTopBtn(win.height());
+        toPageTopBtn.click(function (e) {
+            $.scrollToTop();
+            e.preventDefault();
+        });
         win.resize(function () {
             toPageTopBtn.toPageTopBtn(win.height());
         });
