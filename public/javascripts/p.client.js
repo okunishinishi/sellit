@@ -278,6 +278,7 @@
                     form.findByName('parent_id').val(parentId);
                     form.submit();
                     setTimeout(function () {
+                        children_ids = tek.unique(children_ids);
                         parentForm.findByName('children_ids').val(JSON.stringify(children_ids));
                         parentForm.submit();
                     }, 100);
