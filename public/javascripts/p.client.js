@@ -230,6 +230,35 @@
                 return li.children('.tv-label').findByName('edit-form');
             }
 
+            function resort(ul) {
+                var last_sort_num = null;
+                var formsToSubmit = [];
+                ul.children('li').each(function () {
+                    var li = $(this),
+                        form = getForm(li),
+                        input = form.findByName('sort_num'),
+                        sort_num = Number(input.val() || 1);
+                    var needsUpdate = last_sort_num && (sort_num <= last_sort_num);
+                    if (needsUpdate) {
+                        sort_num = last_sort_num + 1;
+                        input.val(sort_num);
+                        formsToSubmit.push(form);
+                    }
+                    last_sort_num = sort_num;
+                });
+                return formsToSubmit;
+            }
+
+            function submitAll(forms) {
+                var updateTimer = setInterval(function () {
+                    if (forms.length) {
+                        forms.shift().submit();
+                    } else {
+                        clearInterval(updateTimer);
+                    }
+                }, 150);
+            }
+
             li.children('.tv-label').dblclick(function () {
                 var link = $(this).findByRole('detail-link').attr('href');
                 if (link) location.href = link;
@@ -281,6 +310,9 @@
                         children_ids = tek.unique(children_ids);
                         parentForm.findByName('children_ids').val(JSON.stringify(children_ids));
                         parentForm.submit();
+
+                        submitAll(resort(li.parent()));
+
                     }, 100);
                 });
             li.find(':text').keydown(function (e) {
@@ -297,7 +329,8 @@
                 var item = new tv.Item(html);
                 item.data = {
                     children_ids: children_ids,
-                    _id: data._id
+                    _id: data._id,
+                    sort_num:data.sort_num
                 };
                 return  item;
             });
@@ -323,7 +356,10 @@
                             })
                             .filter(function (child) {
                                 return !!child;
-                            });
+                            })
+                            .sort(function(a,b){
+                                return a.data.sort_num - b.data.sort_num;
+                            });;
                         item.children(children);
                     }
                 });

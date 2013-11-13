@@ -141,6 +141,10 @@ function program1(depth0,data) {
   else { stack1 = depth0._vr; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
     + "\" name=\"_vr\"/>\n            <input type=\"hidden\" value=\"";
+  if (stack1 = helpers.sort_num) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.sort_num; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" name=\"sort_num\"/>\n            <input type=\"hidden\" value=\"";
   if (stack1 = helpers.parent_id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.parent_id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -184,6 +188,10 @@ function program3(depth0,data) {
   else { stack1 = depth0._vr; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
     + "\" name=\"_vr\"/>\n            <input type=\"hidden\" value=\"";
+  if (stack1 = helpers.sort_num) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.sort_num; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" name=\"sort_num\"/>\n            <input type=\"hidden\" value=\"";
   if (stack1 = helpers.parent_id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.parent_id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
