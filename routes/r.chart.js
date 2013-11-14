@@ -38,7 +38,7 @@ exports.getData = function (client_group_id, clients, callback) {
             callback({
                 headRow: [],
                 rows: []
-            }, topLvGroups, topLv);
+            });
             return;
         }
 
