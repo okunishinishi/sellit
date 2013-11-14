@@ -1,0 +1,52 @@
+fieldset#chart-control-fieldset
+    legend=l.lbl.control
+    form#chart-control-form
+        .field#use-colorize-field
+            label.field-label=l.lbl.color_effect
+            label(for='use-colorize-input-on')
+                input#use-colorize-input-on(type='radio', name='use_colorize', value='true')
+                | #{l.lbl.on}
+            label(for='use-colorize-input-off')
+                input#use-colorize-input-off(type='radio', name='use_colorize', value='false', checked)
+                | #{l.lbl.off}
+
+        .field#use-scalize-field
+            label.field-label=l.lbl.scale_effect
+            label(for='use-scalize-input-on')
+                input#use-scalize-input-on(type='radio', name='use_scalize', value='true')
+                | #{l.lbl.on}
+            label(for='use-scalize-input-off')
+                input#use-scalize-input-off(type='radio', name='use_scalize', value='false', checked)
+                | #{l.lbl.off}
+
+        .field#use-system-filter-field
+            label.field-label=l.lbl.system_filter
+            label(for='use-system-filter-input-on')
+                input#use-system-filter-input-on(type='radio', name='use_system_filter', value='true')
+                | #{l.lbl.on}
+            label(for='use-system-filter-input-off')
+                input#use-system-filter-input-off(type='radio', name='use_system_filter', value='false', checked)
+                | #{l.lbl.off}
+
+        #system-filter-div.filter-div
+            p#system-filter-p.filter-p(style='display:none')
+                - for(var i=0;i<headRow.length;i++){
+                    label
+                        input(type='checkbox', name='system_index', value=i, checked)
+                        | #{headRow[i]}
+                - }
+
+        .field#use-client-filter-field
+            label.field-label=l.lbl.client_filter
+            input#use-client-filter-input-on(type='radio', name='use_client_filter', value='true')
+            label(for='use-client-filter-input-on')=l.lbl.on
+            input#use-client-filter-input-off(type='radio', name='use_client_filter', value='false', checked)
+            label(for='use-client-filter-input-off')=l.lbl.off
+
+        #client-filter-div.filter-div
+            p#client-filter-p.filter-p(style='display:none')
+                - for(var rownum=0;rownum<rows.length;rownum++) {
+                    label
+                        input(type='checkbox', name='client_index', value=rownum, checked)
+                        | #{rows[rownum][0].text}
+                - }

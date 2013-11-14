@@ -46,6 +46,17 @@ Client.prototype.getChildrenIds = function () {
         return null;
     }
 };
+Client.prototype.getChildren = function (clientMap) {
+    var s = this,
+        childrenIds = s.getChildrenIds();
+    return childrenIds && childrenIds
+        .map(function (children_id) {
+            return clientMap[children_id];
+        })
+        .filter(function (child) {
+            return !!child;
+        });
+};
 Client.prototype.listParentNames = function (clientMap) {
     var s = this,
         result = [];

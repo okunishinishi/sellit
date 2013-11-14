@@ -21,33 +21,19 @@ var tek = require('tek'),
  */
 exports.index = function (req, res) {
     var q = req.query,
-        top_level_client_id = q['top_level_client_id'],
+        client_group_id = q['client_group_id'],
         clients = res.locals.clients;
 
-    exports.getData(top_level_client_id, clients, function (data, topLvGroups, selectedTopLv) {
+    exports.getData(client_group_id, clients, function (data) {
         res.render('chart/index.jade', {
             headRow: data.headRow,
-            rows: data.rows,
-            topLvGroups: topLvGroups,
-            selected_top_level_client_id: top_level_client_id || selectedTopLv._id,
-            selected_top_level_client_name: selectedTopLv && selectedTopLv.name
+            rows: data.rows
         });
     });
 };
-exports.getData = function (top_lv_id, clients, callback) {
+exports.getData = function (client_group_id, clients, callback) {
     findAllModels([Developer, Client], function (developers, all_clients) {
-        var topLvGroups = Client.listTopLvGroups(all_clients);
         var allClientMap = toIdMap(all_clients) || {};
-        if (!top_lv_id) {
-            top_lv_id = topLvGroups && topLvGroups.length && topLvGroups[0]._id;
-        }
-        var topLv = top_lv_id && allClientMap && allClientMap[top_lv_id] || null;
-        if (topLv) {
-            clients = clients.filter(function (client) {
-                return topLv.isAncestorsOf(client, allClientMap);
-            });
-        }
-
         if (!clients.length) {
             callback({
                 headRow: [],
@@ -91,6 +77,6 @@ exports.getData = function (top_lv_id, clients, callback) {
         callback({
             headRow: system_names,
             rows: rows
-        }, topLvGroups, topLv);
+        });
     });
 };

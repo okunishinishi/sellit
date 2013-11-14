@@ -1,7 +1,7 @@
 @import "lib/tek-mixin.less";
 
 body {
-  padding: 20px 0;
+  padding: 20px 0 0;
   margin: 0;
 }
 
@@ -51,6 +51,7 @@ th {
 
 #chart-list-section {
   overflow-y: hidden;
+  .box-shadow(1px -1px 1px, .1);
   .box-sizing(border-box);
   .filter(@filter;) {
     &[data-filter="@{filter}"] {
@@ -271,6 +272,17 @@ fieldset{
   font-size: 4em;
 }
 
-#top_level_client-select{
-  font-size: 2em;
+#main{
+  margin-bottom: 0;
+}
+
+#clear-after-content,
+#clear-before-footer{
+  display: none;
+}
+#to-page-top-btn{
+  position: absolute;
+  right:5px;
+  bottom:2px;
+  float: none;
 }

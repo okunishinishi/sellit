@@ -42,14 +42,16 @@ html
             h2.logo.float-left
                 a(href=url('/'))
                     | #{l.app.name}
+
+            block header-content
             include _client_select
 
 
         article#main
             block content
 
-            br.clear
+            br.clear#clear-after-content
             a#to-page-top-btn.float-right(href='#')=l.btn.to_page_top
-        br.clear
+        br.clear#clear-before-footer
 
         footer
