@@ -11,7 +11,8 @@ var path = require('path'),
     util = require('./util'),
     NODE_ENV = process.env.NODE_ENV,
     config = require('./app.config'),
-    locale = require('./locale');
+    locale = require('./' +
+        'locale');
 
 
 var app = express();
@@ -37,6 +38,13 @@ app.configure('development', function () {
     var hbs = require('./util/u.hbs');
     hbs.precompileAll(config.hbsDir, config.hbsTemplateFile, function () {
         console.log('precompile templates file:', config.hbsTemplateFile);
+    });
+
+    var publish = require('./util/u.publish');
+    Object.keys(locale).forEach(function (lang) {
+        if(lang =='default') return;
+        var filename = 'locale/' + ['l', lang, 'js'].join('.');
+        publish(filename, 'l', locale[lang]);
     });
 });
 

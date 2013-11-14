@@ -25,8 +25,8 @@ html
             script(src=url.js('lib/tek.view.js'))
             script(src=url.js('lib/one-color.js'))
 
+        script(src=url.js('locale/l.#{lang}.js'))
         script.
-            window.l = !{JSON.stringify(l)};
             window.ctx = "#{context}";
         script(src=url.js('templates.js'))
         script(src=url.js('p.js'))
