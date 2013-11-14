@@ -117,3 +117,26 @@ Client.listTopLvGroups = function (clients) {
         return client.isGroup() && !client.parent_id;
     }) || [];
 };
+
+Client.getGroupHierarchy = function (allClientMap) {
+    var topLvs = Client.listTopLvGroups(Object.keys(allClientMap).map(function (key) {
+        return allClientMap[key];
+    }));
+
+    function toGroupHierarchy(array) {
+        return array.map(function (client) {
+            var children = client.getChildren(allClientMap)
+                .filter(function (chlid) {
+                    return chlid.isGroup();
+                });
+            return {
+                name: client.name,
+                _id: client._id,
+                parent_id: client.parent_id,
+                children: toGroupHierarchy(children)
+            }
+        });
+    }
+
+    return toGroupHierarchy(topLvs);
+};

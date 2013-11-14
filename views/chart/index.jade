@@ -19,15 +19,15 @@ block header-content
     .float-left
 
 block content
+    #group-nav(data-groups=groupHierarchy)
     .margin-box
-        .margin-box
-            include _chart_control_fieldset
-            include _chart_list_tabs
+        include _chart_control_fieldset
+        include _chart_list_tabs
 
-        section#chart-list-section(
-        data-headrow=headRow,
-        data-rows=rows)
+    section#chart-list-section(
+    data-headrow=headRow,
+    data-rows=rows)
 
-        if !rows.length
-            h1.text-center.not-found-msg
-                i=l.msg.no_clients
+    if !rows.length
+        h1.text-center.not-found-msg
+            i=l.msg.no_clients

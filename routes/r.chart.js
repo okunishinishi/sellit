@@ -24,10 +24,11 @@ exports.index = function (req, res) {
         client_group_id = q['client_group_id'],
         clients = res.locals.clients;
 
-    exports.getData(client_group_id, clients, function (data) {
+    exports.getData(client_group_id, clients, function (data, groupHierarchy) {
         res.render('chart/index.jade', {
             headRow: data.headRow,
-            rows: data.rows
+            rows: data.rows,
+            groupHierarchy: groupHierarchy
         });
     });
 };
@@ -74,9 +75,10 @@ exports.getData = function (client_group_id, clients, callback) {
                             return  system;
                         }));
             });
+        var groupHierarchy = Client.getGroupHierarchy(allClientMap);
         callback({
             headRow: system_names,
             rows: rows
-        });
+        }, groupHierarchy);
     });
 };
