@@ -54,7 +54,7 @@ th {
   overflow-y: hidden;
   .box-shadow(1px -1px 4px, .1);
   .box-sizing(border-box);
-  padding-bottom: 20px;
+  margin-bottom: 30px;
   background-color: @white;
   .filter(@filter;) {
     &[data-filter="@{filter}"] {
@@ -397,4 +397,21 @@ fieldset{
 
 .tab{
   border-color:darken(@white,10);
+  opacity: .5;
+  @c:rgb(100, 100, 100);
+  color:lighten(@c,5);
+  @back:#666;
+  &:hover{
+    opacity: .9;
+    background-color: @back;
+    border-color:@back;
+  }
+  &.tab-selected,
+  &.tab-selected:hover{
+    opacity: 1;
+    background: @back;
+    color: white;
+    border-color:@back;
+    font-weight: bolder;
+  }
 }
