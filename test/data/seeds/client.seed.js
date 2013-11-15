@@ -16,7 +16,7 @@ function createEntry(i) {
         {
             _id: "33${padZero(rownum, 22)}",
             name: '${animal}グループ',
-            children_ids: "${JSON.stringify(['44'+padZero(rownum+1,22)])}"
+            children_ids: "${JSON.stringify(['44'+padZero(rownum+1,22),'66'+padZero(rownum+5,22)])}"
         },
         {
             _id: "44${padZero(rownum, 22)}",
@@ -43,7 +43,33 @@ function createEntry(i) {
                     "freeword": "${choice('いまいち,あと一押し,絶望的,余裕'.split(','))}"
                 }
             ], 10)
-        }.repeat(3)
+        }.repeat(3),
+        {
+            _id: "66${padZero(rownum, 22)}",
+            name: '${flower}${choice("HD","グループ")}',
+            parent_id: "33${padZero(rownum-5, 22)}",
+            children_ids: "${JSON.stringify(['77'+padZero(rownum+1,22),'77'+padZero(rownum+2,22)])}"
+        },
+        {
+            _id: "77${padZero(rownum, 22)}",
+            name: '${flower}${choice("商事,株式会社".split(","))}',
+            parent_id: "66${padZero(rownum - ((rownum+"+i+")%3)  -1, 22)}",
+            children_ids: "${null}",
+            last_update_by: "${name}",
+            last_update_at: '${1383824091695}',
+            systems: repeat([
+                {
+                    "index": "",
+                    "name": "${'フロント,バック,その他'.split(',')[rownum%3]}",
+                    "code": "${supernatural}",
+                    "start_at": "${2000 + rownum%(choice(1,2,3,5,7,11))}年",
+                    "scale": "${choice(10,20,30,40,50,60,70,80,90)}",
+                    "current_provider": "7${padZero((rownum + choice(1,2,3,4)) % 5, 23)}",
+                    "initial_provider": "7${padZero((rownum + choice(4,3,2,1)) % 5, 23)}",
+                    "freeword": "${choice('いまいち,あと一押し,絶望的,余裕'.split(','))}"
+                }
+            ], 2)
+        }.repeat(2)
     ];
 }
 module.exports = {

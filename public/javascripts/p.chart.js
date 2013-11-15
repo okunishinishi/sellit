@@ -61,7 +61,7 @@
             var section = $(this),
                 data = section.data();
 
-            if(!data) return section;
+            if (!data) return section;
 
             var headData = new ss.HeadData(data['headrow']),
                 bodyData = data['rows'].map(function (row) {
@@ -206,11 +206,11 @@
 
             if (!nav.length) return nav;
 
+            var children = items.children('.chart-group-nav');
             items.not('.disabled').children('a').click(function (e) {
                 var item = $(this).parent(),
                     focused = item.is('.chart-group-nav-focused');
                 if (focused) {
-                    item.chartGroupNavItem('blur');
                 } else {
                     item.siblings().chartGroupNavItem('blur');
                     item.find('.chart-group-nav-item').find('.chart-group-nav-item').chartGroupNavItem('blur');
@@ -220,8 +220,7 @@
                 }
                 item.trigger('chart-group-nav-resize');
             });
-            items
-                .children('.chart-group-nav').chartGroupNav(callback);
+            children.chartGroupNav(callback);
             return nav;
         },
         chartGroupNavContainer: function (client_group_id, data, callback) {
