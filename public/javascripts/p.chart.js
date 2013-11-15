@@ -180,7 +180,6 @@
                     case 'focus':
                         item
                             .addClass('chart-group-nav-focused');
-
                         var nav = item.children('.chart-group-nav')
                             .removeClass('chart-group-nav-hidden');
 
@@ -215,7 +214,7 @@
                     item.siblings().chartGroupNavItem('blur');
                     item.find('.chart-group-nav-item').find('.chart-group-nav-item').chartGroupNavItem('blur');
                     item.chartGroupNavItem('focus', function (item) {
-                        callback(item.find('a').css('background-color'));
+                        callback && callback(item);
                     });
                 }
                 item.trigger('chart-group-nav-resize');
@@ -274,9 +273,7 @@
 
             var root = container.children('.chart-group-nav').first();
             root
-                .chartGroupNav(function (backgroundColor) {
-                    callback && callback(backgroundColor)
-                })
+                .chartGroupNav(callback)
                 .removeClass('chart-group-nav-hidden')
                 .on('chart-group-nav-resize', function () {
                     container.resize(true);
@@ -301,8 +298,7 @@
                     .removeClass('chart-group-nav-hidden')
                     .children('.chart-group-nav-all')
                     .addClass('chart-group-nav-focused');
-                var backgroundColor = $('.chart-group-nav-focused', root).last().children('a').css('background-color');
-                callback && callback(backgroundColor);
+                callback && callback($('.chart-group-nav-focused', root).last());
             }
 
             container.resize();
@@ -429,6 +425,19 @@
             chartListSection.filterByClient.filter_condition = null;
             chartListSection.findAllBodyRows().show();
             chartListSection.filterByClient.filtered = false;
+        };
+
+        chartListSection.filterByClientGroup = function (group_id) {
+            chartListSection.findAllTables().each(function () {
+                var table = $(this);
+                table.children('tbody').children('tr').each(function () {
+                    var tr = $(this),
+                        th = tr.find('th').first(),
+                        parent = th.find('.th-content').data('parent');
+                    var hit = (parent.parent_ids || []).indexOf(group_id) != -1;
+                    console.log('hit', hit);
+                });
+            });
         };
 
         chartListSection.filterBySystem = function (system_index) {
@@ -596,12 +605,14 @@
         $('#client-group-form', body).clientGroupForm();
 
         var groupNavContainer = $('#chart-group-nav-container', body);
-        groupNavContainer.chartGroupNavContainer(q.client_group_id, groupNavContainer.data('groups'), function (backgroundColor) {
+        groupNavContainer.chartGroupNavContainer(q['client_group_id'], groupNavContainer.data('groups'), function (item) {
+            var backgroundColor = item.find('a').css('background-color');
             if (backgroundColor) {
                 main.css({
                     backgroundColor: backgroundColor
                 });
             }
+            chartListSection.filterByClientGroup(item.data('id'));
         });
     });
 })(jQuery, Handlebars, window['l'], document);

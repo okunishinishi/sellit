@@ -53,7 +53,7 @@ function createEntry(i) {
         {
             _id: "77${padZero(rownum, 22)}",
             name: '${flower}${choice("商事,株式会社".split(","))}',
-            parent_id: "66${padZero(rownum - ((rownum+"+i+")%3)  -1, 22)}",
+            parent_id: "66${padZero(rownum-1 - (rownum%2), 22)}",
             children_ids: "${null}",
             last_update_by: "${name}",
             last_update_at: '${1383824091695}',

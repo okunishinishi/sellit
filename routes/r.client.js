@@ -73,7 +73,8 @@ exports.index = function (req, res) {
         system_start_ats = Client.listSystemStartAts(clients) || [];
     findAllModels([Salesman, Developer, Client], function (salesmen, developers, all_clients) {
         client.salesman_ids = ids_string(client.salesman_ids) || '';
-        client.parent_names = client.listParentNames(toIdMap(all_clients)) || [];
+        var allClientMap = toIdMap(all_clients);
+        client.parent_names = client.listParentNames(allClientMap) || [];
         var last_update_at = client.last_update_at;
         try {
             client.last_update_at_label = last_update_at && dateformat(new Date(parseInt(last_update_at)), 'yyyy/mm/dd');

@@ -52,6 +52,9 @@ exports.getData = function (client_group_id, clients, callback) {
         }
 
         clients = clients.filter(function (client) {
+            if (!topLv.isAncestorsOf(client, allClientMap)) {
+                console.log(topLv.name, client.name, topLv.isAncestorsOf(client, allClientMap));
+            }
             return topLv.isAncestorsOf(client, allClientMap);
         });
 
@@ -67,6 +70,7 @@ exports.getData = function (client_group_id, clients, callback) {
         var rows = clients
             .map(function (client) {
                 client.parent_names = client.listParentNames(allClientMap) || [];
+                client.parent_ids = client.listParentIds(allClientMap) || [];
                 client.full_name = [client.parent_names, client.name].join(' ');
                 return client;
             })
@@ -81,6 +85,10 @@ exports.getData = function (client_group_id, clients, callback) {
                 return [
                     {
                         prefix: client.parent_names.length && client.parent_names.join('  ') || null,
+                        data: JSON.stringify({
+                            parent_names: client.parent_names,
+                            parent_ids: client.parent_ids
+                        }),
                         text: client.name,
                         href: [ href, 't=' + new Date().getTime()].join('?')
                     }

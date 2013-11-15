@@ -57,20 +57,32 @@ Client.prototype.getChildren = function (clientMap) {
             return !!child;
         });
 };
-Client.prototype.listParentNames = function (clientMap) {
+Client.prototype.listParentData = function (clientMap, key) {
     var s = this,
         result = [];
     var client = s;
     while (!!client.parent_id) {
         client = clientMap[client.parent_id];
         if (client) {
-            result.unshift(client.name);
+            result.unshift(client[key]);
         } else {
             break;
         }
     }
     return result;
 };
+
+Client.prototype.listParentNames = function (clientMap) {
+    var s = this;
+    return s.listParentData(clientMap, "name");
+};
+
+Client.prototype.listParentIds = function (clientMap) {
+    var s = this;
+    return s.listParentData(clientMap, "_id");
+};
+
+
 Client.prototype.validate = function () {
     var s = this;
     return Client.schema.validate(s);
