@@ -52,7 +52,7 @@ th {
 
 #chart-list-section {
   overflow-y: hidden;
-  .box-shadow(1px -1px 1px, .1);
+  .box-shadow(1px -1px 4px, .1);
   .box-sizing(border-box);
   .filter(@filter;) {
     &[data-filter="@{filter}"] {
@@ -383,4 +383,8 @@ fieldset{
 .clinet-filter-hidden,
 .system-filter-hidden{
   display: none !important;
+}
+
+.tab{
+  border-color:darken(@white,10);
 }
