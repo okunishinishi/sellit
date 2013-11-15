@@ -81,7 +81,11 @@
 
             var leftFixed = $('.ss-left-fixed-table', section);
 
-            topFixed.find('tr').find('th').first()
+            var topFixedTh = topFixed.find('tr').find('th');
+            topFixedTh.off('click').click(function (e) {
+                e.stopImmediatePropagation();
+            });
+            topFixedTh.first()
                 .text(l.lbl.chart_title).addClass('chart-title');
 
             var ssTable = $('.ss-table', section);

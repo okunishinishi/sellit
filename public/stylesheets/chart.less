@@ -54,6 +54,8 @@ th {
   overflow-y: hidden;
   .box-shadow(1px -1px 4px, .1);
   .box-sizing(border-box);
+  padding-bottom: 20px;
+  background-color: @white;
   .filter(@filter;) {
     &[data-filter="@{filter}"] {
       .chart-cell-label[for="@{filter}"] {
@@ -154,6 +156,7 @@ fieldset{
     position: relative;
     padding: 10px;
     .box-sizing(border-box);
+    width:100% !important;
     &:hover{
       text-decoration: none;
     }
@@ -259,10 +262,17 @@ fieldset{
 .loading{
   opacity: .5;
 }
-.top-fixed-thead th:first-child{
-  &.chart-title{
-    color:darken(@white,20);
-    padding:10px 0;
+
+.top-fixed-thead th{
+  cursor: default;
+  .th-content{
+    cursor: default;
+  }
+  &:first-child{
+    &.chart-title{
+      color:darken(@white,20);
+      padding:10px 0;
+    }
   }
 }
 
