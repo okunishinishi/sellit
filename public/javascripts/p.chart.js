@@ -434,7 +434,7 @@
 
         chartListSection.filterBySystem = function (system_index) {
             chartListSection.filterBySystem.filtered = true;
-            var filter_condition = system_index.join(',');
+            var filter_condition = system_index && [].concat(system_index).join(',');
             var changed = chartListSection.filterBySystem.filter_condition !== filter_condition;
             if (!changed) return;
             chartListSection.filterBySystem.filter_condition = filter_condition;
@@ -450,6 +450,7 @@
                     tr.find('.ss-cell').eq(index).show();
                 });
             });
+            chartListSection.trigger('ss-resize');
         };
         chartListSection.filterBySystem.off = function () {
             var filtered = chartListSection.filterBySystem.filtered;
