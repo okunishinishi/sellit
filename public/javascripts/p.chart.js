@@ -423,7 +423,7 @@
             var filtered = chartListSection.filterByClient.filtered;
             if (!filtered) return;
             chartListSection.filterByClient.filter_condition = null;
-            chartListSection.findAllBodyRows().show();
+            chartListSection.findAllBodyRows().removeClass('clinet-filter-hidden');
             chartListSection.filterByClient.filtered = false;
         };
 
@@ -447,26 +447,25 @@
             if (!changed) return;
             chartListSection.filterBySystem.filter_condition = filter_condition;
             var thead = chartListSection.find('.ss-table').children('thead');
-            chartListSection.find('.ss-cell').hide();
-            thead.find('.ss-head-th').hide();
+            chartListSection.find('.ss-cell').addClass('system-filter-hidden');
+            thead.find('.ss-head-th').addClass('system-filter-hidden');
             system_index && [].concat(system_index).forEach(function (index) {
                 thead.each(function () {
-                    $(this).find('.ss-head-th').eq(index).show();
+                    $(this).find('.ss-head-th').eq(index).removeClass('system-filter-hidden');
                 });
                 chartListSection.findAllBodyRows().each(function () {
                     var tr = $(this);
-                    tr.find('.ss-cell').eq(index).show();
+                    tr.find('.ss-cell').eq(index).removeClass('system-filter-hidden');
                 });
             });
-            chartListSection.trigger('ss-resize');
         };
         chartListSection.filterBySystem.off = function () {
             var filtered = chartListSection.filterBySystem.filtered;
             if (!filtered) return;
             chartListSection.filterBySystem.filter_condition = null;
-            chartListSection.find('.ss-cell').show();
+            chartListSection.find('.ss-cell').removeClass('system-filter-hidden');
             var thead = chartListSection.find('.ss-table').children('thead');
-            thead.find('.ss-head-th').show();
+            thead.find('.ss-head-th').removeClass('system-filter-hidden');
 
         };
 
@@ -548,6 +547,8 @@
             } else {
                 chartListSection.filterBySystem.off();
             }
+            chartListSection.trigger('ss-resize');
+            chartListSection.resize.leftFixed();
         });
 
 
