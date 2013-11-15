@@ -11,16 +11,26 @@ function repeat(data, count) {
     }
     return result;
 }
-module.exports = {
-    /** データ定義 **/
-    entries: [
+function createEntry(i) {
+    return [
         {
-            _id: "${padZero(rownum, 24)}",
-            name: '${flower}${(rownum%5)==0?choice("HD","グループ"):choice("商事,株式会社".split(","))}',
-            parent_id: "${(rownum%5)==0?'':padZero(parseInt(rownum/5), 24)}",
-            children_ids: "${(rownum%5)==0?JSON.stringify([padZero(parseInt(rownum/5)+1, 24),padZero(parseInt(rownum/5)+2, 24)]):null}",
+            _id: "33${padZero(rownum, 22)}",
+            name: '${animal}グループ',
+            children_ids: "${JSON.stringify(['44'+padZero(rownum+1,22)])}"
+        },
+        {
+            _id: "44${padZero(rownum, 22)}",
+            name: '${flower}${choice("HD","グループ")}',
+            parent_id: "33${padZero(rownum-1, 22)}",
+            children_ids: "${JSON.stringify(['55'+padZero(rownum+1,22),'55'+padZero(rownum+2,22),'55'+padZero(rownum+3,22)])}"
+        },
+        {
+            _id: "55${padZero(rownum, 22)}",
+            name: '${flower}${choice("商事,株式会社".split(","))}',
+            parent_id: "44${padZero(rownum - ((rownum+"+i+")%3)  -1, 22)}",
+            children_ids: "${null}",
             last_update_by: "${name}",
-            last_update_at:'${1383824091695}',
+            last_update_at: '${1383824091695}',
             systems: repeat([
                 {
                     "index": "",
@@ -33,6 +43,10 @@ module.exports = {
                     "freeword": "${choice('いまいち,あと一押し,絶望的,余裕'.split(','))}"
                 }
             ], 10)
-        }.repeat(20)
-    ]
+        }.repeat(3)
+    ];
+}
+module.exports = {
+    /** データ定義 **/
+    entries: createEntry("1").concat(createEntry("2"))
 };
