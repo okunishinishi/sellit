@@ -390,7 +390,6 @@
         chartListSection.descalize = function () {
             chartListSection.removeClass('scalized');
             chartListCell.find('label').removeAttr('style');
-            chartListSection.resize.leftFixed();
         };
 
         chartListSection.findAllBodyRows = function () {
@@ -496,8 +495,12 @@
                 ssTr = ssTable.children('tbody').children('tr');
             $('.ss-body-th', leftFixed).each(function (i) {
                 var th = $(this);
-                th.height(ssTr.eq(i).find('th').last().height());
+                var height = ssTr.eq(i).find('th').filter(':visible').last().height();
+                if(height) th.height(height);
             });
+
+            var headTh = leftFixed.find('thead').find('th');
+            headTh.height($('.ss-head-th').filter(':visible').height());
         };
 
         chartListSection.busy = function (callback, duration) {
