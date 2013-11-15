@@ -286,3 +286,73 @@ fieldset{
   bottom:2px;
   float: none;
 }
+#main{
+  margin-top:8px;
+}
+
+.chart-group-nav{
+  .cover(1);
+  @back:@black;
+  @color:@white;
+  color:@color;
+  text-align: center;
+  top:100%;
+  padding: 10px 8px 0;
+  height:auto;
+  .chart-group-nav-item{
+    @back:@gray;
+    a{
+      margin:0 4px;
+      padding: 2px 10px 1px;
+      display: inline-block;
+      border:1px solid transparent;
+    }
+  }
+  .depth(@i:0){
+    @depthColor:lighten(@back, @i*15);
+    @borderColor:@back;
+    background-color: @depthColor;
+    .chart-group-nav-item a{
+      color:fadeout(darken(@depthColor, 20), 10);
+      .text-shadow(0 -1px 1px rgba(49, 49, 49, 0.1));
+    }
+    .chart-group-nav-focused{
+      > a{
+        @focusBack:lighten(@back, (@i+1)*15);
+        background-color:@focusBack;
+        z-index: 100;
+        margin-bottom:-1px;
+        border:1px solid darken(@focusBack, 1);
+        border-bottom:none;
+        border-bottom-color: transparent;
+        position: relative;
+        top:1px;
+        @r:1px;
+        .border-radius(@r;@r;0;0;);
+        &:hover{
+          text-decoration: none;
+        }
+      }
+    }
+
+  }
+  &.depth-0{.depth(0)};
+  &.depth-1{.depth(1)};
+  &.depth-2{.depth(2)};
+  &.depth-3{.depth(3)};
+  &.depth-4{.depth(4)};
+  &.depth-5{.depth(5)};
+}
+.chart-group-nav-hidden{
+  height:0;
+  overflow: hidden;
+  padding-top:0;
+  padding-bottom:0;
+}
+#chart-group-nav-container{
+  position: relative;
+  overflow: hidden;
+  > .chart-group-nav{
+    top:0;
+  }
+}

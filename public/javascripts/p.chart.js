@@ -1,9 +1,9 @@
-(function ($, Hbs, l, document) {
+(function ($, hbs, l, document) {
 
     var ss = $.spreadsheet;
     var tmpl = {
-        chartTbodyThContent: Hbs.templates['chart-tbody-th-content'],
-        chartCellContent: Hbs.templates['chart-cell-content']
+        chartTbodyThContent: hbs.templates['chart-tbody-th-content'],
+        chartCellContent: hbs.templates['chart-cell-content']
     };
 
     if (!history.pushState) {
@@ -161,7 +161,7 @@
                     e.preventDefault();
                     var query = $.getQuery(),
                         values = form.getFormValue().toObj();
-                    Object.keys(values).forEach(function(key){
+                    Object.keys(values).forEach(function (key) {
                         query[key] = values[key];
                     });
                     location.href = [location.pathname, $.param(query)].join('?');
@@ -170,6 +170,95 @@
                     form.submit();
                 });
             return form;
+        },
+        chartGroupNavItem: function (command) {
+            return $(this).each(function () {
+                var item = $(this),
+                    nav = item.children('.chart-group-nav');
+                switch (command) {
+                    case 'focus':
+                        item.addClass('chart-group-nav-focused');
+                        nav
+                            .removeClass('chart-group-nav-hidden');
+                        break;
+                    case 'blur':
+                        item.removeClass('chart-group-nav-focused');
+                        nav
+                            .addClass('chart-group-nav-hidden');
+                        break;
+                }
+            });
+            return items;
+        },
+        chartGroupNav: function (callback) {
+            var nav = $(this),
+                items = nav.children('.chart-group-nav-item');
+
+            if (!nav.length) return nav;
+
+            items.hover(function () {
+                var item = $(this);
+                item.siblings().chartGroupNavItem('blur');
+                item.chartGroupNavItem('focus');
+
+                item.trigger('chart-group-nav-resize');
+            }, function () {
+            });
+            items
+                .children('.chart-group-nav').chartGroupNav();
+            return nav;
+        },
+        chartGroupNavContainer: function (data) {
+            var container = $(this),
+                tmpl = {
+                    nav: hbs.templates['chart-group-nav'],
+                    navItem: hbs.templates['chart-group-nav-item']
+                };
+
+            function getHtml(data, depth) {
+                if (!data) return '';
+                depth = depth || 0;
+                var items = data.map(function (data) {
+                    var children = data.children;
+                    return tmpl.navItem({
+                        _id: data._id,
+                        name: data.name,
+                        sub_nav: children && children.length && getHtml(children, depth + 1) || ''
+                    })
+                });
+                return tmpl.nav({
+                    items:items,
+                    depth:depth
+                });
+            }
+
+            container.resize = function (animate) {
+                var nav = container
+                    .find('.chart-group-nav')
+                    .not('.chart-group-nav-hidden');
+
+                var style = {
+                    height: nav.first().outerHeight() * nav.size()
+                };
+                if (animate) {
+                    container.animate(style, 200);
+                } else {
+                    container.css(style);
+                }
+            };
+            container.html(getHtml(data));
+
+            var root = container.children('.chart-group-nav').first();
+            root
+                .chartGroupNav(function () {
+                })
+                .removeClass('chart-group-nav-hidden')
+                .on('chart-group-nav-resize', function () {
+                    container.resize(true);
+                });
+
+            container.resize();
+            return container;
         }
     });
 
@@ -456,5 +545,8 @@
         });
 
         $('#client-group-form', body).clientGroupForm();
+
+        var groupNavContainer = $('#chart-group-nav-container', body);
+        groupNavContainer.chartGroupNavContainer(groupNavContainer.data('groups'));
     });
 })(jQuery, Handlebars, window['l'], document);
