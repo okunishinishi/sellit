@@ -44,10 +44,24 @@ th {
     }
   }
 }
+.bb-color(@back){
+  background-color: @back;
+  border-color:@back;
+}
 .ss-root,
 .ss-scrollable{
   overflow-y: hidden;
   .box-sizing(border-box);
+}
+.ss-tbody-row {
+  .ss-cell:hover{
+    .bb-color(darken(@white, 3));
+  }
+}
+.ss-tbody-row:nth-child(even){
+  .ss-cell:hover{
+    .bb-color(darken(@white, 6));
+  }
 }
 
 #chart-list-section {
