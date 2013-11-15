@@ -119,9 +119,10 @@ Client.listTopLvGroups = function (clients) {
 };
 
 Client.getGroupHierarchy = function (allClientMap) {
-    var topLvs = Client.listTopLvGroups(Object.keys(allClientMap).map(function (key) {
+    var allClients = Object.keys(allClientMap).map(function (key) {
         return allClientMap[key];
-    }));
+    });
+    var topLvs = Client.listTopLvGroups(allClients);
 
     function toGroupHierarchy(array) {
         return array.map(function (client) {

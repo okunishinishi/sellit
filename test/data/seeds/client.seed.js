@@ -16,7 +16,7 @@ module.exports = {
     entries: [
         {
             _id: "${padZero(rownum, 24)}",
-            name: '${flower}${choice("商事,HD,株式会社,グループ".split(","))}',
+            name: '${flower}${(rownum%5)==0?choice("HD","グループ"):choice("商事,株式会社".split(","))}',
             parent_id: "${(rownum%5)==0?'':padZero(parseInt(rownum/5), 24)}",
             children_ids: "${(rownum%5)==0?JSON.stringify([padZero(parseInt(rownum/5)+1, 24),padZero(parseInt(rownum/5)+2, 24)]):null}",
             last_update_by: "${name}",

@@ -293,7 +293,7 @@ fieldset{
 
 .chart-group-nav{
   .cover(1);
-  @back:lighten(@black, 30);
+  @back:lighten(@black, 40);
   @color:@white;
   color:@color;
   top:100%;
@@ -374,5 +374,7 @@ fieldset{
   }
 }
 #chart-control-fieldset{
-  .wall-back();
+  box-shadow: none;
+  border-width:1px;
+  border-color:fadeout(@black,60);
 }

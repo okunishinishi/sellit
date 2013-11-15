@@ -51,6 +51,9 @@ exports.getData = function (client_group_id, clients, callback) {
             return;
         }
 
+        clients = clients.filter(function (client) {
+            return topLv.isAncestorsOf(client, allClientMap);
+        });
 
         if (!clients.length) {
             callback({
@@ -59,7 +62,6 @@ exports.getData = function (client_group_id, clients, callback) {
             }, groupHierarchy);
             return;
         }
-
 
         var system_names = Client.listSystemNames(clients);
         var rows = clients

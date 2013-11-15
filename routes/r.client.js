@@ -175,10 +175,11 @@ exports.api = {
                         var children_ids = oldParent && oldParent.children_ids;
                         if (children_ids) {
                             try {
-                                children_ids = JSON.parse(children_ids).filter(function (_id) {
+                                children_ids = JSON.parse(children_ids);
+                                children_ids = children_ids && children_ids.filter(function (_id) {
                                     return _id != client._id;
                                 });
-                                oldParent.children_ids = JSON.stringify(children_ids);
+                                oldParent.children_ids = JSON.stringify(children_ids || '');
                                 oldParent.update(function () {
                                     doAction(client, 'update');
                                 });

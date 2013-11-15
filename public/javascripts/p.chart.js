@@ -61,6 +61,8 @@
             var section = $(this),
                 data = section.data();
 
+            if(!data) return section;
+
             var headData = new ss.HeadData(data['headrow']),
                 bodyData = data['rows'].map(function (row) {
                     var label = tmpl.chartTbodyThContent(row.shift());
