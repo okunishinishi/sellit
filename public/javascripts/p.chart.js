@@ -2,6 +2,7 @@
 
     var ss = $.spreadsheet;
     var tmpl = {
+        chartTheadThContent: hbs.templates['chart-thead-th-content'],
         chartTbodyThContent: hbs.templates['chart-tbody-th-content'],
         chartCellContent: hbs.templates['chart-cell-content']
     };
@@ -63,7 +64,9 @@
 
             if (!data) return section;
 
-            var headData = new ss.HeadData(data['headrow']),
+            var headData = new ss.HeadData(data['headrow'].map(function (data) {
+                    return tmpl.chartTheadThContent(data);
+                })),
                 bodyData = data['rows'].map(function (row) {
                     var label = tmpl.chartTbodyThContent(row.shift());
                     return new ss.RowData(label, row.map(function (data) {
@@ -73,7 +76,8 @@
             var sheetData = new ss.SheetData('', headData, bodyData);
             section.spreadsheet(sheetData);
 
-            section.find('.top-fixed-thead').find('tr').find('th').first()
+            section
+                .find('.top-fixed-thead').find('tr').find('th').first()
                 .text(l.lbl.chart_title).addClass('chart-title');
             return section;
         },
@@ -308,6 +312,8 @@
             return $(this).each(function () {
                 var label = $(this),
                     parent = label.data('parent');
+
+                if (!parent) return;
                 var hit = (parent.parent_ids || []).indexOf(group_id) != -1;
                 label.toggleClass('client-group-filter-hidden', !hit);
             });
@@ -407,22 +413,25 @@
             return chartListSection.children('.ss-left-fixed-table');
         };
 
-        chartListSection.filterByClient = function (client_index) {
+        chartListSection.filterByClient = function (filter_client_ids) {
             chartListSection.filterByClient.filtered = true;
-            var filter_condition = client_index;
+            var filter_condition = filter_client_ids;
             if ($.isArray(filter_condition)) {
                 filter_condition = filter_condition.join(',');
             }
             var changed = chartListSection.filterByClient.filter_condition !== filter_condition;
             if (!changed) return;
             chartListSection.filterByClient.filter_condition = filter_condition;
-            chartListSection.findAllTables().each(function () {
-                var table = $(this),
-                    tr = table.children('tbody').children('tr');
-                tr.addClass('clinet-filter-hidden');
-                client_index && [].concat(client_index).forEach(function (index) {
-                    tr.eq(index).removeClass('clinet-filter-hidden');
-                });
+            chartListSection.findAllTables().children('tbody').children('tr').each(function () {
+                var tr = $(this) ,
+                    hit = false;
+                filter_client_ids = [].concat(filter_client_ids || []);
+                var client_id = tr.find('.th-content').attr('data-client_id');
+                for (var i = 0, len = filter_client_ids.length; i < len; i++) {
+                    hit = hit || (filter_client_ids[i] == client_id);
+                    if (hit) break;
+                }
+                tr.toggleClass('client-filter-hidden', !hit);
             });
             chartListSection.trigger('ss-resize');
         };
@@ -430,7 +439,7 @@
             var filtered = chartListSection.filterByClient.filtered;
             if (!filtered) return;
             chartListSection.filterByClient.filter_condition = null;
-            chartListSection.findAllBodyRows().removeClass('clinet-filter-hidden');
+            chartListSection.findAllBodyRows().removeClass('client-filter-hidden');
             chartListSection.filterByClient.filtered = false;
         };
 
@@ -496,7 +505,7 @@
             $('.ss-body-th', leftFixed).each(function (i) {
                 var th = $(this);
                 var height = ssTr.eq(i).find('th').filter(':visible').last().height();
-                if(height) th.height(height);
+                if (height) th.height(height);
             });
 
             var headTh = leftFixed.find('thead').find('th');
@@ -548,7 +557,7 @@
             }
 
             if (settings.use_client_filter) {
-                chartListSection.filterByClient(settings.client_index);
+                chartListSection.filterByClient(settings.filter_client_id);
             } else {
                 chartListSection.filterByClient.off();
             }

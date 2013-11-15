@@ -46,7 +46,7 @@ fieldset#chart-control-fieldset
         #client-filter-div.filter-div
             p#client-filter-p.filter-p(style='display:none')
                 - for(var rownum=0;rownum<rows.length;rownum++) {
-                    label(data-parent=rows[rownum][0].data)
-                        input(type='checkbox', name='client_index', value=rownum, checked)
+                    label(data-parent=rows[rownum][0].data.parent)
+                        input(type='checkbox', name='filter_client_id', value=rows[rownum][0].client_id, checked)
                         | #{rows[rownum][0].text}
                 - }

@@ -91,6 +91,7 @@ exports.getData = function (client_group_id, clients, callback) {
                             parent_names: parent_names,
                             parent_ids: client.parent_ids
                         }),
+                        client_id: client._id,
                         text: client.name,
                         href: [ href, 't=' + new Date().getTime()].join('?')
                     }

@@ -172,7 +172,11 @@ function program1(depth0,data) {
   return buffer;
   }
 
-  buffer += "<span class='th-content' data-parent=\"";
+  buffer += "<span class='th-content' data-client_id=\"";
+  if (stack1 = helpers.client_id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.client_id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" data-parent=\"";
   if (stack1 = helpers.data) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.data; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -188,6 +192,21 @@ function program1(depth0,data) {
   else { stack1 = depth0.text; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
     + "</a>\n</span>\n";
+  return buffer;
+  }
+	);
+})();(function() {
+	var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
+	templates['chart-thead-th-content'] = template(
+	function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<span class='th-content'>\n    "
+    + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
+    + "\n</span>\n";
   return buffer;
   }
 	);
