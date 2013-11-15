@@ -412,9 +412,9 @@
             chartListSection.findAllTables().each(function () {
                 var table = $(this),
                     tr = table.children('tbody').children('tr');
-                tr.hide();
+                tr.addClass('clinet-filter-hidden');
                 client_index && [].concat(client_index).forEach(function (index) {
-                    tr.eq(index).show();
+                    tr.eq(index).removeClass('clinet-filter-hidden');
                 });
             });
             chartListSection.trigger('ss-resize');
@@ -435,7 +435,7 @@
                         th = tr.find('th').first(),
                         parent = th.find('.th-content').data('parent');
                     var hit = (parent.parent_ids || []).indexOf(group_id) != -1;
-                    console.log('hit', hit);
+                    tr.toggleClass('client-group-filter-hidden', !hit);
                 });
             });
         };
@@ -613,6 +613,7 @@
                 });
             }
             chartListSection.filterByClientGroup(item.data('id'));
+            chartListSection.trigger('ss-resize');
         });
     });
 })(jQuery, Handlebars, window['l'], document);

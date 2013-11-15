@@ -82,11 +82,13 @@ exports.getData = function (client_group_id, clients, callback) {
                     systemsMap = toNameMap(systems),
                     developersMap = toIdMap(developers);
                 var href = resolve('/', config.context || '', 'client/' + client._id);
+                var parent_names = client.parent_names;
+                parent_names.shift(); //remove top level group name from display
                 return [
                     {
-                        prefix: client.parent_names.length && client.parent_names.join('  ') || null,
+                        prefix: parent_names.length && parent_names.join('  ') || null,
                         data: JSON.stringify({
-                            parent_names: client.parent_names,
+                            parent_names: parent_names,
                             parent_ids: client.parent_ids
                         }),
                         text: client.name,
