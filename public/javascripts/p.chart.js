@@ -58,7 +58,7 @@
                 elm.hide();
             });
         },
-        chartListSection: function () {
+        chartListSection: function (callback) {
             var section = $(this),
                 data = section.data();
 
@@ -76,9 +76,21 @@
             var sheetData = new ss.SheetData('', headData, bodyData);
             section.spreadsheet(sheetData);
 
-            section
-                .find('.top-fixed-thead').find('tr').find('th').first()
+            var topFixed = section
+                .find('.top-fixed-thead');
+
+            var leftFixed = $('.ss-left-fixed-table', section);
+
+            topFixed.find('tr').find('th').first()
                 .text(l.lbl.chart_title).addClass('chart-title');
+
+            var ssTable = $('.ss-table', section);
+
+            ssTable.sortableTable(function () {
+                var bodyTh = ssTable.find('.ss-body-th');
+                leftFixed.html($.spreadsheet.createLeftFixed(bodyTh));
+                callback && callback();
+            });
             return section;
         },
         chartListTabs: function (callback) {
@@ -326,7 +338,13 @@
             win = $(window),
             q = $.getQuery();
 
-        var chartListSection = $('#chart-list-section', main).chartListSection(),
+        var chartListSection = $('#chart-list-section', main);
+        chartListSection.chartListSection(function () {
+            chartListSection.filterByClientGroup.reload();
+            chartListSection.killCache();
+            controlForm.submit();
+        });
+        var
             chartListCell = $('.ss-cell', chartListSection);
 
         chartListSection.colorize = function (base, type, order) {
@@ -413,6 +431,10 @@
             return chartListSection.children('.ss-left-fixed-table');
         };
 
+        chartListSection.killCache = function () {
+            chartListSection.filterByClient.filter_condition = null;
+            chartListSection.filterBySystem.filter_condition = null;
+        };
         chartListSection.filterByClient = function (filter_client_ids) {
             chartListSection.filterByClient.filtered = true;
             var filter_condition = filter_client_ids;
@@ -444,6 +466,7 @@
         };
 
         chartListSection.filterByClientGroup = function (group_id) {
+            chartListSection.filterByClientGroup.filter_condition = group_id;
             chartListSection.findAllTables().each(function () {
                 var table = $(this);
                 table.children('tbody').children('tr').each(function () {
@@ -454,6 +477,10 @@
                     tr.toggleClass('client-group-filter-hidden', !hit);
                 });
             });
+        };
+        chartListSection.filterByClientGroup.reload = function () {
+            var group_id = chartListSection.filterByClientGroup.filter_condition;
+            chartListSection.filterByClientGroup(group_id);
         };
 
         chartListSection.filterBySystem = function (system_index) {
@@ -504,12 +531,16 @@
                 ssTr = ssTable.children('tbody').children('tr');
             $('.ss-body-th', leftFixed).each(function (i) {
                 var th = $(this);
-                var height = ssTr.eq(i).find('th').filter(':visible').last().height();
+                var origin = ssTr.eq(i).find('.ss-body-th').filter(':visible').last();
+                var height = origin.height();
                 if (height) th.height(height);
+                var width = origin.width();
+                if (width) th.width(width);
             });
 
             var headTh = leftFixed.find('thead').find('th');
-            headTh.height($('.ss-head-th').filter(':visible').height());
+            var h = $('.ss-head-th', ssTable).filter(':visible').last().height();
+            headTh.height(h);
         };
 
         chartListSection.busy = function (callback, duration) {
@@ -617,7 +648,7 @@
 
         win.resize(function () {
             chartListSection.trigger('ss-resize');
-            var leftFixed = $('.ss-left-fixed-table');
+            var leftFixed = $('.ss-left-fixed-table', chartListSection);
             leftFixed.find('th').first().height(
                 chartListSection.find('.ss-head-th').last().height()
             );

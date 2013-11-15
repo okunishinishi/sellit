@@ -1,9 +1,9 @@
 /**
  * tek.view.js
  * - javascript library for tek -
- * @version v0.2.16
+ * @version v0.2.28
  * @author Taka Okunishi
- * @date 2013-11-09
+ * @date 2013-11-15
  *
  */
 (function (dependencies, window, undefined) {
@@ -58,6 +58,41 @@
 		
 		
 		  return "<label class=\"tk-editable-label\">\n\n</label>";
+		  });
+		templates['tk-err-balloon'] = template(function (Handlebars,depth0,helpers,partials,data) {
+		  this.compilerInfo = [4,'>= 1.0.0'];
+		helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+		  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+		
+		function program1(depth0,data) {
+		  
+		  var buffer = "";
+		  buffer += "\n            <li>"
+		    + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
+		    + "</li>\n        ";
+		  return buffer;
+		  }
+		
+		  buffer += "<div class=\"tk-err-balloon\">\n    <ul>\n        ";
+		  stack1 = helpers.each.call(depth0, depth0.msg, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+		  if(stack1 || stack1 === 0) { buffer += stack1; }
+		  buffer += "\n    </ul>\n    <div class=\"tek-text-center\">\n        <a href=\"javascript:void(0)\" class=\"tk-close-btn\">";
+		  if (stack1 = helpers.close_label) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+		  else { stack1 = depth0.close_label; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+		  buffer += escapeExpression(stack1)
+		    + "</a>\n    </div>\n</div>";
+		  return buffer;
+		  });
+		templates['tk-hit-word'] = template(function (Handlebars,depth0,helpers,partials,data) {
+		  this.compilerInfo = [4,'>= 1.0.0'];
+		helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+		  var buffer = "", functionType="function", escapeExpression=this.escapeExpression;
+		
+		
+		  buffer += "<span class=\"tk-hit-word\">"
+		    + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
+		    + "</span>";
+		  return buffer;
 		  });
 		templates['tk-no-support-dialog'] = template(function (Handlebars,depth0,helpers,partials,data) {
 		  this.compilerInfo = [4,'>= 1.0.0'];
@@ -118,19 +153,19 @@
 		  if (stack1 = helpers.width) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
 		  else { stack1 = depth0.width; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
 		  buffer += escapeExpression(stack1)
-		    + ";height:";
+		    + "px;height:";
 		  if (stack1 = helpers.height) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
 		  else { stack1 = depth0.height; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
 		  buffer += escapeExpression(stack1)
-		    + ";\n        position: absolute;left:";
+		    + "px;\n        position: absolute;left:";
 		  if (stack1 = helpers.left) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
 		  else { stack1 = depth0.left; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
 		  buffer += escapeExpression(stack1)
-		    + ";top:";
+		    + "px;top:";
 		  if (stack1 = helpers.top) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
 		  else { stack1 = depth0.top; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
 		  buffer += escapeExpression(stack1)
-		    + "\"></div>";
+		    + "px\"></div>";
 		  return buffer;
 		  });
 		})();
@@ -142,6 +177,10 @@
 		    hbs = global['hbs'],
 		    $ = global['$'];
 		
+		/**
+		 * form value object
+		 * @type {tek.define|*}
+		 */
 		$.FormValue = tek.define({
 		    init: function (values) {
 		        var s = this;
@@ -305,7 +344,10 @@
 		    hst.pushState(null, null, new_url);
 		};
 		
-		
+		/**
+		 * show sorry page for not supported
+		 * @param data
+		 */
 		$.sorryNoSupport = function (data) {
 		    var body = document.body;
 		    $('#tk-no-support-dialog', body).remove();
@@ -321,6 +363,10 @@
 		    $(html).appendTo(body);
 		};
 		
+		/**
+		 * confirm before page unload
+		 * @param msg
+		 */
 		$.confirmLeave = function (msg) {
 		    if (!$.confirmLeave.initialized) {
 		        $.confirmLeave.initialized = true;
@@ -330,11 +376,43 @@
 		    }
 		    $.confirmLeave.msg = msg;
 		};
+		
+		
+		/**
+		 * scroll page to top
+		 * @param duration
+		 */
+		$.scrollToTop = function (duration) {
+		    $('html,body').animate({
+		        scrollTop: 0
+		    }, duration || 300);
+		};
+		
+		$.wordSearch={};
+		$.wordSearch.restore = function (word) {
+		    if (!word) return;
+		    for (var i = 0, len = word.length; i < len; i++) {
+		        var parent = word[i].parentNode;
+		        var text = document.createTextNode();
+		        text.nodeValue = parent.dataset.origin;
+		        parent.parentNode.replaceChild(text, parent);
+		    }
+		};
+		$.wordSearch.hitElement = function(match){
+		    var tmpl = hbs.templates['tk-hit-word'];
+		    var origin = match.input,
+		        span = document.createElement('span'),
+		        hit = match[0];
+		    span.innerHTML = origin.replace(hit, tmpl(hit));
+		    span.dataset.origin = origin;
+		    return span;
+		};
 	})(dependencies, undefined);
 	/** tek.view for $.fn **/
 	(function (global, undefined) {
 	
-		var $ = global['$'],
+		var tek = global['tek'],
+		    $ = global['$'],
 		    hbs = global['hbs'];
 		
 		/**
@@ -396,6 +474,8 @@
 		        }
 		        var name = input.attr('name'),
 		            val = input.val();
+		        if (!name) return;
+		        if (val === '') return;
 		        result.addValue(name, val);
 		    });
 		    return result;
@@ -873,6 +953,175 @@
 		    });
 		    return spy;
 		};
+		
+		$.fn.showErrBalloon = function (msg, close_label) {
+		    var elm = $(this);
+		    elm.find('.tk-err-balloon').remove();
+		    var tmpl = {
+		        balloon: hbs.templates['tk-err-balloon']
+		    };
+		    var balloonHTML = tmpl.balloon({
+		            msg: [].concat(msg),
+		            close_label: close_label || '[close]'
+		        }),
+		        balloon = elm.append(balloonHTML).find('.tk-err-balloon');
+		    balloon.click(function () {
+		        balloon.fadeOut(200, function () {
+		            balloon.remove();
+		        });
+		    });
+		    return elm;
+		};
+		
+		/**
+		 * input with auto format feature
+		 * @param format
+		 * @returns {*}
+		 *
+		 * available formats
+		 *   hankaku,zenkaku,hiragana,katakana
+		 */
+		$.fn.autoformatInput = function (format) {
+		    var string = tek.string;
+		    var input = $(this);
+		    input.data('autoformat', format);
+		    return input.each(function () {
+		        var input = $(this);
+		        if (input.data('autoformat-input')) return;
+		        input.data('autoformat-input', true);
+		        input.change(function () {
+		            var input = $(this),
+		                format = input.data('autoformat'),
+		                val = input.val();
+		            if (typeof(format) === 'string') {
+		                format = format.split(',');
+		            }
+		            for (var i = 0, len = format.length; i < len; i++) {
+		                switch (format[i]) {
+		                    case 'hankaku':
+		                        val = string.toHankaku(val);
+		                        break;
+		                    case 'zenkaku':
+		                        val = string.toZenkaku(val);
+		                        break;
+		                    case 'hiragana':
+		                        val = string.toHiragana(val);
+		                        break;
+		                    case 'katakana':
+		                        val = string.toKatakana(val);
+		                        break;
+		                    default:
+		                        console.warn('[tek.view.js]', format[i], 'is not supported for autoformat');
+		                        break;
+		                }
+		            }
+		            input.val(val);
+		        });
+		    });
+		};
+		
+		/**
+		 * search by word
+		 * @param word
+		 */
+		$.fn.wordSearch = function (word) {
+		    var ambiguousMatch = tek.string.ambiguousMatch;
+		    var elm = $(this);
+		    if (!elm.length) return false;
+		    if (elm.is('.tk-hit-word')) return false;
+		
+		    $.wordSearch.restore(elm.find('.tk-hit-word'));
+		
+		    var hit = false,
+		        contents = elm.contents(),
+		        inner = $();
+		
+		
+		    for (var i = 0, len = contents.length; i < len; i++) {
+		        var content = contents[i];
+		        switch (content.nodeType) {
+		            case 3:
+		                var match = ambiguousMatch(word, content.nodeValue);
+		                if (match) {
+		                    var span = $.wordSearch.hitElement(match);
+		                    content.parentNode.replaceChild(span, content);
+		                    hit = true;
+		                }
+		                break;
+		            default:
+		                inner = inner.add(content);
+		                break;
+		
+		        }
+		    }
+		    return inner.wordSearch(word) || hit;
+		};
+		
+		/**
+		 * make table sortable by click th in thead
+		 * @returns {*|jQuery|HTMLElement}
+		 */
+		$.fn.sortableTable = function (callback) {
+		    var table = $(this),
+		        thead = table.find('thead'),
+		        tbody = table.find('tbody');
+		
+		    var bodyTr = tbody.find('tr');
+		
+		    bodyTr
+		        .each(function (row) {
+		            var tr = $(this);
+		            tr
+		                .data('tk-row', row)
+		                .find('th,td').each(function (col) {
+		                    $(this).addClass('tk-col-' + col);
+		                });
+		        });
+		    thead
+		        .find('th')
+		        .addClass('tk-sortable-th')
+		        .each(function (col) {
+		            var th = $(this);
+		            th.data('col', col);
+		            if (!th.find('label').size()) {
+		                var msg = '[tek.view.js] Thead th should contain label for sortable table.';
+		                msg += 'tek.view.js complete it, but, consider prepare before rendering, for performance reasons.';
+		                console.warn(msg);
+		                th.wrapInner('<label/>');
+		            }
+		        })
+		        .click(function () {
+		            var th = $(this),
+		                asc = eval(th.attr('data-tk-asc') || 'false'),
+		                col = th.data('col');
+		            th.siblings('[data-tk-asc]').removeAttr('data-tk-asc');
+		            bodyTr
+		                .each(function (i) {
+		                    var tr = $(this),
+		                        td = tr.find('.tk-col-' + col);
+		                    tr
+		                        .data('tk-sort-value', td.text() || '')
+		                        .data('tk-row', i);
+		                })
+		                .sort(function (a, b) {
+		                    var $1 = $(a);
+		                    var $2 = $(b);
+		                    var v1 = $1.data('tk-sort-value'),
+		                        v2 = $2.data('tk-sort-value');
+		                    var sorted = v1.localeCompare(v2) * (asc ? 1 : -1);
+		                    if (sorted) {
+		                        return  sorted;
+		                    } else {
+		                        return ($2.data('tk-row') - $1.data('tk-row')) * (asc ? 1 : -1);
+		                    }
+		                })
+		                .appendTo(tbody);
+		            th.attr('data-tk-asc', !asc);
+		            callback && callback(col, asc);
+		        });
+		    return table;
+		}
+		
 	})(dependencies, undefined);
 
 })({
