@@ -171,24 +171,32 @@
                 });
             return form;
         },
-        chartGroupNavItem: function (command) {
+        chartGroupNavItem: function (command, callback) {
             return $(this).each(function () {
-                var item = $(this),
-                    nav = item.children('.chart-group-nav');
+                var item = $(this);
                 switch (command) {
                     case 'focus':
-                        item.addClass('chart-group-nav-focused');
-                        nav
+                        item
+                            .addClass('chart-group-nav-focused');
+
+                        var nav = item.children('.chart-group-nav')
                             .removeClass('chart-group-nav-hidden');
+
+                        var allItem = nav.children('.chart-group-nav-all');
+                        if (allItem.size()) {
+                            allItem.chartGroupNavItem('focus', callback);
+                        } else {
+                            callback(item);
+                        }
                         break;
                     case 'blur':
-                        item.removeClass('chart-group-nav-focused');
-                        nav
-                            .addClass('chart-group-nav-hidden');
+                        item.find('.chart-group-nav').addClass('chart-group-nav-hidden');
+                        item.find('.chart-group-nav-item')
+                            .add(item)
+                            .removeClass('chart-group-nav-focused');
                         break;
                 }
             });
-            return items;
         },
         chartGroupNav: function (callback) {
             var nav = $(this),
@@ -196,39 +204,55 @@
 
             if (!nav.length) return nav;
 
-            items.hover(function () {
-                var item = $(this);
-                item.siblings().chartGroupNavItem('blur');
-                item.chartGroupNavItem('focus');
-
+            items.not('.disabled').children('a').click(function (e) {
+                var item = $(this).parent(),
+                    focused = item.is('.chart-group-nav-focused');
+                if (focused) {
+                    item.chartGroupNavItem('blur');
+                } else {
+                    item.siblings().chartGroupNavItem('blur');
+                    item.find('.chart-group-nav-item').find('.chart-group-nav-item').chartGroupNavItem('blur');
+                    item.chartGroupNavItem('focus', function (item) {
+                        callback(item.find('a').css('background-color'));
+                    });
+                }
                 item.trigger('chart-group-nav-resize');
-            }, function () {
             });
             items
-                .children('.chart-group-nav').chartGroupNav();
+                .children('.chart-group-nav').chartGroupNav(callback);
             return nav;
         },
-        chartGroupNavContainer: function (data) {
+        chartGroupNavContainer: function (client_group_id, data, callback) {
             var container = $(this),
                 tmpl = {
                     nav: hbs.templates['chart-group-nav'],
                     navItem: hbs.templates['chart-group-nav-item']
                 };
 
-            function getHtml(data, depth) {
+            function getHtml(data, depth, parent_id) {
                 if (!data) return '';
                 depth = depth || 0;
                 var items = data.map(function (data) {
-                    var children = data.children;
+                    var children = data.children,
+                        hasChildren = !!children && children.length,
+                        sub_nav = hasChildren && getHtml(children, depth + 1, data._id);
                     return tmpl.navItem({
                         _id: data._id,
                         name: data.name,
-                        sub_nav: children && children.length && getHtml(children, depth + 1) || ''
+                        sub_nav: sub_nav || ''
                     })
                 });
+                if (parent_id) {
+                    var allItem = tmpl.navItem({
+                        _id: parent_id,
+                        name: l.lbl.chart_nav_all,
+                        classes: 'chart-group-nav-all'
+                    });
+                    items.unshift(allItem);
+                }
                 return tmpl.nav({
-                    items:items,
-                    depth:depth
+                    items: items,
+                    depth: depth
                 });
             }
 
@@ -236,7 +260,6 @@
                 var nav = container
                     .find('.chart-group-nav')
                     .not('.chart-group-nav-hidden');
-
                 var style = {
                     height: nav.first().outerHeight() * nav.size()
                 };
@@ -250,12 +273,36 @@
 
             var root = container.children('.chart-group-nav').first();
             root
-                .chartGroupNav(function () {
+                .chartGroupNav(function (backgroundColor) {
+                    callback && callback(backgroundColor)
                 })
                 .removeClass('chart-group-nav-hidden')
                 .on('chart-group-nav-resize', function () {
                     container.resize(true);
                 });
+
+            root.children('.chart-group-nav-item').children('a').each(function () {
+                var a = $(this),
+                    ref = a.data('ref');
+                a
+                    .off('click')
+                    .attr('href', ref);
+            });
+
+            var selectedItem = root.children('.chart-group-nav-item-' + client_group_id).first();
+            if (selectedItem.size()) {
+                var parentItems = selectedItem.parents('.chart-group-nav-item');
+                parentItems
+                    .add(selectedItem)
+                    .addClass('chart-group-nav-focused');
+                selectedItem
+                    .children('.chart-group-nav')
+                    .removeClass('chart-group-nav-hidden')
+                    .children('.chart-group-nav-all')
+                    .addClass('chart-group-nav-focused');
+                var backgroundColor = $('.chart-group-nav-focused', root).last().children('a').css('background-color');
+                callback && callback(backgroundColor);
+            }
 
             container.resize();
             return container;
@@ -264,10 +311,11 @@
 
     $(function () {
         var body = $(document.body),
+            main = $('#main', body),
             win = $(window),
             q = $.getQuery();
 
-        var chartListSection = $('#chart-list-section', body).chartListSection(),
+        var chartListSection = $('#chart-list-section', main).chartListSection(),
             chartListCell = $('.ss-cell', chartListSection);
 
         chartListSection.colorize = function (base, type, order) {
@@ -292,7 +340,6 @@
                     borderColor: color,
                     backgroundColor: color
                 }).find('.chart-cell-content').css({
-
                         backgroundColor: '#FFF'
                     });
                 content
@@ -547,6 +594,12 @@
         $('#client-group-form', body).clientGroupForm();
 
         var groupNavContainer = $('#chart-group-nav-container', body);
-        groupNavContainer.chartGroupNavContainer(groupNavContainer.data('groups'));
+        groupNavContainer.chartGroupNavContainer(q.client_group_id, groupNavContainer.data('groups'), function (backgroundColor) {
+            if (backgroundColor) {
+                main.css({
+                    backgroundColor: backgroundColor
+                });
+            }
+        });
     });
 })(jQuery, Handlebars, window['l'], document);

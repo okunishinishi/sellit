@@ -25,23 +25,41 @@ exports.index = function (req, res) {
         clients = res.locals.clients;
 
     exports.getData(client_group_id, clients, function (data, groupHierarchy) {
-        res.render('chart/index.jade', {
-            headRow: data.headRow,
-            rows: data.rows,
-            groupHierarchy: groupHierarchy
-        });
+        if (data) {
+            res.render('chart/index.jade', {
+                headRow: data.headRow,
+                rows: data.rows,
+                groupHierarchy: groupHierarchy
+            });
+        } else {
+            var firstGroup = groupHierarchy.shift();
+            if (firstGroup) {
+                res.redirect('/chart?client_group_id=' + firstGroup._id.toString());
+            } else {
+                res.render('chart/index.jade');
+            }
+        }
     });
 };
 exports.getData = function (client_group_id, clients, callback) {
     findAllModels([Developer, Client], function (developers, all_clients) {
-        var allClientMap = toIdMap(all_clients) || {};
+        var allClientMap = toIdMap(all_clients) || {},
+            groupHierarchy = Client.getGroupHierarchy(allClientMap);
+        var topLv = client_group_id && allClientMap[client_group_id];
+        if (!topLv) {
+            callback(null, groupHierarchy);
+            return;
+        }
+
+
         if (!clients.length) {
             callback({
                 headRow: [],
                 rows: []
-            });
+            }, groupHierarchy);
             return;
         }
+
 
         var system_names = Client.listSystemNames(clients);
         var rows = clients
@@ -75,7 +93,6 @@ exports.getData = function (client_group_id, clients, callback) {
                             return  system;
                         }));
             });
-        var groupHierarchy = Client.getGroupHierarchy(allClientMap);
         callback({
             headRow: system_names,
             rows: rows

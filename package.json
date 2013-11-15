@@ -17,6 +17,7 @@
         "msexcel-builder": "0.0.2",
         "jade": "0.35.0",
         "less-middleware": "0.1.12",
+        "connect-flash":"0.1.1",
         "handlebars": "1.0.12",
         "revalidator": "0.1.5",
         "tek": "*",

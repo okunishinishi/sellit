@@ -3,16 +3,20 @@
 @import "lib/tek.view.less";
 @import "lib/icons.less";
 
+@import "base-mixin";
+
 @base: darken(@white, 1);
 @main: @gray;
 @accent: darken(@white, 10);
+
+
 
 body {
   margin: 0 auto;
   height: 100%;
   font-siz: 18px;
   padding: 20px 20px;
-  background-image: url('../images/brickwall/brickwall.png');
+  .wall-back();
   .btn-danger {
     .btn(#FF99AC);
   }

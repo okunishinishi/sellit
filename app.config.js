@@ -4,12 +4,14 @@
  * Time: 6:44 AM
  */
 
-var lessMiddleware = require('less-middleware'),
+var flash = require('connect-flash'),
+    lessMiddleware = require('less-middleware'),
     express = require('express'),
     path = require('path'),
     env = process['env'],
     resolve = path['resolve'];
 
+exports.package = require('./package.json');
 
 exports.viewDir = resolve(__dirname, 'views');
 exports.publicDir = resolve(__dirname, 'public');
@@ -28,9 +30,13 @@ exports.set = {
     'view engine': 'jade'
 };
 
+var version = exports.package.version;
 exports.use = [
     express.cookieParser(),
-    express.cookieSession({secret: '1234qwer'}),
+    express.cookieSession({
+        secret: '1234qwer' + version.replace(/\./g, '')
+    }),
+    flash(),
     express['favicon'](),
     express.logger('dev'),
     express['bodyParser'](),
@@ -52,4 +58,4 @@ exports.backup = {
 };
 
 exports.context = '';
-exports.package = require('./package.json');
+

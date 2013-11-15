@@ -15,8 +15,7 @@ l.msg.no_clients = 'No clients found.';
 l.err = {};
 l.err.page_not_found = 'sorry! page not found';
 l.err.login_fail = 'username or password is wrong';
-
-
+l.err.no_clients_found = 'no clients found';
 
 
 l.lbl = {};
@@ -65,6 +64,7 @@ l.lbl.scale_effect = 'scale effect';
 l.lbl.apply = 'apply';
 l.lbl.start_at = 'start_at';
 l.lbl.login_as = 'login as';
+l.lbl.chart_nav_all = 'ALL';
 
 l.plh = {};
 l.plh.search = l.lbl.search;
@@ -74,7 +74,6 @@ l.plh.system_name = l.lbl.system_name;
 l.plh.freeword = l.lbl.freeword;
 l.plh.provider = ['--', l.lbl.provider, '--'].join(' ');
 l.plh.select_all_clients = ['--', l.lbl.all_clients, '--'].join(' ');
-
 
 
 l.btn = {};

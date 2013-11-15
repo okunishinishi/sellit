@@ -13,7 +13,8 @@ l = {
     },
     "err": {
         "page_not_found": "sorry! page not found",
-        "login_fail": "username or password is wrong"
+        "login_fail": "username or password is wrong",
+        "no_clients_found": "no clients found"
     },
     "lbl": {
         "search": "search",
@@ -56,7 +57,8 @@ l = {
         "scale_effect": "scale effect",
         "apply": "apply",
         "start_at": "start_at",
-        "login_as": "login as"
+        "login_as": "login as",
+        "chart_nav_all": "ALL"
     },
     "plh": {
         "search": "search",

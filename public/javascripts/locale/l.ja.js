@@ -13,7 +13,8 @@ l = {
     },
     "err": {
         "page_not_found": "sorry! page not found",
-        "login_fail": "username or password is wrong"
+        "login_fail": "username or password is wrong",
+        "no_clients_found": "no clients found"
     },
     "lbl": {
         "search": "search",
@@ -57,6 +58,7 @@ l = {
         "apply": "apply",
         "start_at": "導入時期",
         "login_as": "login as",
+        "chart_nav_all": "ALL",
         "cd": "PJコード"
     },
     "plh": {

@@ -92,11 +92,15 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<span class=\"chart-group-nav-item\" id=\"chart-group-nav-item-";
+  buffer += "<span class=\"chart-group-nav-item chart-group-nav-item-";
   if (stack1 = helpers._id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0._id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\">\n    <a href=\"";
+    + " ";
+  if (stack1 = helpers.classes) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.classes; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">\n    <a href='javascript:void(0)' data-ref=\"";
   if (stack1 = helpers.ctx) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.ctx; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
