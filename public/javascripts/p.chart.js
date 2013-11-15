@@ -303,6 +303,14 @@
 
             container.resize();
             return container;
+        },
+        clientFilterLabel: function (group_id) {
+            return $(this).each(function () {
+                var label = $(this),
+                    parent = label.data('parent');
+                var hit = (parent.parent_ids || []).indexOf(group_id) != -1;
+                label.toggleClass('client-group-filter-hidden', !hit);
+            });
         }
     });
 
@@ -613,7 +621,10 @@
                     backgroundColor: backgroundColor
                 });
             }
-            chartListSection.filterByClientGroup(item.data('id'));
+            var group_id = item.data('id');
+
+            chartListSection.filterByClientGroup(group_id);
+            $('#client-filter-p', main).find('label').clientFilterLabel(group_id);
             chartListSection.trigger('ss-resize');
         });
     });

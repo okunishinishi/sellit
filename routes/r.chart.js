@@ -81,7 +81,7 @@ exports.getData = function (client_group_id, clients, callback) {
                 var systems = client.systems || [],
                     systemsMap = toNameMap(systems),
                     developersMap = toIdMap(developers);
-                var href = resolve('/', config.context || '', 'client/' + client._id);
+                var href = ['/', config.context || '', 'client/' + client._id].join('');
                 var parent_names = client.parent_names;
                 parent_names.shift(); //remove top level group name from display
                 return [
