@@ -215,8 +215,10 @@
             }
             if (ul.is(':visible')) {
                 ul.hide();
+                ul.parent('.nav-item').removeAttr('style');
             } else {
-                ul.show();
+                ul.show().removeClass('hidden');
+                ul.parent('.nav-item').css({opacity: 1});
             }
         }
     });
