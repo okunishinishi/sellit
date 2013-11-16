@@ -67,6 +67,7 @@
                 form.editableForm('view');
                 submitBtn.removeAttr('disabled');
                 $.pushQueryToState({mode: 'view'});
+                $.confirmLeave(false);
                 $(':text,textarea', form).filter(':visible').hide();
             });
             $('input,select,textarea', form).not(':submit').on("click change", function () {
@@ -274,6 +275,10 @@
                             value: val
                         });
                     });
+                    var _id = form.findByName('_id').val();
+                    li.find('.detail-link').attr({
+                        href: (window.ctx||'') + "/client/"+_id+"?t=" + new Date().getTime()
+                    });
                 })
                 .submit(function (e) {
                     e.stopPropagation();
@@ -330,7 +335,7 @@
                 item.data = {
                     children_ids: children_ids,
                     _id: data._id,
-                    sort_num:data.sort_num
+                    sort_num: data.sort_num
                 };
                 return  item;
             });
@@ -357,9 +362,10 @@
                             .filter(function (child) {
                                 return !!child;
                             })
-                            .sort(function(a,b){
+                            .sort(function (a, b) {
                                 return a.data.sort_num - b.data.sort_num;
-                            });;
+                            });
+                        ;
                         item.children(children);
                     }
                 });

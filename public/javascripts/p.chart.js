@@ -490,6 +490,11 @@
             chartListSection.filterByClientGroup(group_id);
         };
 
+        chartListSection.filterBySystemGroup = function () {
+            var table = chartListSection.findSSTable();
+            //TODO filter by col
+        };
+
         chartListSection.filterBySystem = function (system_index) {
             chartListSection.filterBySystem.filtered = true;
             var filter_condition = system_index && [].concat(system_index).join(',');
@@ -605,8 +610,13 @@
             } else {
                 chartListSection.filterBySystem.off();
             }
+
+            chartListSection.filterBySystemGroup();
+
+
             chartListSection.trigger('ss-resize');
             chartListSection.resize.leftFixed();
+
         });
 
 

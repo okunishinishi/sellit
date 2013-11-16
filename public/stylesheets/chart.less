@@ -441,4 +441,19 @@ form{
       bottom:4px;
     }
   }
+  [type="checkbox"] + label{
+    &:hover{
+      &:after{
+        display: inline-block;
+        opacity: .25;
+      }
+    }
+  }
+  [type="checkbox"]:checked + label,
+  [type="checkbox"]:checked + label:hover{
+    &:after{
+      opacity: 1;
+    }
+  }
+
 }

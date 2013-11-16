@@ -103,11 +103,11 @@ exports.index = function (req, res) {
     });
 };
 exports.index.first = function (req, res) {
-    Client.findAll({}, function (clients) {
+    Client.findByCondition({}, function (clients) {
         var client = clients.filter(function (client) {
             return !client.isGroup();
         }).shift();
-        res.redirect('/client/' + (client && client._id || '0'));
+        res.redirect('/client/' + (client && client._id || '0') + '?t=' + res.locals.time);
     });
 };
 
