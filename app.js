@@ -42,7 +42,7 @@ app.configure('development', function () {
 
     var publish = require('./util/u.publish');
     Object.keys(locale).forEach(function (lang) {
-        if(lang =='default') return;
+        if (lang == 'default') return;
         var filename = 'locale/' + ['l', lang, 'js'].join('.');
         publish(filename, 'l', locale[lang]);
     });
@@ -65,6 +65,12 @@ app.all('*',
         next();
     },
     function (req, res, next) {
+        var isAPI = req.path.match(/^\/api/);
+        if(isAPI){
+            next();
+           return;
+        }
+        console.log('req', req.path);
         var Client = db.models.Client;
         Client.findByCondition({}, function (clients) {
             res.locals.clients = clients.filter(function (client) {
