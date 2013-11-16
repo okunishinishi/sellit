@@ -14,7 +14,8 @@ l = {
     "err": {
         "page_not_found": "sorry! page not found",
         "login_fail": "username or password is wrong",
-        "no_clients_found": "no clients found"
+        "no_clients_found": "no clients found",
+        "duplicate_system_name": "duplicate system name"
     },
     "lbl": {
         "search": "search",

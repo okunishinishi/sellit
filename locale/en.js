@@ -16,6 +16,7 @@ l.err = {};
 l.err.page_not_found = 'sorry! page not found';
 l.err.login_fail = 'username or password is wrong';
 l.err.no_clients_found = 'no clients found';
+l.err.duplicate_system_name = 'duplicate system name';
 
 
 l.lbl = {};

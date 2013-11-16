@@ -68,6 +68,8 @@
                 submitBtn.removeAttr('disabled');
                 $.pushQueryToState({mode: 'view'});
                 $.confirmLeave(false);
+                $('.err-msg', form).text('');
+                $('.err', form).removeClass('err');
                 $(':text,textarea', form).filter(':visible').hide();
             });
             $('input,select,textarea', form).not(':submit').on("click change", function () {
@@ -157,7 +159,7 @@
                         li.removeClass('remove-target');
                     })
                     .click(function () {
-                        var name = li.find('caption').find(':text').val();
+                        removeBtn.remove();
                         li.animate({
                             width: 0,
                             paddingLeft: 0,
@@ -174,7 +176,8 @@
                         .removeClass('system-list-item-focused');
                 });
             });
-            li.find('.system-name-input').selectableText(data.system_names);
+            li.find('.system-name-input')
+                .selectableText(data.system_names);
             li.find('.system-scale-input').selectableText(data.system_scales);
             li.find('.system-start_at-input').selectableText(data.system_start_ats);
 
@@ -277,7 +280,7 @@
                     });
                     var _id = form.findByName('_id').val();
                     li.find('.detail-link').attr({
-                        href: (window.ctx||'') + "/client/"+_id+"?t=" + new Date().getTime()
+                        href: (window.ctx || '') + "/client/" + _id + "?t=" + new Date().getTime()
                     });
                 })
                 .submit(function (e) {
@@ -453,8 +456,9 @@
     ;
 
     $(function () {
-        var head = $(document.head),
-            body = $(document.body),
+        var doc = document ,
+            head = $(doc.head),
+            body = $(doc.body),
             aside = $('aside', body),
             q = $.getQuery();
 
@@ -467,6 +471,26 @@
         var clientName = clientNameInput.val() || '',
             title = $('title', head);
         title.text([clientName, (title.text() || '') ].join(' - '));
+
+        $(doc)
+            .on('change', '.system-name-input', function () {
+                var changed = $(this),
+                    input = $('.system-name-input', doc).removeClass('err').not(changed),
+                    system_names = input.toArray().map(function (elm) {
+                        return elm.value;
+                    });
+                $('.system-name-input-err', doc).text('');
+                var val = changed.val();
+                var duplicate = system_names.indexOf(val) !== -1;
+                if (duplicate) {
+                    input.filter('[value="' + val + '"]')
+                        .add(changed).addClass('err', duplicate)
+                        .each(function () {
+                            $(this).siblings('.system-name-input-err')
+                                .text(l.err.duplicate_system_name);
+                        });
+                }
+            });
 
 
         $('#client-name-spy', body).clientNameSpy(clientNameInput);
