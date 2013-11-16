@@ -34,6 +34,7 @@ get('/client/:client_id', client.index);
 post('/api/client/save', client.api.save);
 post('/api/client/destroy', client.api.destroy);
 get('/api/client.json', client.api.list);
+get('/api/client.top_level.json', client.api.listTopLv);
 get('/api/client/:_id', client.api.one);
 
 

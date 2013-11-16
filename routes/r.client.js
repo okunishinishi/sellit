@@ -155,6 +155,17 @@ exports.api = {
         });
     },
 
+    listTopLv: function (req, res) {
+        Client.findByCondition({}, function (all_clients) {
+            var allClientMap = toIdMap(all_clients) || {};
+            var result = Client.listTopLvGroups(all_clients).map(function (client) {
+                client.parent_names = client.listParentNames(allClientMap) || [];
+                client.full_name = [client.parent_names, client.name].join(' ');
+                return client;
+            });
+            res.json(result);
+        });
+    },
     /**
      * save data
      * @param req

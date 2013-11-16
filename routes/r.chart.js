@@ -23,7 +23,7 @@ exports.index = function (req, res) {
     var q = req.query,
         client_group_id = q['client_group_id'];
 
-    exports.getData(client_group_id, function (data, groupHierarchy) {
+    exports.getData(client_group_id, function (data, groupHierarchy, topLv) {
         if (data) {
             res.render('chart/index.jade', {
                 headRow: data.headRow,
@@ -112,6 +112,6 @@ exports.getData = function (client_group_id, callback) {
         callback({
             headRow: system_names,
             rows: rows
-        }, groupHierarchy);
+        }, groupHierarchy, topLv);
     });
 };

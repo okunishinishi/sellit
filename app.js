@@ -72,7 +72,8 @@ app.all('*',
         res.locals.time = new Date().getTime();
         var lang = util['lang'];
         res.locals.lang = lang.fromRequest(req);
-        res.locals.lang = 'ja';//TODO
+
+        if (config.lang) res.locals.lang = config.lang;
         res.locals.login_username = req.session && req.session.login_username;
         res.locals.url = app.locals.url;
         next();
@@ -105,12 +106,22 @@ app.all('*',
 
 
 (function () {
-    var resolve = require('path')['resolve'],
+    var tek = require('tek'),
+        JobQueue = tek['JobQueue'],
+        filesInDir = tek.file.filesInDir,
+        path = require('path'),
+        extname = path.extname,
+        resolve = path['resolve'],
         excel = require('./routes/r.excel');
     var takeBackup = function () {
         var db_filepath = resolve(config.db.host, config.db.name),
-            excel_filepath = resolve(config.excelDir, config.excelFileName),
+            excel_filepaths = filesInDir(resolve(config.excelDir)) || [],
             bk_dirpath = config.backup.dirpath;
+
+        excel_filepaths = excel_filepaths.filter(function (filepath) {
+            return extname(filepath) == '.xlsx';
+        });
+
 
         function execute(filepath, callback) {
             util.backup.fileBackup(filepath, bk_dirpath, function (err, bk_filepath) {
@@ -124,7 +135,7 @@ app.all('*',
         }
 
         function clean() {
-            util.backup.cleanBackup(config.backup.maxcount * 2, bk_dirpath, function (err) {
+            util.backup.cleanBackup(config.backup.maxcount * (excel_filepaths + 1), bk_dirpath, function (err) {
                 if (err) {
                     console.error('failed to clean backup');
                 } else {
@@ -134,9 +145,15 @@ app.all('*',
         }
 
         execute(db_filepath, function () {
-            execute(excel_filepath, function () {
-                clean();
-            });
+            new JobQueue()
+                .pushAll(excel_filepaths.map(function (excel_filepath) {
+                    return function (next) {
+                        execute(excel_filepath, next);
+                    };
+                }))
+                .execute(function () {
+                    clean();
+                });
         });
     };
     setInterval(takeBackup, config.backup.interval);

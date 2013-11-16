@@ -203,6 +203,21 @@
             var needed = winHeight < btn.offset().top;
             if (!needed) btn.hide();
             return btn;
+        },
+        downloadSelectList: function () {
+            var ul = $(this);
+            if (ul.is(':empty')) {
+                var ref = ul.data('ref'),
+                    tmpl = hbs.templates['download-select-list'];
+                $.getJSON(ref, function (data) {
+                    ul.htmlHandlebars(tmpl, data);
+                });
+            }
+            if (ul.is(':visible')) {
+                ul.hide();
+            } else {
+                ul.show();
+            }
         }
     });
     $(function () {
@@ -230,6 +245,12 @@
         });
         win.resize(function () {
             toPageTopBtn.toPageTopBtn(win.height());
+        });
+
+
+        var downloadSelectList = $('#download-select-list', body);
+        $('#download-btn', body).click(function () {
+            downloadSelectList.downloadSelectList();
         });
 
     });

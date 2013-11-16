@@ -21,8 +21,7 @@ exports.imgDir = resolve(exports.publicDir, 'images');
 exports.cssDir = resolve(exports.publicDir, 'stylesheets');
 exports.hbsDir = resolve(exports.publicDir, 'hbs');
 exports.hbsTemplateFile = resolve(exports.publicDir, "javascripts/templates.js");
-exports.excelDir = exports.publicDir;
-exports.excelFileName = 'sellit.xlsx';
+exports.excelDir = resolve(exports.publicDir, 'excel');
 
 exports.set = {
     'port': env['PORT'] || eval('3066'),
@@ -58,4 +57,6 @@ exports.backup = {
 };
 
 exports.context = '';
+
+exports.lang = 'ja';
 

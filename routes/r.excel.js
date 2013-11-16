@@ -10,8 +10,8 @@ var excelbuilder = require('msexcel-builder'),
     teK = require('tek'),
     Client = models['Client'],
     findAllModels = util['mdl']['findAllModels'],
-    l = require('../locale')['en'],
     config = require('../app.config'),
+    l = require('../locale')[config.lang || 'en'],
     path = require('path'),
     resolve = path['resolve'];
 
@@ -21,13 +21,13 @@ var publicDir = require('../app.config')['publicDir'];
 
 exports.generateWorkbook = function (client_group_id, callback) {
     var createWorkbook = excelbuilder.createWorkbook;
-    require('./r.chart.js').getData(client_group_id, function (data) {
+    require('./r.chart.js').getData(client_group_id, function (data, groupHierarchy, topLv) {
         if (!data) {
             callback('excel data not found');
             return;
         }
         var dirpath = config.excelDir,
-            filename = config.excelFileName;
+            filename = topLv.name.replace(/\s/g, '_') + '.xlsx';
         var workbook = createWorkbook(dirpath + "/", filename);
         var cols = data.headRow.length + 1,
             rows = data.rows.length + 1;
@@ -56,7 +56,8 @@ exports.generateWorkbook = function (client_group_id, callback) {
                     default:
                         return data[key] || '';
                 }
-            };
+            }
+
             data.rows.forEach(function (data, i) {
                 var row = i + 2;
                 data.forEach(function (data, j) {

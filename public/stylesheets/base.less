@@ -2,14 +2,11 @@
 @import "lib/tek-style-clean";
 @import "lib/tek.view.less";
 @import "lib/icons.less";
-
 @import "base-mixin";
 
 @base: darken(@white, 1);
 @main: @gray;
 @accent: darken(@white, 10);
-
-
 
 body {
   margin: 0 auto;
@@ -402,24 +399,56 @@ header {
   }
   &:before {
     border-style: solid;
-    @w:8px;
+    @w: 8px;
     margin: 0 4px;
     position: relative;
     border-width: 0 @w @w;
     border-color: transparent;
     border-bottom-color: @back;
-    content:'';
+    content: '';
     display: inline-block;
-
 
   }
 }
-#top_lv_client-select{
-  -webkit-appearance:none;
+
+#top_lv_client-select {
+  -webkit-appearance: none;
   padding: 4px 0;
   background-color: transparent;
-  .text-shadow(0 -1px 1px rgba(255,255,255,.5));
-  color:@gray;
+  .text-shadow(0 -1px 1px rgba(255, 255, 255, .5));
+  color: @gray;
   font-weight: bolder;
-  border-width:0;
+  border-width: 0;
+}
+
+.dropdown-menu {
+  .no-style-list;
+  position: absolute;
+  right: 0;
+  top:30px;
+  .box-shadow(4px 4px 8px, .4);
+  .border-radius(8px);
+  overflow: hidden;
+  width:150px;
+  border:1px solid darken(@white, 20);
+  li {
+    padding: 0;
+    margin: 0;
+    a {
+      @back: @white;
+      background-color: @back;
+      border: 1px solid darken(@back, 10);
+      margin: 0;
+      margin-bottom: -1px;
+      display: block;
+      padding: 4px 8px;
+      text-decoration: none;
+      @c:@gray;
+      &:hover{
+        text-decoration: none;
+        background-color: @c;
+        color:@back;
+      }
+    }
+  }
 }
