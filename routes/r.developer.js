@@ -1,6 +1,7 @@
 var tek = require('tek'),
     copy = tek['meta']['copy'],
     db = require('../db'),
+    Client = db.models['Client'],
     Developer = db.models['Developer'];
 
 /**
@@ -125,8 +126,10 @@ exports.api = {
         var _id = req.body['_id'];
         findOne(_id, function (developer) {
             if (developer) {
-                developer.remove(function () {
-                    res.json({count: 1});
+                removeFromClient(developer, function () {
+                    developer.remove(function () {
+                        res.json({count: 1});
+                    });
                 });
             } else {
                 res.json({count: 0});
@@ -134,3 +137,28 @@ exports.api = {
         });
     }
 };
+
+function removeFromClient(developer, callback) {
+    var id = developer._id;
+    Client.findAll(function (clients) {
+        clients = (clients || [])
+            .map(function (client) {
+                var changed = false;
+                (client.systems || []).forEach(function (system) {
+                    if(system.current_provider == id){
+                        system.current_provider = undefined;
+                        changed = true;
+                    }
+                    if(system.initial_provider == id){
+                        system.initial_provider = undefined;
+                        changed = true;
+                    }
+                });
+                return changed && client || false;
+            })
+            .filter(function (client) {
+                return !!client;
+            });
+        Client.updateAll(clients, callback);
+    });
+}

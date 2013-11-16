@@ -388,7 +388,10 @@
         };
         chartListSection.decolorize = function () {
             chartListSection.removeClass('colorized');
-            chartListCell.removeAttr('style');
+            chartListCell
+                .removeAttr('style')
+                .find('.chart-cell-content,.chart-cell-color-mark,.chart-cell-color-mark-hover')
+                .removeAttr('style');
         };
 
         chartListSection.scalize = function (min, max) {
