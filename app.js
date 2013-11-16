@@ -69,7 +69,6 @@ app.all('*',
             next();
             return;
         }
-        console.log('req', req.path);
         res.locals.time = new Date().getTime();
         var lang = util['lang'];
         res.locals.lang = lang.fromRequest(req);
