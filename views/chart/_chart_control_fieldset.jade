@@ -3,37 +3,30 @@ fieldset#chart-control-fieldset
     form#chart-control-form
         .field#use-colorize-field
             label.field-label=l.lbl.color_effect
-            label(for='use-colorize-input-on')
-                input#use-colorize-input-on(type='radio', name='use_colorize', value='true')
-                | #{l.lbl.on}
-            label(for='use-colorize-input-off')
-                input#use-colorize-input-off(type='radio', name='use_colorize', value='false', checked)
-                | #{l.lbl.off}
+            input#use-colorize-input-on(type='radio', name='use_colorize', value='true')
+            label(for='use-colorize-input-on')=l.lbl.on
+            input#use-colorize-input-off(type='radio', name='use_colorize', value='false', checked)
+            label(for='use-colorize-input-off')=l.lbl.off
 
         .field#use-scalize-field
             label.field-label=l.lbl.scale_effect
-            label(for='use-scalize-input-on')
-                input#use-scalize-input-on(type='radio', name='use_scalize', value='true')
-                | #{l.lbl.on}
-            label(for='use-scalize-input-off')
-                input#use-scalize-input-off(type='radio', name='use_scalize', value='false', checked)
-                | #{l.lbl.off}
+            input#use-scalize-input-on(type='radio', name='use_scalize', value='true')
+            label(for='use-scalize-input-on')=l.lbl.on
+            input#use-scalize-input-off(type='radio', name='use_scalize', value='false', checked)
+            label(for='use-scalize-input-off')=l.lbl.off
 
         .field#use-system-filter-field
             label.field-label=l.lbl.system_filter
-            label(for='use-system-filter-input-on')
-                input#use-system-filter-input-on(type='radio', name='use_system_filter', value='true')
-                | #{l.lbl.on}
-            label(for='use-system-filter-input-off')
-                input#use-system-filter-input-off(type='radio', name='use_system_filter', value='false', checked)
-                | #{l.lbl.off}
+            input#use-system-filter-input-on(type='radio', name='use_system_filter', value='true')
+            label(for='use-system-filter-input-on')=l.lbl.on
+            input#use-system-filter-input-off(type='radio', name='use_system_filter', value='false', checked)
+            label(for='use-system-filter-input-off')=l.lbl.off
 
         #system-filter-div.filter-div
             p#system-filter-p.filter-p(style='display:none')
                 - for(var i=0;i<headRow.length;i++){
-                    label
-                        input(type='checkbox', name='system_index', value=i, checked)
-                        | #{headRow[i]}
+                    input(type='checkbox', name='system_index', value=i, checked, id="system_index-input-#{i}")
+                    label(for="system_index-input-#{i}")=headRow[i]
                 - }
 
         .field#use-client-filter-field
@@ -45,8 +38,6 @@ fieldset#chart-control-fieldset
 
         #client-filter-div.filter-div
             p#client-filter-p.filter-p(style='display:none')
-                - for(var rownum=0;rownum<rows.length;rownum++) {
-                    label(data-parent=rows[rownum][0].data.parent)
-                        input(type='checkbox', name='filter_client_id', value=rows[rownum][0].client_id, checked)
-                        | #{rows[rownum][0].text}
-                - }
+                each row, i in rows
+                    input(type='checkbox', name='filter_client_id', value=row[0].client_id, checked, id="filter_client_id-input-#{i}")
+                    label(data-parent=row[0].data.parent, for="filter_client_id-input-#{i}")=row[0].text

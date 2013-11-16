@@ -259,7 +259,6 @@ fieldset{
   margin: 0 20px 20px 60px;
   display: block;
   .white-back(.65);
-  border:1px solid darken(@white,10);
   padding:10px 20px 5px;
   .border-radius(4px);
   .box-shadow(2px 2px 4px;.2;inset);
@@ -427,5 +426,19 @@ fieldset{
     color: white;
     border-color:@back;
     font-weight: bolder;
+  }
+}
+form{
+  .checkbox-radio-style(lighten(@gray,3);@white;);
+  label{
+    line-height: 20px;
+  }
+  [type="radio"] + label{
+    &:before{
+      bottom:2px;
+    }
+    &:after{
+      bottom:4px;
+    }
   }
 }

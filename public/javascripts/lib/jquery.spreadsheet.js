@@ -1,10 +1,10 @@
 /**
- * jquery.spreadsheet.js v0.2.30
+ * jquery.spreadsheet.js v0.2.32
  * - jquery plugin to create spreadsheet -
- * @version v0.2.30
+ * @version v0.2.32
  * @author Taka Okunishi
  * @license MIT
- * @date 2013-11-15
+ * @date 2013-11-16
  */
 (function (dependencies, undefined) {
 	
@@ -200,8 +200,8 @@
 		    });
 		
 		    var cellSelector = [p('.root'), p('.cell')].join(' ');
-
-    root
+		
+		    root
 		        .on('mouseleave', function () {
 		            root.find(p('.th-hover')).removeClass(p('th-hover'));
 		        })

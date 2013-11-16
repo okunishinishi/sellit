@@ -19,9 +19,13 @@ var excelbuilder = require('msexcel-builder'),
 var publicDir = require('../app.config')['publicDir'];
 
 
-exports.generateWorkbook = function (clients, callback) {
+exports.generateWorkbook = function (client_group_id, clients, callback) {
     var createWorkbook = excelbuilder.createWorkbook;
-    require('./r.chart.js').getData(clients, function (data) {
+    require('./r.chart.js').getData(client_group_id, clients, function (data) {
+        if (!data) {
+            callback('excel data not found');
+            return;
+        }
         var dirpath = config.excelDir,
             filename = config.excelFileName;
         var workbook = createWorkbook(dirpath + "/", filename);
@@ -75,13 +79,20 @@ exports.generateWorkbook = function (clients, callback) {
     });
 };
 
+function handleErr(err) {
+    console.error(err);
+}
+
 exports.download = function (req, res) {
-    var clients = res.locals.clients;
-    exports.generateWorkbook(clients, function (err, filepath) {
+    var q = req.query,
+        client_group_id = q['client_group_id'],
+        clients = res.locals.clients;
+    exports.generateWorkbook(client_group_id, clients, function (err, filepath) {
         if (err) {
+            err && handleErr(err);
             res.redirect('/404');
         } else {
-            res.redirect(resolve('/',path.relative(publicDir, filepath)));
+            res.redirect(resolve('/', path.relative(publicDir, filepath)));
         }
     });
 };
