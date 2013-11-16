@@ -176,9 +176,13 @@ function program1(depth0,data) {
   if (stack1 = helpers.client_id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.client_id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" data-parent=\"";
-  if (stack1 = helpers.data) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.data; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+    + "\" data-system=\"";
+  if (stack1 = helpers.data_system) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.data_system; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\"\n      data-parent=\"";
+  if (stack1 = helpers.data_parent) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.data_parent; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
     + "\">\n    ";
   stack1 = helpers['if'].call(depth0, depth0.prefix, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});

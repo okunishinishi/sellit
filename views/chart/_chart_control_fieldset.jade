@@ -40,4 +40,4 @@ fieldset#chart-control-fieldset
             p#client-filter-p.filter-p(style='display:none')
                 each row, i in rows
                     input(type='checkbox', name='filter_client_id', value=row[0].client_id, checked, id="filter_client_id-input-#{i}")
-                    label(data-parent=row[0].data.parent, for="filter_client_id-input-#{i}")=row[0].text
+                    label(data-parent=row[0].data_parent, for="filter_client_id-input-#{i}")=row[0].text

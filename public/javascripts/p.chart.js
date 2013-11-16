@@ -327,11 +327,20 @@
         clientFilterLabel: function (group_id) {
             return $(this).each(function () {
                 var label = $(this),
+                    input = $('#' + label.attr('for')),
                     parent = label.data('parent');
 
                 if (!parent) return;
                 var hit = (parent.parent_ids || []).indexOf(group_id) != -1;
-                label.toggleClass('client-group-filter-hidden', !hit);
+                label.toggleClass('client-filter-hidden', !hit);
+            });
+        },
+        systemFilterLabel: function (systemNames) {
+            return $(this).each(function () {
+                var label = $(this),
+                    input = $('#' + label.attr('for'));
+                var empty = systemNames.indexOf($.trim(label.text())) === -1;
+                label.toggleClass('system-group-filter-hidden', empty);
             });
         }
     });
@@ -492,7 +501,27 @@
 
         chartListSection.filterBySystemGroup = function () {
             var table = chartListSection.findSSTable();
-            //TODO filter by col
+            var systemNames = chartListSection.filterBySystemGroup.getActiveSystemNames(table) || [];
+            var thead = table.children('thead'),
+                fixedThead = thead.filter('.top-fixed-thead'),
+                fixedTheadTh = fixedThead.find('.ss-head-th');
+            thead.not(fixedThead).find('.ss-head-th').each(function (i) {
+                var th = $(this),
+                    col = th.data('col');
+                var systemName = $.trim(th.text());
+                var empty = systemNames.indexOf(systemName) === -1;
+                var cells = table.find('.tk-col-' + col);
+                fixedTheadTh.eq(i).add(cells).add(th).toggleClass('empty-col', empty);
+            });
+            return systemNames;
+        };
+        chartListSection.filterBySystemGroup.getActiveSystemNames = function (table) {
+            var result = [];
+            table.find('.ss-body-th').filter(':visible').each(function () {
+                var data = $(this).find('.th-content').data('system');
+                if (data.system_names) result = result.concat(data.system_names);
+            });
+            return tek.unique(result);
         };
 
         chartListSection.filterBySystem = function (system_index) {
@@ -611,8 +640,6 @@
                 chartListSection.filterBySystem.off();
             }
 
-            chartListSection.filterBySystemGroup();
-
 
             chartListSection.trigger('ss-resize');
             chartListSection.resize.leftFixed();
@@ -685,7 +712,14 @@
 
             chartListSection.filterByClientGroup(group_id);
             $('#client-filter-p', main).find('label').clientFilterLabel(group_id);
+
+
+            var systemNames = chartListSection.filterBySystemGroup();
+            $('#system-filter-p', main).find('label').systemFilterLabel(systemNames);
+
+
             chartListSection.trigger('ss-resize');
+            chartListSection.resize.leftFixed();
         });
     });
 })(jQuery, Handlebars, window['l'], document);

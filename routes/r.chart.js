@@ -87,9 +87,12 @@ exports.getData = function (client_group_id, callback) {
                 return [
                     {
                         prefix: parent_names.length && parent_names.join('  ') || null,
-                        data: JSON.stringify({
+                        data_parent: JSON.stringify({
                             parent_names: parent_names,
                             parent_ids: client.parent_ids
+                        }),
+                        data_system: JSON.stringify({
+                            system_names: Client.listSystemNames([client])
                         }),
                         client_id: client._id,
                         text: client.name,
