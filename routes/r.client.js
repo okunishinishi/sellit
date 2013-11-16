@@ -53,11 +53,7 @@ function notFound(res) {
 exports.index = function (req, res) {
     var p = req.params,
         clientId = p['client_id'];
-    var client = clientId && res.getClient(clientId);
-    if (!client) {
-        notFound(res);
-        return;
-    }
+
     function ids_string(ids) {
         if (!ids) ids = [];
         if (ids instanceof Array) {
@@ -66,14 +62,26 @@ exports.index = function (req, res) {
         return ids;
     }
 
-    var clients = res.locals.clients;
-    var system_names = Client.listSystemNames(clients) || [],
-        system_codes = Client.listSystemCode(clients) || [],
-        system_scales = Client.listSystemScales(clients) || [],
-        system_start_ats = Client.listSystemStartAts(clients) || [];
     findAllModels([Salesman, Developer, Client], function (salesmen, developers, all_clients) {
-        client.salesman_ids = ids_string(client.salesman_ids) || '';
+        var clients = all_clients.filter(function (client) {
+            return !client.isGroup();
+        });
+
+        var system_names = Client.listSystemNames(clients) || [],
+            system_codes = Client.listSystemCode(clients) || [],
+            system_scales = Client.listSystemScales(clients) || [],
+            system_start_ats = Client.listSystemStartAts(clients) || [];
+
         var allClientMap = toIdMap(all_clients);
+
+        var client = clientId && allClientMap[clientId];
+        if (!client) {
+            notFound(res);
+            return;
+        }
+
+
+        client.salesman_ids = ids_string(client.salesman_ids) || '';
         client.parent_names = client.listParentNames(allClientMap) || [];
         var last_update_at = client.last_update_at;
         try {

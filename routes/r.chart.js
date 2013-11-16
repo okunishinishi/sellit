@@ -21,10 +21,9 @@ var tek = require('tek'),
  */
 exports.index = function (req, res) {
     var q = req.query,
-        client_group_id = q['client_group_id'],
-        clients = res.locals.clients;
+        client_group_id = q['client_group_id'];
 
-    exports.getData(client_group_id, clients, function (data, groupHierarchy) {
+    exports.getData(client_group_id, function (data, groupHierarchy) {
         if (data) {
             res.render('chart/index.jade', {
                 headRow: data.headRow,
@@ -41,7 +40,7 @@ exports.index = function (req, res) {
         }
     });
 };
-exports.getData = function (client_group_id, clients, callback) {
+exports.getData = function (client_group_id, callback) {
     findAllModels([Developer, Client], function (developers, all_clients) {
         var allClientMap = toIdMap(all_clients) || {},
             groupHierarchy = Client.getGroupHierarchy(allClientMap);
@@ -51,7 +50,8 @@ exports.getData = function (client_group_id, clients, callback) {
             return;
         }
 
-        clients = clients.filter(function (client) {
+        var clients = all_clients.filter(function (client) {
+            if (client.isGroup()) return false;
             if (!topLv.isAncestorsOf(client, allClientMap)) {
                 console.log(topLv.name, client.name, topLv.isAncestorsOf(client, allClientMap));
             }

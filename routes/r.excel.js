@@ -19,9 +19,9 @@ var excelbuilder = require('msexcel-builder'),
 var publicDir = require('../app.config')['publicDir'];
 
 
-exports.generateWorkbook = function (client_group_id, clients, callback) {
+exports.generateWorkbook = function (client_group_id, callback) {
     var createWorkbook = excelbuilder.createWorkbook;
-    require('./r.chart.js').getData(client_group_id, clients, function (data) {
+    require('./r.chart.js').getData(client_group_id, function (data) {
         if (!data) {
             callback('excel data not found');
             return;
@@ -85,9 +85,8 @@ function handleErr(err) {
 
 exports.download = function (req, res) {
     var q = req.query,
-        client_group_id = q['client_group_id'],
-        clients = res.locals.clients;
-    exports.generateWorkbook(client_group_id, clients, function (err, filepath) {
+        client_group_id = q['client_group_id'];
+    exports.generateWorkbook(client_group_id, function (err, filepath) {
         if (err) {
             err && handleErr(err);
             res.redirect('/404');

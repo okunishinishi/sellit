@@ -6,7 +6,6 @@
 
 var path = require('path'),
     http = require('http'),
-    db = require('./db'),
     express = require('express'),
     util = require('./util'),
     NODE_ENV = process.env.NODE_ENV,
@@ -66,26 +65,18 @@ app.all('*',
     },
     function (req, res, next) {
         var isAPI = req.path.match(/^\/api/);
-        if(isAPI){
+        if (isAPI) {
             next();
-           return;
+            return;
         }
         console.log('req', req.path);
-        var Client = db.models.Client;
-        Client.findByCondition({}, function (clients) {
-            res.locals.clients = clients.filter(function (client) {
-                return !client.isGroup();
-            });
-            res.locals.time = new Date().getTime();
-
-            var lang = util['lang'];
-            res.locals.lang = lang.fromRequest(req);
-            res.locals.lang = 'ja';//TODO
-            var login_username = req.session && req.session.login_username;
-            res.locals.login_username = login_username;
-            res.locals.url = app.locals.url;
-            next();
-        });
+        res.locals.time = new Date().getTime();
+        var lang = util['lang'];
+        res.locals.lang = lang.fromRequest(req);
+        res.locals.lang = 'ja';//TODO
+        res.locals.login_username = req.session && req.session.login_username;
+        res.locals.url = app.locals.url;
+        next();
     });
 
 
@@ -110,20 +101,6 @@ app.all('*',
         var s = this;
         newpath = require('path').resolve('/', app.locals.context, newpath);
         return redirect.call(s, newpath);
-    };
-
-    app.response.__proto__.getClient = function (clientId) {
-        var s = this,
-            clients = s.locals.clients;
-        if (!clients) return null;
-        if (!clientId) return null;
-        var hit = false, client;
-        for (var i = 0, len = clients.length; i < len; i++) {
-            client = clients[i];
-            hit = client._id == clientId;
-            if (hit) return client;
-        }
-        return null;
     };
 })(app.response.__proto__.render, app.response.__proto__.redirect);
 

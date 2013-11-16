@@ -1,6 +1,0 @@
-select#client-select
-    for client in clients
-        if (selected_client && (selected_client._id == client._id))
-            option(value=client._id, selected='selected')=client.name
-        else
-            option(value=client._id)=client.name
