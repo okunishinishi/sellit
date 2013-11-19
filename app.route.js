@@ -65,3 +65,10 @@ post('/api/developer/save', developer.api.save);
 post('/api/developer/destroy', developer.api.destroy);
 get('/api/developer.json', developer.api.list);
 get('/api/developer/:_id', developer.api.one);
+
+var issue = r['issue'];
+get('/issue', issue.index);
+post('/api/issue/save', issue.api.save);
+post('/api/issue/destroy', issue.api.destroy);
+get('/api/issue.json', issue.api.list);
+get('/api/issue/:_id', issue.api.one);

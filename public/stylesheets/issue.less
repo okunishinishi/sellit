@@ -1,0 +1,98 @@
+@import "lib/tek-mixin";
+
+nav{
+  display:none! important;
+}
+
+.issue-list-item {
+  list-style: none;
+  display: inline-block;
+  float: left;
+
+  &:hover {
+    .block-list-item-control {
+      opacity: 1;
+    }
+  }
+  &.editable-list-item-fixed {
+    select {
+      border: none;
+      background-color: transparent;
+      -webkit-appearance: none;
+      -moz-appearance: window;
+      outline: none;
+    }
+    .save-btn{
+      display: none !important;
+    }
+    .block-list-item-control {
+      display: block;
+    }
+  }
+}
+.tk-transferable{
+  min-height: 120px;
+  padding: 20px 40px;
+  margin: -15px 0 0;
+  width:100%;
+  height: 100%;
+}
+.paper-content{
+  max-width: 300px;
+  min-width:200px;
+}
+.tk-transferable-drop-ready{
+  .white-back(.5);
+}
+
+#issue-add-btn{
+  .stick-right(10px);
+  .stick-top(20px);
+}
+.title-text{
+  min-height: 100px;
+}
+textarea {
+  width: 100%;
+  height: 80%;
+}
+.paper-content {
+  min-height: 100px;
+}
+
+.block-list-item-control {
+  right: -5px;
+  top: 0;
+  opacity: .1;
+  display: none;
+}
+
+.paper-content{
+  margin: 10px;
+  padding: 5px;
+  .white-back(.8);
+  position: relative;
+  border:1px solid #AAA;
+  .border-radius(2px);
+  .box-shadow(1px 1px 2px, .4);
+}
+
+#working-issues-list{
+  .paper-content{
+    @back:#FFF68B;
+    background-color: @back;
+    border-color:darken(@back,5);
+    color:rgb(119, 86, 0);
+    .text-shadow(none);
+  }
+}
+
+#done-issues-list{
+  .paper-content{
+    @back:#DFDFDF;
+    color:darken(@back, 20);
+    background-color: @back;
+    border-color:darken(@back,5);
+    .text-shadow(none);
+  }
+}

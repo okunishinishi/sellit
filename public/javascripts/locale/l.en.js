@@ -20,6 +20,7 @@ l = {
     "lbl": {
         "search": "search",
         "understand": "I understand consequences.",
+        "issue": "issue",
         "client": "client",
         "client_group": "group",
         "client_name": "client name",

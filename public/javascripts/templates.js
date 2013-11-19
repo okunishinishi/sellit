@@ -431,6 +431,63 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 	);
 })();(function() {
 	var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
+	templates['issue-list-item'] = template(
+	function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<li class=\"issue-list-item positioned paper editable-list-item-fixed\" data-priority=\"";
+  if (stack1 = helpers.priority) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.priority; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">\n    <div class=\"paper-content\">\n\n        <form class=\"inline-form\" action=\"";
+  if (stack1 = helpers.ctx) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.ctx; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "/api/issue/save\"\n              method=\"post\" name=\"edit-form\">\n            <input type=\"hidden\" value=\"";
+  if (stack1 = helpers._id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0._id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" name=\"_id\"/>\n            <input type=\"hidden\" value=\"";
+  if (stack1 = helpers.status) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.status; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" name=\"status\"/>\n            <input type=\"hidden\" value=\"";
+  if (stack1 = helpers._vr) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0._vr; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" name=\"_vr\"/>\n\n\n            <div class=\"title-text\">\n                <textarea name=\"title\" id=\"\"\n                          data-role=\"editable-text\"\n                          placeholder=\"request for improvement\"\n                          cols=\"30\" rows=\"10\">";
+  if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "</textarea>\n            </div>\n            <div style=\"display: none !important;\">\n                <label for=\"priority-select-";
+  if (stack1 = helpers._id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0._id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">priority : </label>\n                <select name=\"priority\" id=\"priority-select-";
+  if (stack1 = helpers._id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0._id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" data-value=\"";
+  if (stack1 = helpers.priority) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.priority; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">\n                    <option value=\"high\">high</option>\n                    <option value=\"middle\">middle</option>\n                    <option value=\"low\">low</option>\n                </select>\n            </div>\n\n            <input class=\"btn wide-btn save-btn\" type=\"submit\" value=\"save\"/>\n        </form>\n        <div class=\"stick-right stick-top block-list-item-control\">\n            <a href=\"javascript:void(0)\" data-role='edit-btn'>\n                <i class=\"icon icon-pencil\"></i>\n            </a>\n\n            <form class=\"inline-form\" action=\"";
+  if (stack1 = helpers.ctx) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.ctx; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "/api/issue/destroy\"\n                  method=\"post\" name=\"destroy-form\">\n                <input type=\"hidden\" value=\"";
+  if (stack1 = helpers._id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0._id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" name=\"_id\"/>\n                <a href=\"javascript:void(0)\" data-role='submit-btn'>\n                    <i class=\"icon icon-trash\"></i>\n                </a>\n            </form>\n        </div>\n    </div>\n</li>";
+  return buffer;
+  }
+	);
+})();(function() {
+	var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
 	templates['salesman-list-item'] = template(
 	function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];

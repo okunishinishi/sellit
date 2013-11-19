@@ -22,6 +22,7 @@ l.err.duplicate_system_name = 'duplicate system name';
 l.lbl = {};
 l.lbl.search = 'search';
 l.lbl.understand = 'I understand consequences.';
+l.lbl.issue = 'issue'.replace(/_/g,' ');
 
 l.lbl.client = 'client';
 l.lbl.client_group = 'group';
@@ -47,6 +48,7 @@ l.lbl.name = 'name';
 l.lbl.provider = 'provider';
 l.lbl.initial_provider = 'initial developer';
 l.lbl.current_provider = 'current develop';
+l.lbl.issue = 'issue'.replace(/_/g,' ');
 
 l.lbl.all = 'all';
 l.lbl.all_clients = 'select clients';
@@ -66,6 +68,7 @@ l.lbl.apply = 'apply';
 l.lbl.start_at = 'start_at';
 l.lbl.login_as = 'login as';
 l.lbl.chart_nav_all = 'ALL';
+l.lbl.issue = 'issue'.replace(/_/g,' ');
 
 l.plh = {};
 l.plh.search = l.lbl.search;

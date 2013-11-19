@@ -1,0 +1,18 @@
+mixin nav()
+    nav
+        if login_username
+            span.nav-item.login-user #{login_username}
+        a.nav-item(href=url('/client?t=#{time}'), key='detail')
+            i.icon.icon-file
+            | detail
+        a.nav-item(href=url('/chart?t=#{time}'), key='list')
+            i.icon.icon-th
+            | list
+
+        a.nav-item(href="javascript:void(0)")#download-btn.positioned
+            i.icon.icon-download
+            | download
+            ul#download-select-list.dropdown-menu.hidden(data-ref=url('/api/client.top_level.json'))
+        a.nav-item(href=url('/master'), key='master')
+            i.icon.icon-wrench
+            | master
