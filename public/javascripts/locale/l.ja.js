@@ -11,7 +11,7 @@ l = {
         "leave_with_unsaved": "You have unsaved changes.",
         "no_clients": "No clients found.",
         "send_issue": {
-            "prefix": "このアプリに対する改善要望・不具合報告は",
+            "prefix": "このシステムに対する改善要望・不具合報告は",
             "link_text": "こちら",
             "suffix": "まで。"
         }
