@@ -56,3 +56,8 @@ html
         br.clear#clear-before-footer
 
         footer
+            ul
+                li.issue-link-li
+                    | #{l.msg.send_issue.prefix}
+                    a(href=url('/issue'))!=l.msg.send_issue.link_text
+                    | #{l.msg.send_issue.suffix}

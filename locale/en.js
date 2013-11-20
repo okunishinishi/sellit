@@ -11,6 +11,11 @@ l.msg.never_go_back = 'Once this done, there will be no way to go back.';
 l.msg.save_done = 'save done!';
 l.msg.leave_with_unsaved = 'You have unsaved changes.';
 l.msg.no_clients = 'No clients found.';
+l.msg.send_issue = {
+    prefix: 'If you want to send issue report, please post ',
+    link_text: 'HERE',
+    suffix: ''
+};
 
 l.err = {};
 l.err.page_not_found = 'sorry! page not found';

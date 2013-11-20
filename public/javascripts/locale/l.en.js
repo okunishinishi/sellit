@@ -9,7 +9,12 @@ l = {
         "never_go_back": "Once this done, there will be no way to go back.",
         "save_done": "save done!",
         "leave_with_unsaved": "You have unsaved changes.",
-        "no_clients": "No clients found."
+        "no_clients": "No clients found.",
+        "send_issue": {
+            "prefix": "If you want to send issue report, please post ",
+            "link_text": "HERE",
+            "suffix": ""
+        }
     },
     "err": {
         "page_not_found": "sorry! page not found",
