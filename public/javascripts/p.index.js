@@ -29,7 +29,7 @@
             var logo = $(this),
                 text = logo.text() || '';
             logo.click(function () {
-                location.reload && location.reload();
+                location.href = logo.data('ref');
             });
             var html = text.split('').map(function (t) {
                 return "<span class='hop'>" + t + "</span>";

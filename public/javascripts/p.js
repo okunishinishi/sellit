@@ -248,6 +248,7 @@
         win.resize(function () {
             toPageTopBtn.toPageTopBtn(win.height());
         });
+        win.resize();
 
 
         var downloadSelectList = $('#download-select-list', body);

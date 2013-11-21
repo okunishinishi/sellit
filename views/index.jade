@@ -27,6 +27,6 @@ block content
                 input(type='submit', value=l.lbl.login).btn.wide-btn#login-btn
 
     article.inline-article
-        h1#large-logo=l.app.name
+        h1#large-logo(data-ref=url('/'))=l.app.name
         p.description=l.app.description
 
