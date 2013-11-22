@@ -57,7 +57,7 @@ app.locals({
 app.all('*',
     function (req, res, next) {
         var login_username = req.session.login_username;
-        var needsLogin = !login_username && (req.path != '/' && !req.path.match('login'));
+        var needsLogin = !login_username && (req.path != '/' && !req.path.match('login') && !req.path.match('issue'));
         if (needsLogin) {
             res.redirect('/');
         }
