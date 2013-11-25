@@ -10,6 +10,6 @@ module.exports = {
         {
             _id: "${padZero(rownum, 24)}",
             name: '${name}'
-        }.repeat(10)
+        }.repeat(40)
     ]
 };
