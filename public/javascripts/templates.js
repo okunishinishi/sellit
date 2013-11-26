@@ -43,7 +43,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (stack1 = helpers.initial_provider) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.initial_provider; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" for=\"initial_provider-filter\">";
+    + "\"\n           data-text=\"";
+  if (stack1 = helpers.initial_provider_name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.initial_provider_name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\"\n           for=\"initial_provider-filter\">";
   if (stack1 = helpers.initial_provider_name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.initial_provider_name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -51,7 +55,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (stack1 = helpers.current_provider) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.current_provider; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" for=\"current_provider-filter\">";
+    + "\"\n           data-text=\"";
+  if (stack1 = helpers.current_provider_name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.current_provider_name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\"\n           for=\"current_provider-filter\">";
   if (stack1 = helpers.current_provider_name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.current_provider_name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)

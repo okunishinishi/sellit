@@ -600,11 +600,21 @@
             .hover(function () {
                 var cellMap = chartListSection.cellMap;
                 var cell = $(this),
-                    value = cell.find('label:visible').data('value');
-                if (!value) return;
-                var syncCell = cellMap && cellMap[value];
-                if (syncCell && syncCell.size() > 1) {
-                    syncCell.addClass('hover-sync');
+                    label = cell.find('label:visible'),
+                    value = label.data('value');
+                if (value) {
+                    var syncCell = cellMap && cellMap[value];
+                    if (syncCell && syncCell.size() > 1) {
+                        syncCell.addClass('hover-sync');
+                    }
+                } else {
+                    var text = label.data("text");
+                    if (text) {
+                        var syncLabel = chartListSection.findByAttr('data-text', text);
+                        if(syncLabel.size() > 1){
+                            syncLabel.parents('.ss-cell').addClass('hover-sync');
+                        }
+                    }
                 }
             }, function () {
                 chartListCell.filter('.hover-sync').removeClass('hover-sync');
