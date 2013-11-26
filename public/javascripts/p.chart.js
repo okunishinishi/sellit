@@ -377,11 +377,13 @@
                 if (value === '__empty__') return;
                 var color = colors[i],
                     cell = cellMap[value];
-                var content = cell.css({
-                    color: color,
-                    borderColor: color,
-                    backgroundColor: color
-                }).find('.chart-cell-content').css({
+                var content = cell
+                    .css({
+                        color: color,
+                        borderColor: color,
+                        backgroundColor: color
+                    })
+                    .find('.chart-cell-content').css({
                         backgroundColor: '#FFF'
                     });
                 content
@@ -391,9 +393,24 @@
                 content
                     .find('.chart-cell-color-mark-hover').css({
                         backgroundColor: color
-                    })
+                    });
             });
             chartListSection.addClass('colorized');
+
+            chartListCell.find('[data-text]').each(function () {
+                var label = $(this),
+                    text = label.data('text');
+                if (!text) return;
+                var value = label.data('value');
+                if (value) return;
+                label.parent('.chart-cell-content').css({
+                        backgroundColor: '#EEE'
+                    })
+                    .parent('').css({
+                        backgroundColor: '#AAA'
+                    });
+            });
+
         };
         chartListSection.decolorize = function () {
             chartListSection.removeClass('colorized');
@@ -611,7 +628,7 @@
                     var text = label.data("text");
                     if (text) {
                         var syncLabel = chartListSection.findByAttr('data-text', text);
-                        if(syncLabel.size() > 1){
+                        if (syncLabel.size() > 1) {
                             syncLabel.parents('.ss-cell').addClass('hover-sync');
                         }
                     }
