@@ -37,7 +37,7 @@ l = {
         "systems": "systems",
         "salesman": "salesman",
         "freeword": "営業情報",
-        "code": "PJコード",
+        "code": "システム名称",
         "scale": "開発規模",
         "scale_unit": "人月",
         "provider": "担当会社",
@@ -66,7 +66,7 @@ l = {
         "start_at": "導入時期",
         "login_as": "login as",
         "chart_nav_all": "ALL",
-        "cd": "PJコード"
+        "cd": "システム名称"
     },
     "plh": {
         "search": "search",
