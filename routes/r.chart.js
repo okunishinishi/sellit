@@ -52,9 +52,6 @@ exports.getData = function (client_group_id, callback) {
 
         var clients = all_clients.filter(function (client) {
             if (client.isGroup()) return false;
-            if (!topLv.isAncestorsOf(client, allClientMap)) {
-                console.log(topLv.name, client.name, topLv.isAncestorsOf(client, allClientMap));
-            }
             return topLv.isAncestorsOf(client, allClientMap);
         });
 
