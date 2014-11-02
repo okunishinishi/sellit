@@ -1,6 +1,11 @@
 sellit
 ======
 
+システム会社の営業向けのマチュアマップシステム。
+顧客ごとに、どのシステムをどう導入しているかのマトリクス管理を行なう。
+
+![capture](doc/img/capture.png "capture")
+
 
 requirements
 ------
